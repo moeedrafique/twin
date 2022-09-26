@@ -1,0 +1,151 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                        {% block organization %}
+                                                        <h4>{{ organization }}</h4>
+                                                        {% endblock %}
+<!--                                                    <span>This is a list of all the business customers.</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-5 col-md-5">
+                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                        <h5>N.Ahmed</h5>
+                                                        <hr>
+                                                    <div class="card-header-right">
+                                                        <ul class="list-unstyled card-option">
+                                                            <li> <a href="{% url 'organization_view' organization.pk %}" class=" b-b-primary text-primary">View Profile</a></li>
+                                                        </ul>
+                                                    </div>
+                                                        <div class="card-block">
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-7">
+                                                                        <h2 class="d-inline-block text-c-green m-r-10">
+                                                                            <img width="40%" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"/> </h2>
+                                                                        <div class="d-inline-block">
+<!--                                                                            <p class="m-b-0"><i class="feather icon-chevrons-down m-r-10 text-c-pink"></i>10%</p>-->
+                                                                            <p class="text-muted m-b-0">Create Activity Report</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <p class="text-dark m-b-0">Subscription ID</p>
+                                                                                <p class="text-muted m-b-0">8992704716</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="text-dark m-b-0">Feature Data Store</p>
+                                                                                <p class="text-muted m-b-0">Standard</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="text-dark m-b-0">Regional Data Hosting</p>
+                                                                                <p class="text-muted m-b-0">Ireland</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            <hr>
+                                                            <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <p class="m-b-10 f-w-600">Created</p>
+                                                                        <h6 class="text-muted f-w-400">July 15, 2020</h6>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <p class="m-b-10 f-w-600">Renewal Date</p>
+                                                                        <h6 class="text-muted f-w-400">July 15, 2020</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2"></div>
+                                            <div class="col-sm-5 col-md-5">
+                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                        <h5>Members</h5>
+                                                        <hr>
+                                                    <div class="card-header-right">
+                                                        <ul class="list-unstyled card-option">
+                                                            <li><a href="{% url 'organization_user_add' organization.pk %}" class=" b-b-primary text-primary">Invite Members</a></li>
+                                                            <li>|</li>
+                                                            <li><a href="{% url 'organization_user_list' organization.pk %}" class=" b-b-primary text-primary">Manage Members</a></li>
+                                                        </ul>
+                                                    </div>
+                                                        <div class="card-block">
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6">
+                                                                        <h2 class="d-inline-block text-c-green m-r-10">
+                                                                            {{organization.TotalMemberCount}}</h2>
+                                                                        <div class="d-inline-block">
+<!--                                                                            <p class="m-b-0"><i class="feather icon-chevrons-down m-r-10 text-c-pink"></i>10%</p>-->
+                                                                            <p class="text-muted m-b-0">Total Members</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <h2 class="d-inline-block text-c-pink m-r-10">{{organization.PendingMemberCount}}</h2>
+                                                                        <div class="d-inline-block">
+<!--                                                                            <p class="m-b-0"><i class="feather icon-chevrons-up m-r-10 text-c-green"></i>87%</p>-->
+                                                                            <p class="text-muted m-b-0">Pending Members</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            <hr>
+                                                            <div style="margin-bottom: 10.5rem!important;"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                                                                </div>
+                                                            </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

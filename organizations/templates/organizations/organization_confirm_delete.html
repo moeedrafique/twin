@@ -1,0 +1,68 @@
+{% extends "base.htm" %}
+{% load i18n %}
+{% block content %}
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                    <h4>Delete Organization</h4>
+<!--                                                    <span>This is a list of all the business customers.</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                            <div class="col-sm-12">
+                                                <!-- HTML5 Export Buttons table start -->
+                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                        <h5></h5>
+                                                        <div class="card-header-right">
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block" style="justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;">
+                                                        <h2>{{ organization }}</h2>
+                                                        <h4>{% trans "Are you sure you want to delete this organization?" %}</h4>
+                                                        <form action="." method="post">{% csrf_token %}
+                                                            {{ form }}
+                                                            <button class="btn btn-primary" onClick="javascript:history.go(-1);">Cancel</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- HTML5 Export Buttons end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+
+{% endblock %}

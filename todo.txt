@@ -1,0 +1,14 @@
+Progress To Show by Tuesday: 24th May 2022
+
+Frontend and Backend
+
+1. Login System
+
+
+2. Join form
+3. Business detail form
+4. Invitation with member form
+
+Setup of email connection
+
+Email: "info@twindynamics.co.uk"

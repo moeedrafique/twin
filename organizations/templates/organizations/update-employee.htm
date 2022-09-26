@@ -1,0 +1,274 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                        <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                    <h4>Update Employee Here</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">Update Employee</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page-header end -->
+                                    
+                                    <!-- Page body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Job application card start -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Update Employee</h5>
+                                                        <span>You can change the current attributes of employee from here</span>
+
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="col-lg-12 j-wrapper j-wrapper-640">
+                                                            <form method="post" class="j-pro" id="j-pro" enctype="multipart/form-data" novalidate="">
+                                                                {% csrf_token %}
+                                                                <!-- end /.header-->
+                                                                <div class="j-content">
+                                                                    <!-- start name -->
+                                                                    <div class="j-row">
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="first_name">
+                                                            <i class="icofont icofont-ui-user"></i>
+                                                        </label>
+                                                                                {% render_field form.first_name type="text" id="first_name" name="first_name" placeholder="First name" value="form.first_name" %}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="last_name">
+                                                            <i class="icofont icofont-ui-user"></i>
+                                                        </label>
+                                                                                {% render_field form.last_name type="text" id="last_name" name="last_name" placeholder="Last name" value="form.last_name" %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end name -->
+                                                                    <!-- start email username -->
+                                                                    <div class="j-row">
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="email">
+                                                            <i class="icofont icofont-envelope"></i>
+                                                        </label>
+                                                                                {% render_field form.email type="email" placeholder="Email" id="email" name="email" value="form.email" %}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="phone">
+                                                            <i class="icofont icofont-waiter"></i>
+                                                        </label>
+                                                                                {% render_field form.username type="text" class="disabled" placeholder="Username" id="username" name="username" value="form.username" %}
+                                                                                <span class="j-tooltip j-tooltip-right-top">Your login username</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end email username -->
+                                                                    <div class="divider gap-bottom-25"></div>
+                                                                    <!-- start password -->
+                                                                    <div>
+                                                                    </div>
+                                                                    <!-- end password -->
+                                                                    <!-- start phone landline -->
+                                                                    <div class="j-row">
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="phone">
+                                                            <i class="icofont icofont-phone"></i>
+                                                        </label>
+                                                                                <input type="text" placeholder="Phone" id="phone_number" name="phone_number" value="{{ staffuser.phone_number }}">
+                                                                                <span class="j-tooltip j-tooltip-right-top">Your contact phone number</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="j-span6 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="email">
+                                                            <i class="icofont icofont-phone"></i>
+                                                        </label>
+                                                                                <input type="text" placeholder="Landline" id="landline" name="landline" value="{{ staffuser.landline }}">
+                                                                                <span class="j-tooltip j-tooltip-right-top">Your landline number (if any)</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end phone landline -->
+                                                                    <div class="divider gap-bottom-25"></div>
+                                                                    <div class="j-unit">
+                                                                        <div class="j-input">
+                                                                            <label class="j-icon-right" for="phone">
+                                                                                <i class="icofont icofont-phone"></i>
+                                                                            </label>
+                                                                            <input type="text" placeholder="Emergency Contact" id="emergency_contact" name="emergency_contact" value="{{ staffuser.emergency_contact }}">
+                                                                            <span class="j-tooltip j-tooltip-right-top">Your contact phone number</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- start date -->
+                                                                    <div class="j-unit">
+                                                                        <div class="j-input">
+                                                                            <label class="j-icon-right" for="date_from">
+                                                                            <i class="icofont icofont-ui-calendar"></i>
+                                                                        </label>
+                                                                        <input id="dropper-animation" name="dob" class="form-control" type="text" placeholder="Select your date"  value="{{ staffuser.dob }}" readonly="readonly">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end date -->
+                                                                    <!-- start cnic/passport -->
+                                                                    <div class="j-unit">
+                                                                        <div class="j-input">
+                                                                            <label class="j-icon-right" for="address">
+                                                                            <i class="icofont icofont-file-text"></i>
+                                                                        </label>
+                                                                            <input type="text" id="id_card_no" placeholder="CNIC or Passport" name="id_card_no" value="{{ staffuser.id_card_no }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end cnic/passport -->
+                                                                    <!-- start country -->
+                                                                    <div class="j-unit">
+                                                                        <label class="j-input j-select">
+                                                                            <select name="nationality">
+                                                                                <option value="{{ staffuser.nationality.code }}" selected="">{{ staffuser.nationality.name }}</option>
+                                                                                {% for country in countries %}
+                                                                                    <option value="{{ country.code }}">{{ country.name }}</option>
+                                                                                {% endfor %}
+                                                                                </select>
+                                                                                <i></i>
+                                                                        </label>
+                                                                    </div>
+                                                                    <!-- end country -->
+                                                                    <!-- start city post code -->
+                                                                    <div class="j-row">
+                                                                        <div class="j-span8 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="city">
+                                                            <i class="icofont icofont-building"></i>
+                                                        </label>
+                                                                                <input type="text" id="city" placeholder="City" name="city" value="{{ staffuser.city }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="j-span4 j-unit">
+                                                                            <div class="j-input">
+                                                                                <label class="j-icon-right" for="postal_code">
+                                                            <i class="icofont icofont-file-code"></i>
+                                                        </label>
+                                                                                <input type="text" id="postal_code" placeholder="Postal code" name="postal_code" value="{{ staffuser.postal_code }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end city post code -->
+                                                                    <!-- start address -->
+                                                                    <div class="j-unit">
+                                                                        <div class="j-input">
+                                                                            <label class="j-icon-right" for="address">
+                                                        <i class="icofont icofont-building"></i>
+                                                    </label>
+                                                                            <input type="text" id="address" placeholder="Address" name="house_address" value="{{ staffuser.house_address }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end address -->
+                                                                    <div class="divider gap-bottom-25"></div>
+                                                                    <!-- start message -->
+                                                                    <div class="j-unit">
+                                                                        <div class="j-input">
+                                                                            <textarea placeholder="Additional Medical info" spellcheck="false" name="medical_history">{{ staffuser.medical_history }}</textarea>
+                                                                            <span class="j-tooltip j-tooltip-right-top">Any useful information about you</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end message -->
+                                                                      <!-- start file -->
+                                                                    <div class="j-unit">
+                                                                                                                                                          <div class="form-group">
+                                                                                    <label>Current Profile Image</label><br>
+                                                                                    <img src='{{ staffuser.profile_pic }}' style='height:150px'/>
+                                                                                </div>
+                                                                        <div class="j-input j-append-big-btn">
+                                                                            <label class="j-icon-left" for="file_input">
+                                                        <i class="icofont icofont-download"></i>
+                                                    </label>
+                                                                            <div class="j-file-button">
+                                                                                Browse
+                                                                                <input type="file" name="profile_pic" onchange="document.getElementById('file_input').value = this.value;">
+                                                                            </div>
+                                                                            <input type="text" id="file_input" readonly="" placeholder="no file selected" value="{{ staffuser.profile_pic }}">
+                                                                            <span class="j-hint">Only: jpg / jpeg / png / gif, less 2Mb</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end file -->
+                                                                    <!-- start notify me -->
+                                                                    <div class="j-unit">
+                                                                        <label class="j-checkbox-toggle">
+                                                                    <input type="checkbox" name="is_active" class="js-single" checked=""> Activate Employee
+                                                                    </label>
+                                                                    </div>
+                                                                    <!-- end notify me -->
+                                                                    <!-- start response from server -->
+                                                                    <div class="j-response"></div>
+                                                                    <!-- end response from server -->
+                                                                </div>
+                                                                <!-- end /.content -->
+                                                                <div class="j-footer">
+                                                                    <button type="submit" class="btn btn-primary">Send</button>
+                                                                    <button type="reset" class="btn btn-default m-r-20">Reset</button>
+                                                                </div>
+                                                                <!-- end /.footer -->
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Job application card end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page body end -->
+                                </div>
+                            </div>
+                            <!-- Main-body end -->
+
+                            <div id="styleSelector">
+
+                            </div>
+                        </div>
+
+        {% block js %}
+        <script type="text/javascript" src="{% static 'libraries\assets\pages\j-pro\js\custom\form-job.js' %}"></script>
+        {% endblock js %}
+
+
+    {% endblock %}
+</body>
+</html>

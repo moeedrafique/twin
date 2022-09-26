@@ -1,0 +1,353 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+<!--    <h1>{{ organization }}</h1>-->
+<!--<form action="." method="post">{% csrf_token %}-->
+<!--    {{ form }}-->
+<!--    <input type="submit" value="submit">-->
+<!--</form>-->
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+
+                                                        <h4>{{organization.name}} Information</h4>
+
+<!--                                                    <span>This is a list of all the business customers.</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Business Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.owner}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="col-lg-12">-->
+<!--                                                    <div class="row g-3 align-items-center">-->
+<!--                                                        <div class="col-auto ml-5">-->
+<!--                                                            <input type="number" name="user_id" id="" maxlength="256" class="form-control fc-c" placeholder="Password">-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.name}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="number" disabled value="{{organization.company_number}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.business_phone}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.business_email}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.business_address}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.post_code}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.city}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.country}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.industry}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Subscription</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.start_date}}" class="form-control fc-c"required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                            </div>
+                        </div><!--col-sm-6 ends here-->
+
+                                <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Registered Personal Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.full_name}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.job_title}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.email}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" disabled value="{{organization.phone}}" class="form-control fc-c"required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Notes</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <textarea disabled name="notes" cols="40" rows="10" maxlength="256" class="h-auto form-control fc-c">{{organization.notes}}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Sub Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input disabled type="text" name="full_name" maxlength="256" id="" class="form-control fc-c" placeholder="Subscription ID">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input disabled type="text" name="job_title" maxlength="256" id="" class="form-control fc-c" placeholder="Regional Data Hosting">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input disabled type="email" name="email" maxlength="256" id="" class="form-control fc-c" placeholder="Renewal Data">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+
+                        </div>
+                        </div>
+
+                               <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                <h6>Documents</h6>
+                                <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="flex-contianer form-control mb-3" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn" style="font-size: 14px;">
+                                            Contractual Agreement
+                                        </div>
+                                        <div class="right-btn">
+                                            {% if organization.contractual_agreement %}
+                                            Currently: <a href="{{organization.contractual_agreement.url}}">{{organization.contractual_agreement}}</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

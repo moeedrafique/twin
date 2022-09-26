@@ -1,0 +1,514 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost:9000/staffs/new/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>TRYME.TAXI</title>
+	<link href="css/css2" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script type="text/javascript" src="{%  static 'css/feather.js.download' %}"></script>
+	<script src="{% static 'css/jquery-3.5.1.js.download' %}"></script>
+</head>
+
+<body><div class="container-fluid p-0">
+    <div class="row">
+        {% block content %}
+                                    <div class="col-md-11 ms-sm-auto col-lg-11 px-md-4" style="width: 95.66666%;
+                    padding: 0;
+    overflow-x: hidden;
+    height: 100vh;
+    float: right;
+    background: #f9f9f9;">
+
+            <div class="top-bar pl-4 pr-4">
+    <div class="row align-items-start">
+        <div class="col-sm-4 h-58">
+            <p>
+                <strong>TwiDy:</strong>
+                Buidling and Occupant Health Dashboard
+              </p>
+        </div>
+                <div class="col-sm-6 h-58">
+                    <p>
+                        <strong>Region:</strong>
+                        Sheffield | <strong>Buidling:</strong>The Diamond | <strong>Floor:</strong>3 | <strong>Room:</strong>
+                        WR03
+
+                      </p>
+        </div>
+        <div class="col-sm-2 h-58">
+            <p id="live-time-date">
+                4-3-2022 - 5:17:58: AM
+              </p>
+            <ul class="float-right">
+                <li><span id=""></span></li>
+            </ul>
+
+        </div>
+    </div>
+</div><!--top-bar ends here-->
+          <div id="accounts-section" class="pl-4 pr-4">
+                <form class="business-detail" method="POST" action="" novalidate="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card pl-3 pr-3 bg-light mt-2 mb-2">
+                                <hr>
+                                <div class="tab-bar">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                <li><button disabled href="#" class="btn-primary btn-sm mt-1">{{ business_detail.unique_business.uniqueId }}</button></li>
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div><!--col-sm-12 ends here-->
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                <div class="h-100 card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Business Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="User ID/Login" name="user_id" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Password" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Ref ID" name="ref_id" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.company_name placeholder="Company Name" class="form-control credit__note_input w-400" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Company Number" name="company_number" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Business Phone" name="business_phone" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Business Email" name="business_email" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Business Address" name="business_address" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Postcode" name="post_code" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="City" name="city" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Country" name="country" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Industry" name="industry" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Status" name="status" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Last Active" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                    <div class="card pl-3 pr-3 bg-light mt-3 mb-3">
+                                        <h6>Subscription</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control credit__note_input w-400" placeholder="Start Date" name="" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                    <div class="card pl-3 pr-3 bg-light mb-3">
+                                        <h6>Invoicing</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control credit__note_input w-400" placeholder="Invoice ID" name="invoice_id" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control credit__note_input w-400" placeholder="Payment Terms" name="payment_terms" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control credit__note_input w-400" placeholder="Output Reference" name="output_perference" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <textarea class="h-auto form-control credit__note_input w-400" placeholder="Invoice Footer" name="invoice_footer" rows="4" cols="50"></textarea>                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                            </div>
+                        </div><!--col-sm-6 ends here-->
+
+                        <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Registered Personal Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.full_name placeholder="Full Name" class="form-control credit__note_input w-400" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.job_title placeholder="Job Title" class="form-control credit__note_input w-400" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.email placeholder="Email" class="form-control credit__note_input w-400" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.phone placeholder="Phone No" class="form-control credit__note_input w-400" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Payment Card Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Payment Card" name="payment_card" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Expiration" name="expiration" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Notes</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <textarea class="h-auto form-control credit__note_input w-400" placeholder="Notes" name="notes" rows="10" cols="50">
+                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Payments/VAT</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Account Details Ref" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Payment On" name="payment_on" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Last Payment" name="last_payment" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="Apply VAT" name="apply_vat" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control credit__note_input w-400" placeholder="VAT Rate (%)" name="vat_rate" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-12 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card pl-3 pr-3 bg-light mb-3">
+                                    <h6>Access</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <button class="btn btn-primary">Access</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                        </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="card pl-3 pr-3 bg-light mt-2 mb-2">
+                                <h6>Documents</h6>
+                                <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="flex-contianer form-control mb-3" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn"  style="font-size: 14px;">
+                                            Registration Application Form
+                                        </div>
+                                        <div class="right-btn">
+                                            <input type="file" style="font-size: 14px;" name="registration_app_form">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="flex-contianer form-control mb-3" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn"  style="font-size: 14px;">
+                                            Contractual Agreement
+                                        </div>
+                                        <div class="right-btn">
+                                            <input type="file" style="font-size: 14px;" name="contractual_agreement">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                        <div class="col-sm-12">
+                            <div class="card pl-3 pr-3 bg-light mt-3">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    <input type="submit" name="add-client" class="btn btn-primary mt-3" value="Save">
+                                    </div>
+                                </div><!--row ends here-->
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div><!--col-sm-12 ends here-->
+                    </div><!--row ends here-->
+
+
+                </form>
+          </div><!--accounts section ends here-->
+
+        </div><!--col-sm-11 ends here-->
+        {% endblock %}
+
+        </div><!--row ends here-->
+</div><!--container ends here-->
+
+<script type="text/javascript" src="{% static 'css/jquery.js.download' %}"></script>
+<script type="text/javascript">
+	$("#slidebar-open").click(function () {
+		$('#inner-bar').toggleClass('bar-opened');
+	});
+</script>
+<script src="{% static 'css/jquery.js.download' %}"></script>
+<script src="{% static 'css/bootstrap.js.download' %}"></script>
+<script src="{% static 'css/select2.min.js.download' %}"></script>
+<script type="text/javascript" src="{% static 'css/jquery.dataTables.min.js.download' %}"></script>
+<script type="text/javascript" src="{% static 'css/custom.js.download' %}"></script>
+
+</body></html>

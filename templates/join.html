@@ -1,0 +1,229 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://localhost:9000/register -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>TRYME.TAXI</title>
+	<link href="./TRYME.TAXI_files/css2" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'TRYME.TAXI_files/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'TRYME.TAXI_files/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'TRYME.TAXI_files/font-awesome.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'TRYME.TAXI_files/jquery.dataTables.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'TRYME.TAXI_files/main.css' %}">
+	<script type="text/javascript" src="{% static 'TRYME.TAXI_files/feather.js.download' %}"></script>
+	<script src="{% static 'TRYME.TAXI_files/jquery-3.5.1.js.download' %}"></script>
+</head>
+
+<body><div class="wrapper login-wrapper signup-wrapper">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <!-- Login Form -->
+        <form class="form card signup-form  needs-validation" novalidate="" method="POST" action="">
+            {% csrf_token %}
+          <h1 class="text-center">TRYME.TAXI</h1>
+          <h4 class="text-center">Your awesome tagline</h4>
+          <hr>
+          <p class="text-center">TryME.Taxi Joining Application Form</p>
+          <div class="row">
+            <div class="col-sm-4">
+                <input type="text" id="c_name" class="form-control" name="company_name" placeholder="Company Name" value="">
+            </div>
+            <div class="col-sm-4">
+                <input type="number" id="c_number" class="form-control" name="company_number" placeholder="Company Number" value="">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="website" class="form-control" name="company_website" placeholder="Company Website" value="">
+            </div>
+          </div><!--row ends here-->
+            <div class="mb-2"></div>
+          <div class="row">
+            <div class="col-sm-12">
+                <select class="form-control" name="company_industry">
+                  <option value="">Company Industry</option>
+                  <option value="it">IT</option>
+                  <option value="media">Media</option>
+                </select>
+            </div><!--col-sm-6 ends here--->
+          </div><!--row ends here--->
+            <div class="mb-2"></div>
+          <div class="row">
+            <div class="col-sm-12">
+              <p><textarea name="company_address" class="form-control" id="company_address" placeholder="Company Address" cols="30" rows="3" value=""></textarea></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <p><input type="text" name="name" placeholder="Your Name" class="form-control" value=""></p>
+            </div>
+            <div class="col-sm-6">
+              <p><input text="text" name="job_title" class="form-control" placeholder="Job Title" value=""></p>
+            </div>
+          </div><!--row ends here-->
+          <div class="row">
+            <div class="col-sm-6">
+              <p><input text="email" name="email" class="form-control" placeholder="Email Address" value=""></p>
+            </div>
+            <div class="col-sm-6">
+              <p><input text="text" name="contact_no" class="form-control" placeholder="Contact Number" value=""></p>
+            </div>
+          </div><!--row ends here---->
+
+          <h6>Terms and Conditions</h6>
+          <small>By signing and submitting the End User Application Form, I certify that this application is complete and all information provided is true and accurate, and contains no wilful falsifications or misrepresentation. I understand that falsifications, representations, or omissions may disqualify me from considerations to this position. I hereby authorise responsible person to contact current and previous employers for verification and conduct a background investigation, if required.</small>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="agree" id="termsCheckbox">
+            <label class="form-check-label" for="termsCheckbox">I agree with the above terms and conditions</label>
+          </div>
+          <p class="center"><input type="submit" class=" btn btn-primary col pt-2 pb-2  mt-3" value="Send"></p>
+
+
+
+        <span class="text-success"></span>
+
+
+
+        <span class="text-danger"></span>
+
+
+
+        <span class="text-danger"></span>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script type="text/javascript" src="./TRYME.TAXI_files/jquery.js.download"></script>
+<script type="text/javascript">
+	$("#slidebar-open").click(function () {
+		$('#inner-bar').toggleClass('bar-opened');
+	});
+</script>
+<script src="./TRYME.TAXI_files/jquery.js.download"></script>
+<script src="./TRYME.TAXI_files/bootstrap.js.download"></script>
+<script src="./TRYME.TAXI_files/select2.min.js.download"></script>
+<script type="text/javascript" src="./TRYME.TAXI_files/jquery.dataTables.min.js.download"></script>
+<script type="text/javascript" src="./TRYME.TAXI_files/custom.js.download"></script>
+<script>
+  feather.replace()
+</script>
+<script type="text/javascript">
+
+// live date & time script
+
+function display_ct5() {
+var x = new Date()
+var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
+
+var x1=x.getMonth() + 1+ "-" + x.getDate() + "-" + x.getFullYear();
+x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+document.getElementById('live-time-date').innerHTML = x1;
+display_c5();
+ }
+ function display_c5(){
+var refresh=1000; // Refresh rate in milli seconds
+mytime=setTimeout('display_ct5()',refresh)
+}
+display_c5();
+
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+// Form toggle script
+
+$(document).on('change','#formToggle', function(){
+  var selected_form = $(this).val();
+  console.log(selected_form);
+  if(selected_form == "admin"){
+    $('.admin-manage-form').css("display","block");
+    $('.operator-form').css("display","none");
+    $("#accessType").val("admin");
+  }else if(selected_form == "manage"){
+    $('.admin-manage-form').css("display","block");
+    $('.operator-form').css("display","none");
+    $("#accessType").val("manage");
+  }
+  else if (selected_form == "operator" ){
+    $('.operator-form').css("display","block");
+    $('.admin-manage-form').css("display","none");
+  }
+
+})
+
+// Access modal popup
+
+$("#access-btn").click(function(){
+  $(".access-modal").fadeIn(500);
+  $('.modal-overlay').fadeIn(300);
+});
+$("#btn-cancel").click(function(){
+  $(".access-modal").fadeOut(300);
+  $('.modal-overlay').fadeOut(500);
+});
+	/*----Layers toggle script----*/
+  	$(document).ready(function(){
+
+		$('#myTable').DataTable();
+  		//Layer toggle
+  		$(".layers-toggle-btn").click(function(){
+  			$(this).next(".toggle-layers").slideToggle(100);
+  		});
+
+  		// Radio toggle script
+  		$(".toggle-layers #terr").click(function(){
+  			if($(this).prop("checked", true)){
+  				$("#sat").prop("checked", false);
+  					map.setMapTypeId('terrain');
+  			}
+  		});
+
+  		//Fire and event when a radio button is selected
+  		$(".toggle-layers #sat").click(function(){
+  			if($(this).prop("checked", true)){
+  				$("#terr").prop("checked", false);
+  					map.setMapTypeId('satellite');
+  			}
+  		});
+
+  		//Fire and event when a checkbox button is selected
+
+
+
+  		if($(this).prop("checked") == true) {
+          const trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+       } else if($(this).prop("checked") == false){
+           const trafficLayer = new google.maps.TrafficLayer();
+           trafficLayer.setMap(null);
+       }
+
+	   var alertList = document.querySelectorAll('.alert')
+		alertList.forEach(function (alert) {
+		new bootstrap.Alert(alert)
+})
+
+  	});
+
+
+</script>
+
+</body></html>

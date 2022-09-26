@@ -1,0 +1,32 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login auth</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+	<div class="wrapper">
+	  <a href="index.php" id="logo"><img src="{% static 'pics/logo-text.png' %}" alt="image"></a>
+
+	    <!-- Login Form -->
+	    <form class="form" method="POST" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+                <p>Are you sure you want to sign out?</p>
+        <input type="submit" class=" btn btn-large col" value="{% trans 'Sign Out' %}">
+	    </form>
+
+
+	</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/materialize.min.js' %}"></script>
+
+</body>
+</html>

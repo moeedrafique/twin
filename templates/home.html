@@ -1,0 +1,168 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load org_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Twin Dynamics Platform </title>
+    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 10]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <meta name="author" content="#">
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'libraries\assets\images\logo.png' %}" type="image/x-icon' %}">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\bootstrap\css\bootstrap.min.css' %}">
+    <!-- feather Awesome -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\icon\feather\css\feather.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\icon\themify-icons\themify-icons.css' %}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\icon\icofont\css\icofont.css' %}">
+    <!-- notify js Fremwork -->
+    <link rel="stylesheet" href="{% static 'libraries\assets\js\iziToast-master\dist\css\iziToast.min.css' %}">
+    <!-- sweet alert framework -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\sweetalert\css\sweetalert.css' %}">
+     <!-- owl carousel css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\owl.carousel\css\owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\owl.carousel\css\owl.theme.default.css' %}">
+    <!-- animation nifty modal window effects css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\css\component.css' %}">
+    <!-- jpro forms css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\j-pro\css\demo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\j-pro\css\font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\j-pro\css\j-pro-modern.css' %}">
+    <!-- Switch component css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\switchery\css\switchery.min.css' %}">
+    <!-- Tags css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\bootstrap-tagsinput\css\bootstrap-tagsinput.css' %}">
+    <!-- Flag.css -->
+    <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
+    <link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
+    <!-- Select 2 css -->
+    <link rel="stylesheet" href="{% static 'libraries\bower_components\select2\css\select2.min.css' %}">
+    <!-- Date-time picker css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\advance-elements\css\bootstrap-datetimepicker.css' %}">
+    <!-- Date-range picker css  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\bootstrap-daterangepicker\css\daterangepicker.css' %}">
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\datedropper\css\datedropper.min.css' %}">
+    <!-- Color Picker css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\spectrum\css\spectrum.css' %}">
+    <!-- Mini-color css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\jquery-minicolors\css\jquery.minicolors.css' %}">
+    <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\data-table\css\buttons.dataTables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\data-table\extensions\buttons\css\buttons.dataTables.min.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="libraries\assets\pages\foo-table\css\footable.standalone.min.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\css\style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\css\jquery.mCustomScrollbar.css' %}">
+
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="col-sm-12">
+                                        <div class="col-sm-9" style="transform: translate(18%, 130%);">
+                                            <div class="row">
+                                                <div class="col-md-6 col-lg-3">
+                                                <div class="card statustic-card">
+                                                    <div class="card-header" style="padding: 2px 20px;">
+                                                        <h5></h5>
+                                                    </div>
+                                                    <div class="card-block text-center">
+                                                        <a href="{% url 'organization_list' %}"><span class="d-block text-c-blue f-24">Asset<br> Database</span></a>
+                                                        <p class="m-b-0"></p>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-c-blue" style="width:100%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-blue">
+                                                        <h6 class="text-white m-b-0"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                <div class="card statustic-card">
+                                                    <div class="card-header" style="padding: 2px 20px;">
+                                                        <h5></h5>
+                                                    </div>
+                                                    <div class="card-block text-center">
+                                                        <a href=""><span class="d-block text-c-green f-24">Operational Behaviour</span></a>
+                                                        <p class="m-b-0"></p>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-c-green" style="width:100%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-green">
+                                                        <h6 class="text-white m-b-0"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                <div class="card statustic-card">
+                                                    <div class="card-header" style="padding: 2px 20px;">
+                                                        <h5></h5>
+                                                    </div>
+                                                    <div class="card-block text-center">
+                                                        <a href=""><span class="d-block text-c-pink f-24">Real-time Data Monitoring</span></a>
+                                                        <p class="m-b-0"></p>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-c-pink" style="width:100%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-pink">
+                                                        <h6 class="text-white m-b-0"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-6 col-lg-3">
+                                                <div class="card statustic-card">
+                                                    <div class="card-header" style="padding: 2px 20px;">
+                                                        <h5></h5>
+                                                    </div>
+                                                    <div class="card-block text-center">
+                                                        <a href=""><span class="d-block text-c-yellow f-24">Summary and Reporting</span></a>
+                                                        <p class="m-b-0"></p>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-c-yellow" style="width:100%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-yellow">
+                                                        <h6 class="text-white m-b-0"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                        </div>
+                    </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

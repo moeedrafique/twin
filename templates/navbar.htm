@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar header-navbar pcoded-header">
+        <div class="navbar-wrapper">
+
+            <div class="navbar-logo">
+                <a class="mobile-menu" id="mobile-collapse" href="#!">
+                    <i class="feather icon-menu"></i>
+                </a>
+                <a href="">
+                    <img width="width:100%" style="height: 100%;" class="img-fluid" src="{% static 'libraries\assets\images\logo-bg.png' %}" alt="Theme-Logo">
+                </a>
+                <a class="mobile-options">
+                    <i class="feather icon-more-horizontal"></i>
+                </a>
+            </div>
+
+            <div class="navbar-container container-fluid">
+               <div class="top-bar pl-4 pr-4">
+    <div class="row align-items-start">
+        <div class="col-sm-4 h-58">
+            <p>
+                <strong>TwiDy:</strong>
+                Buidling and Occupant Health Dashboard
+              </p>
+        </div>
+                <div class="col-sm-6 h-58">
+                    <p>
+                        <strong>Region:</strong>
+                        Barnsley | <strong>Buidling:</strong> DMC02 | <strong>Floor: </strong>Ground | <strong>Room: Coworking Space</strong>
+                        WR03
+
+                      </p>
+        </div>
+        <div class="col-sm-2 h-58">
+            <p id="live-time-date">
+                {% now "jS F Y H:i" %}
+              </p>
+            <ul class="float-right">
+                <li><span id=""></span></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

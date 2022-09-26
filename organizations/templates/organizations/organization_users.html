@@ -1,0 +1,169 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                        {% block organization %}
+                                                        <h4>All Members - ({{ organization }})</h4>
+                                                        {% endblock %}
+                                                    <span>This is a list of all the business customers.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12">
+                                                                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                                <div class="row">
+                                                                    <div class="col-sm-3 col-md-3" style="text-align: center;">
+                                                                        <a  href="{% url 'organization_user_add' organization.pk %}" type="button">
+                                                        Invite Members
+                                                    </a>
+                                                                        <button role="button" data-toggle="modal" data-target="#form" class="btn btn-primary btn-rounded" style="width: 80%; color: white;"><i class="fa fa-plus"></i>Invite Members</button>
+                                                                    </div>
+                                                                    <div class="col-sm-3 col-md-3">
+                                                                        <div class="form-group form-focus">
+                                                                            <input type="text" id="id_name" name="name" placeholder="Search........" autocomplete="off" maxlength="200" class="form-control floating">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3 col-md-3" style="text-align: center;">
+                                                                        <button type="submit" id="btnSearch" class="btn btn-primary btn-rounded" style="width: 80%; color: white;"><i class="fa fa-search"></i>Search</button>
+                                                                    </div>
+                                                                </div>
+
+                                                    </div>
+                                                                                                </div>
+                                                            </div>
+                                            <div class="col-sm-12">
+                                                <!-- HTML5 Export Buttons table start -->
+                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                        <div class="card-header-right">
+                                                    <ul class="list-unstyled card-option">
+                                                        <li><i class="feather icon-maximize full-card"></i></li>
+                                                        <li><i class="feather minimize-card icon-minus"></i></li>
+                                                        <li><i class="feather icon-trash-2 close-card"></i></li>
+                                                    </ul>
+                                                </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="dt-responsive table-responsive">
+                                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Member</th>
+                                                                        <th>Last Login</th>
+                                                                        <th>User Type</th>
+                                                                        <th>Role</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for i in organization_users %}
+                                                            <tr>
+                                                                    <td><a href="{{ i.get_absolute_url }}"> {{ i }}</a></td>
+                                                                    <td>{{i.user.last_login}}</td>
+                                                                    <td>Creator</td>
+                                                                    <td><strong>{{ i.is_admin }}</strong></td>
+                                                                    <td><div class="dropdown dropdown-action" style="width: 159px;">
+                                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="float: left"
+                                                                        ><i class="fa fa-ellipsis-v"></i>
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(23px, 27px, 0px);">
+                                                                        <a href="{% url 'organization_user_edit' i.organization.id i.user.id %}" class="dropdown-item edit_click">
+                                                                        <i class="fa fa-pencil m-r-5"></i>Edit Details </a>
+                                                                        <a href="{% url 'organization_user_delete' i.organization.id  i.user.id %}" class="dropdown-item edit_click">
+                                                                            <i class="fa fa-edit m-r-5"></i>Delete Details</a>
+                                                                        </div>
+                                                                        </div><style>.dropdown-toggle::after{display:none;}</style></td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>Member</th>
+                                                                        <th>Last Login</th>
+                                                                        <th>User Type</th>
+                                                                        <th>Role</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- HTML5 Export Buttons end -->
+                                            </div>
+                                            <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                          <h5 class="modal-title" id="exampleModalLabel">Invite User</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {{form}}
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                              <label>Email address</label>
+                                                <input type="email" class="form-control" name="email" maxlength="75" required="" id="id_email">
+                                              <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
+                                            </div>
+                                          <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                          </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,147 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost:9000/staffs/new/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>TRYME.TAXI</title>
+	<link href="css/css2" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div id="main-sect" class="about-page">
+      <div class="row">
+          {% block content %}
+                            <div class="col-md-11 ms-sm-auto col-lg-11 px-md-4" style="width: 95.66666%;
+                    padding: 0;
+    overflow-x: hidden;
+    height: 100vh;
+    float: right;
+    background: #e0e0e0;">
+
+            <div class="top-bar pl-4 pr-4">
+    <div class="row align-items-start">
+        <div class="col-sm-4 h-58">
+            <p>
+                <strong>TwiDy:</strong>
+                Buidling and Occupant Health Dashboard
+              </p>
+        </div>
+                <div class="col-sm-6 h-58">
+                    <p>
+                        <strong>Region:</strong>
+                        Sheffield | <strong>Buidling:</strong>The Diamond | <strong>Floor:</strong>3 | <strong>Room:</strong>
+                        WR03
+
+                      </p>
+        </div>
+        <div class="col-sm-2 h-58">
+            <p id="live-time-date">
+                4-3-2022 - 5:17:58: AM
+              </p>
+            <ul class="float-right">
+                <li><span id=""></span></li>
+            </ul>
+
+        </div>
+    </div>
+</div><!--top-bar ends here-->
+          <div id="accounts-section" class="pl-4 pr-4">
+                <form class="business-detail" method="POST" action="" novalidate="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card pl-3 pr-3 bg-light mt-2 mb-2">
+                                <hr>
+                                <div class="tab-bar">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul"></ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div><!--col-sm-12 ends here-->
+                        <div class="col-sm-12">
+                            <div class="card pl-3 pr-3 bg-light mt-2 mb-2">
+                                <h6>All Business</h6>
+                                <hr>
+                            <table id="record-tbl" class="cell-border" style="width:100%">
+        <thead>
+            <tr>
+                <th>Ref ID</th>
+                <th>Company Name</th>
+                <th>Company Number</th>
+                <th>Location</th>
+                <th>License Type</th>
+                <th>Employee Name</th>
+                <th>Status</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in all %}
+            <tr>
+                <td>{{ i.unique_business.uniqueId }}</td>
+                <td>{{ i.unique_business }}</td>
+                <td>{{ i.company_number }}</td>
+                <td>{{ i.unique_business.company_address }}</td>
+                <td>{{ i }}</td>
+                <td>{{ i }}</td>
+                <td>{{ i.full_name }}</td>
+                <td>{ i.status }}</td>
+                <td><a class="btn btn-primary" href="{% url 'business' i.slug %}">VIEW</a> </td>
+                <td><a class="btn btn-primary" href="{% url 'business' i.slug %}">EDIT</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Ref ID</th>
+                <th>Company Name</th>
+                <th>Company Number</th>
+                <th>Location</th>
+                <th>License Type</th>
+                <th>Employee Name</th>
+                <th>Status</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+        </tfoot>
+    </table>
+                        </div>
+                    </div>
+                    </div><!--row ends here-->
+
+
+                </form>
+          </div><!--accounts section ends here-->
+
+        </div><!--col-sm-11 ends here-->
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body></html>

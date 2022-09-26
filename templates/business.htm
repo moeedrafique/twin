@@ -1,0 +1,555 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <!--div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                    <h4>Business Customers</h4>
+                                                    <span>This is a list of all the business customers.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div-->
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                <hr>
+                                <div class="tab-bar">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                <li><button disabled="" href="#" class="btn-primary btn-sm mt-1">{{ business_detail.unique_business.uniqueId }}</button></li>
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+                                            <div class="col-sm-12 col-md-12">
+                    <form class="business-detail" method="POST" action="" novalidate="" enctype="multipart/form-data">
+                    {% csrf_token %}
+<div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Business Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.user_id placeholder="User ID/Login" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.user_id placeholder="Password" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.ref_id placeholder="Ref ID" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.company_name placeholder="Company Name" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.company_number placeholder="Company Number" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.business_phone placeholder="Business Phone" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.business_email placeholder="Business Email" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.business_address placeholder="Business Address" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.post_code placeholder="Postcode" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.city placeholder="City" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.country placeholder="Country" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.industry placeholder="Industry" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.status placeholder="Status" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.last_active class="form-control fc-c" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Subscription</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                {% render_field form.start_date id="dropper-default" placeholder="Start Date" class="form-control fc-c" %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Invoicing</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                {% render_field form.invoice_id placeholder="Invoice ID" class="form-control fc-c" maxlength="256" id="" %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                {% render_field form.payment_terms placeholder="Payment Terms" class="form-control fc-c" maxlength="256" id="" %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                {% render_field form.output_perference placeholder="Output Reference" class="form-control fc-c" maxlength="256" id="" %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                {% render_field form.invoice_footer placeholder="Invoice Footer" class="form-control fc-c" maxlength="256" id="" %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                            </div>
+                        </div><!--col-sm-6 ends here-->
+
+                        <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Registered Personal Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.full_name placeholder="Full Name" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.job_title placeholder="Job Title" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.email placeholder="Email" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.phone placeholder="Phone No" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Payment Card Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.payment_card placeholder="Payment Card" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.expiration placeholder="Expiration" class="form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Notes</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.notes placeholder="Notes" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Payments/VAT</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.account_details_ref placeholder="Account Details Ref" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.payment_on placeholder="Payment On" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.last_payment placeholder="Last Payment" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.apply_vat placeholder="Apply VAT" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            {% render_field form.vat_rate placeholder="VAT Rate (%)" class="h-auto form-control fc-c" maxlength="256" id="" %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-12 ends here-->
+                                </form>
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Business Setup</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12 d-flex">
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" value="{{ business_detail.email }}" name="email">
+                                                        <button type="submit" class="btn btn-primary mr-2">Signup</button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#status-Modal">Activate/Deactivate</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                        </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                <h6>Documents</h6>
+                                <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="flex-contianer form-control mb-3" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn" style="font-size: 14px;">
+                                            Registration Application Form
+                                        </div>
+                                        <div class="right-btn">
+
+                                            {% render_field form.registration_app_form style="font-size: 14px;" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="flex-contianer form-control mb-3" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn" style="font-size: 14px;">
+                                            Contractual Agreement
+                                        </div>
+                                        <div class="right-btn">
+                                            {% render_field form.contractual_agreement style="font-size: 14px;" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                        <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    <input type="submit" name="add-client" class="btn btn-primary mt-3" value="Save">
+                                    </div>
+                                </div><!--row ends here-->
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div><!--col-sm-12 ends here-->
+                        </div><!--col-sm-12 ends here-->
+                    </div>
+
+                       <div class="modal fade" id="status-Modal" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <form method="post" action="" style="margin-top: -17px;">
+                                                                                {% csrf_token %}
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Activate/Deactivate</h4>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">×</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+
+                                                                                <fieldset id="verticle-wizard-p-0" role="tabpanel" aria-labelledby="verticle-wizard-h-0" class="body current" aria-hidden="false">
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-sm-12">
+                                                                                        <label required="" for="id_total_stock" class="block required">Enter Password*</label>
+                                                                                    </div>
+                                                                                    <div class="col-sm-12">
+                                                                                        <input type="password" name="status_pass" class="form-control">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </fieldset>
+
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                <button type="submit" class="btn btn-primary waves-effect waves-light ">Save changes</button>
+
+                                                                            </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

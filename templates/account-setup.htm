@@ -1,0 +1,494 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <!--div class="page-header">
+                                    <div class="row align-items-end">
+                                        <div class="col-lg-8">
+                                            <div class="page-header-title">
+                                                <div class="d-inline">
+                                                    <h4>Business Customers</h4>
+                                                    <span>This is a list of all the business customers.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="page-header-breadcrumb">
+                                                <ul class="breadcrumb-title">
+                                                    <li class="breadcrumb-item">
+                                                        {% if user.is_superuser %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% else %}
+                                                        <a href=""> <i class="feather icon-home"></i></a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div-->
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                <hr>
+                                <div class="tab-bar">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                <li><button disabled="" href="#" class="btn-secondary btn-sm mt-1">B-7711</button></li>
+                                                <li><button disabled="" href="#" class="btn-primary btn-sm mt-1">New Account</button></li>
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+                                            <div class="col-sm-12 col-md-12">
+
+<div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Account Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Ref ID" name="user_id" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Name" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Name Alias" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" name="" value="" maxlength="256" id="" class="form-control fc-c" placeholder="Address">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Prepaid" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Payment" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Credit Card" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Primary Contact</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Contact Name" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Contact Phone" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="email" class="form-control fc-c" placeholder="Email" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Pin" name="" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Account Charges</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Downtime Price" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Downtime Cost" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Current Balance" name="" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                                <div class="col-sm-12">
+                                                                        <div class="card">
+                                        <div class="card-header table-card-header">
+                                        <h6>Account Charges</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div id="credit__note" class="col-lg-12">
+                                                <div class="row mx-auto">
+                                                    <div class="col-lg-12">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Downtime Price" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Assessment Charge" name="" required="">
+                                                            </div>
+                                                            <hr>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Upfront Cost" name="" required="">
+                                                            </div>
+                                                            <hr>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Service Charge" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="Min S/C" name="" required="">
+                                                            </div>
+                                                            <div class="col-auto ml-5">
+                                                                <input type="text" class="form-control fc-c" placeholder="S/C Type" name="" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--row ends here-->
+                                        <hr>
+
+                                    </div><!--card ends here-->
+                                    </div><!--card ends here-->
+
+
+                                </div><!--col-sm-12 ends here-->
+                            </div>
+                        </div><!--col-sm-6 ends here-->
+
+                        <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Account Details</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" name="" value="" maxlength="256" id="" class="form-control fc-c" placeholder="Identifier">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-sm-4">
+                                                            <input type="text" class="form-control fc-cs ml-2" placeholder="Start Date">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" class="form-control fc-cs  ml-2" placeholder="">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" class="form-control fc-cs  ml-2" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" name="" value="" maxlength="256" id="" class="form-control fc-c" placeholder="Expiry">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" name="" value="" maxlength="256" id="" class="form-control fc-c" placeholder="Expiry Date">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header table-card-header">
+                                    <h6>Notes</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-6">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto">
+                                                            <label for="">Mgt.Notes</label>
+                                                            <textarea class="form-control" placeholder="" name="" rows="10" cols="30">                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto">
+                                                            <label for="">Client Notes</label>
+                                                            <textarea class="form-control" placeholder="" name="" rows="10" cols="30">                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                                                    <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Account Discounts</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Assessment Charge Discount" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="A/C Discount Type" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Upfront Cost Discount" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="U/C Discount Type" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-12 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Other</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Export ID" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Purchase Order" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-3 align-items-center">
+                                                        <div class="col-auto ml-5">
+                                                            <input type="text" class="form-control fc-c" placeholder="Output Preference" name="" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                            <div class="col-sm-12">
+                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                    <h6>Account Setup</h6>
+                                    <hr>
+                                    <div class="row">
+                                        <div id="credit__note" class="col-lg-12">
+                                            <div class="row mx-auto">
+                                                <div class="col-lg-12">
+                                                    <button type="button" class="btn btn-primary">Activate/Deactivate</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--row ends here-->
+                                    <hr>
+
+                                </div><!--card ends here-->
+                                </div><!--card ends here-->
+
+
+                            </div><!--col-sm-6 ends here-->
+                        </div>
+                        </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header table-card-header">
+                                <hr>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <div class="left-btn">
+                                            <button type="button" class="btn btn-secondary">
+                                                CANCEL
+                                            </button>
+                                        </div>
+                                        <div class="right-btn">
+                                            <button type="submit" class="btn btn-primary">
+                                                SAVE
+                                            </button>
+                                        </div>
+                                    </div>
+                                <div class="mb-2"></div>
+                            </div><!--card ends here---->
+
+                        </div><!--col-sm-12 ends here-->
+                        </div><!--col-sm-12 ends here-->
+                    </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>

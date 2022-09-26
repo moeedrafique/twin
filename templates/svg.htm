@@ -1,0 +1,293 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load plotly_dash %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12">
+                                                <div class="row">
+                                                    <!-- order-visitor start -->
+                                                    <div class="col-md-3">
+                                                        <div class="carousel owl-carousel ">
+                                                            <div class="card text-center text-white bg-c-green">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Temperature AHU</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_ahu|floatformat:2}}℃</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                            <div class="card text-center text-white bg-c-green">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Temperature FC3</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_fcu_3|floatformat:2}} ℃</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                            <div class="card text-center text-white bg-c-green">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Temperature FC4</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_fcu_4|floatformat:2}} ℃</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="card text-center text-white bg-c-pink">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Comfort</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-down m-r-15"></i>2%</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="card text-center text-white bg-c-lite-green">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Relative Humidity</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>1.3%</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="card text-center text-white bg-c-yellow">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-0">Pressure</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>2.2%</h4>
+                                                                <p class="m-b-0">Daily Average</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--------OWL Carousel Script----------->
+                                            <script>
+                                                    $(document).ready(function(){
+                                                        $('.owl-carousel').owlCarousel({
+                                                            items:1,
+                                                            loop:true,
+                                                            autoplay:true,
+                                                            autoplayTimeout:3500,
+                                                            autoplayHoverPause:true
+                                                        });
+                                                    });
+                                                </script>
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-header table-card-header">
+                                                        <h6>Simulation Sensor Locations</h6>
+                                                        <div class="chart" id="fcu9">
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+</style>
+<!-- HTML -->
+<div id="graph" style="height:372px;">
+        <select  id="colorselector" name="select" class="form-control form-control-default">
+            <option value="red">AHU OUT</option>
+            <option value="yellow">EG1_1</option>
+            <option value="blue">SF1_2</option>
+        </select>
+
+</div>
+                                                <script>
+                                                    $(function() {
+  $('#colorselector').change(function(){
+    $('.colors').hide();
+    $('#' + $(this).val()).show();
+  });
+});
+                                                </script>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                            </div>
+                                            <div class="col-sm-6 col-md-6">
+                                            <div class="row">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Occupants</h5>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="feather icon-maximize full-card"></i></li>
+                                                                <li><i class="feather icon-minus minimize-card"></i></li>
+                                                                <li><i class="feather icon-trash-2 close-card"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+        <div class="chart-container" style="width:100%;height:352px;">
+            <canvas id="my_Chart"></canvas>
+        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                                </div>
+
+
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="card" style="height: 85%;">
+                                                    <div class="card-header table-card-header">
+                                                        <h5>Floor Plan</h5>
+                                                        <div class="row">
+                                                        <div class="col-lg-6">
+                                                        <div class="blob_svg" style="transform: translate(-15px, -20px) scale(0.85);">
+                                                            {{blob_output|safe}}
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-lg-6" style="transform: translate(125px, 95px);">
+                                                                <h5>Occupants Capacity = 40</h5>
+                                                                <br>
+                                                                <h5>Settings</h5>
+                                                                 <br>
+                                                                <h5 style="margin-top: 45px;">Tables = 4</h5>
+                                                                 <br>
+                                                                <h5>Total Chairs = 37</h5>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                            </div>
+
+                                             <div class="col-sm-6 col-md-6">
+                                                <div class="card" style="height: 85%;">
+                                                    <div class="card-header table-card-header">
+                                                        <h5>Floor Plan</h5>
+                                                        <div class="row">
+                                                        <div class="col-lg-6">
+                                                        <div class="floor_svg" style="transform: translate(-15px, -20px) scale(0.85);">
+                                                            {{floor_output|safe}}
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-lg-6" style="transform: translate(125px, 95px);">
+                                                                <h5>Occupants Capacity = 40</h5>
+                                                                <br>
+                                                                <h5>Settings</h5>
+                                                                 <br>
+                                                                <h5 style="margin-top: 45px;">Tables = 4</h5>
+                                                                <br>
+                                                                <h5>Total Chairs = 37</h5>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                        <script>
+                                // Data define for bar chart
+                            var myData = {
+                                labels: ["O1T0", "O1T1", "O2T1", "O3T1", "O4T1", "O5T1", "O6T1","O7T1","O8T1","O1T2","O2T2","O3T2","O4T2", "O5T2", "O6T2", "O7T2", "O8T2",
+                                        "01T3", "02T3", "03T3", "04T3", "05T3", "06T3", "07T3", "08T3", "01T4", "02T4", "03T4", "04T4", "05T4", "06T4", "07T4", "08T4"],
+                                datasets: [{
+                                    label: "Occupants Chart",
+                                    fill: false,
+                                    //backgroundColor: ['#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00'],
+                                    backgroundColor: ['#0d0887', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#a01b9b', '#a01b9b'
+                                    , '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b','#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83',
+                                     '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164',
+                                    '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24'
+                                    , '#f9da24', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921'
+                                    , '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00'
+                                    ],
+                                    borderColor: 'black',
+                                    data: [{% for i in occu_dt %}{{i.data.o1t0}}, {{i.data.o1t1}}, {{i.data.o2t1}}, {{i.data.o3t1}}, {{i.data.o4t1}}, {{i.data.o5t1}}, {{i.data.o6t1}}
+                                    , {{i.data.o7t1}}, {{i.data.o8t1}}, {{i.data.o1t2}}, {{i.data.o2t2}}, {{i.data.o3t2}}, {{i.data.o4t2}}, {{i.data.o5t2}}, {{i.data.o6t2}}, {{i.data.o7t2}}
+                                    , {{i.data.o8t2}}, {{i.data.o1t3}}, {{i.data.o2t3}}, {{i.data.o3t3}}, {{i.data.o4t3}}, {{i.data.o5t3}}, {{i.data.o6t3}}, {{i.data.o7t3}}, {{i.data.o8t3}}
+                                    , {{i.data.o1t4}}, {{i.data.o2t4}}, {{i.data.o3t4}}, {{i.data.o5t4}}, {{i.data.o6t4}}, {{i.data.o7t4}}, {{i.data.o8t4}} {% endfor %}],
+                                }]
+                            };
+
+                            // Code to drow Chart
+                            // Default chart defined with type: 'bar'
+                            var ctx = document.getElementById('my_Chart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',    	// Define chart type
+                                data: myData,   	// Chart data
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        xAxes: [{
+                                            scaleLabel: {
+                                                display: true,
+                                                //labelString: 'Month'
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            ticks: {
+                                                //beginAtZero: true
+                                            },
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'T[K]'
+                                            }
+                                        }]
+                                    }
+                                },
+                            });
+
+                            var socket = new WebSocket('ws://localhost:8000/ws/graph/');
+                            socket.onmessage = function(e){
+                                var djangoData = JSON.parse(e.data);
+                                console.log(djangoData);
+                                myChart.data.datasets[0].data = djangoData.value;
+                                myChart.update();
+                            }
+                        </script>
+                        <script>
+                         var socket = new WebSocket('ws://localhost:8000/ws/graph1/');
+                            socket.onmessage = function(e){
+                                var djangoData = JSON.parse(e.data);
+                                console.log(djangoData);
+                                document.querySelector('.blob_svg').innerHTML = djangoData.blob_output;
+                            }
+                        </script>
+                        <script>
+                         var socket = new WebSocket('ws://localhost:8000/ws/graph2/');
+                            socket.onmessage = function(e){
+                                var djangoData = JSON.parse(e.data);
+                                console.log(djangoData);
+                                document.querySelector('.floor_svg').innerHTML = djangoData.floor_output;
+                            }
+                        </script>
+    {% endblock %}
+</body>
+</html>
