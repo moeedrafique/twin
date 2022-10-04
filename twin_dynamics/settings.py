@@ -192,18 +192,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_DEFAULT_ACL = None
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_IS_GZIPPED = True
-AWS_S3_OBJECT_PARAMETERS = {
-	'CacheControl': 'max-age=86400',
-
-}
-DEFAULT_FILE_STORAGE = 'twin_dynamics.custom_storage.storages.MediaStorage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_DEFAULT_ACL = None
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_IS_GZIPPED = True
+# AWS_S3_OBJECT_PARAMETERS = {
+# 	'CacheControl': 'max-age=86400',
+#
+# }
+# DEFAULT_FILE_STORAGE = 'twin_dynamics.custom_storage.storages.MediaStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 
 # Default primary key field type

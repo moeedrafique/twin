@@ -27,6 +27,9 @@ urlpatterns = [
         "<int:organization_pk>/",
         include(
             [
+                path('summary/', views.viewSummary,
+                     name='summary'
+                     ),
                 path('dashboard/', views.viewDashboard,
                      name='dashboard'
                 ),

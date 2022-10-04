@@ -8,33 +8,7 @@ from uuid import uuid4
 from django.utils.text import slugify
 from django.db.models.signals import post_save
 # Create your models here.
-from main_app.abstract import *
 
-
-class Organization(AbstractOrganization):
-    """
-    Default Organization model.
-    """
-
-    class Meta(AbstractOrganization.Meta):
-        abstract = False
-
-class OrganizationUser(AbstractOrganizationUser):
-    """
-    Default OrganizationUser model.
-    """
-
-    class Meta(AbstractOrganizationUser.Meta):
-        abstract = False
-
-
-class OrganizationOwner(AbstractOrganizationOwner):
-    """
-    Default OrganizationOwner model.
-    """
-
-    class Meta(AbstractOrganizationOwner.Meta):
-        abstract = False
 # class User_Profile(models.Model):
 #     user = models.OneToOneField(User,related_name="profile",on_delete=models.CASCADE)
 #     first_name = models.CharField(max_length=200, default=None)
