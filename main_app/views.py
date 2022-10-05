@@ -44,6 +44,9 @@ def home(request):
 def energyDash(request):
     return render(request, 'energy.htm')
 
+def energyDetail(request):
+    return render(request, 'energy_detail.htm')
+
 def accountsSetup(request):
     return render(request, 'account-setup.htm')
 

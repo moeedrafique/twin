@@ -13,9 +13,9 @@
         <div class="pcoded-inner-navbar main-menu">
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu active pcoded-trigger">
-                    {% for organization in organizations|slice:":1" %}
-                    <a class="ajd-size" href="{% url 'dashboard' organization.pk %}">
-                        <span class="pcoded-micon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {% for post_category in post_category|slice:":1" %}
+                    <a class="ajd-size" href="{% url 'dashboard' post_category.pk %}">
+                        <span class="pcoded-micon"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 20V22H8.586L2 28.586L3.414 30L10 23.414V28H12V20H4Z" fill="white"/>
                         <path d="M24 21H26V26H24V21Z" fill="white"/>
                         <path d="M20 16H22V26H20V16Z" fill="white"/>
@@ -61,7 +61,7 @@
                             </li>
 
                 <li class="pcoded-hasmenu">
-                    <a class="ajd-size" href="">
+                    <a class="ajd-size" href="{% url 'energy' %}">
                         <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="mask0_615_40" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="38" height="38">
 <path d="M8.33398 25H13.334C14.6601 25 15.9318 25.5268 16.8695 26.4645C17.8072 27.4021 18.334 28.6739 18.334 30C18.334 31.3261 17.8072 32.5979 16.8695 33.5355C15.9318 34.4732 14.6601 35 13.334 35H8.33398V25Z" fill="#555555" stroke="white" stroke-width="4" stroke-linejoin="round"/>
@@ -82,7 +82,7 @@
 
                 <li class="pcoded-hasmenu">
                     <a class="ajd-size" href="">
-                        <span class="pcoded-mtext"><svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <span class="pcoded-mtext"><svg width="34" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M16 11.5V19.0002" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <path d="M16 24.25V25" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <path d="M1.34732 26.5249L13.5246 2.57841C14.5941 0.473864 17.4097 0.473864 18.4777 2.57841L30.6535 26.5249C31.675 28.541 30.316 31.001 28.1739 31.001H3.82388C1.68333 31.001 0.322799 28.541 1.34882 26.5249H1.34732Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -116,10 +116,10 @@
               </a>
             </li>
             <li>
-                {% for organization in organizations|slice:":1" %}
-              <a class="ajd-size" href="{% url 'organization_view' organization.pk %}">
+                {% for post_category in post_category|slice:":1" %}
+              <a class="ajd-size" href="{% url 'organization_view' post_category.pk %}">
                   {% endfor %}
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" id="bi-pics" class="bi bi-gear" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-gear" viewBox="0 0 16 16">
                   <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
                   <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
                 </svg>
@@ -128,7 +128,7 @@
             </li>
             <li>
               <a class="ajd-size" href="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" id="bi-pics" class="bi bi-question-circle" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-question-circle" viewBox="0 0 16 16">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
                   <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path>
                 </svg>
@@ -136,7 +136,7 @@
             </li>
             <li>
               <a class="ajd-size" href="/accounts/logout/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" id="bi-pics" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"></path>
                   <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
                 </svg>

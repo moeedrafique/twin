@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('energy/', views.energyDash, name='energy'),
+    path('energy-usage/', views.energyDetail, name='energy-detail'),
     # path('business/<slug:slug>/', views.business, name='business'),
     # path('invite/', views.invite, name='invite'),
     # path('accounts/signup/', views.register, name='register'),
