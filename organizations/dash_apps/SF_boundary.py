@@ -3,7 +3,6 @@ import pathlib
 
 import dash
 import gridfs
-import numpy as np
 import pandas as pd
 import pymongo
 #from bson.json_util import dumps
