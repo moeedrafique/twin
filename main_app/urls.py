@@ -5,7 +5,7 @@ from . import views
 # from main_app.dash_apps import outlet
 urlpatterns = [
     path('', views.home, name='home'),
-    # path('join/', views.join, name='join'),
+    path('energy/', views.energyDash, name='energy'),
     # path('business/<slug:slug>/', views.business, name='business'),
     # path('invite/', views.invite, name='invite'),
     # path('accounts/signup/', views.register, name='register'),

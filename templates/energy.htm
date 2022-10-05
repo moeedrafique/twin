@@ -1,0 +1,108 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">Summary</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">Energy Usage</button></li>
+                                                <li><button href="#" class="btn-primary btn-sm mt-1">CO2 Usage</button></li>
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                            <h4>ENERGY DASHBOARD</h4>
+                                <hr>
+                                <div class="mb-1"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/cost_estimated.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/change_in_cost.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/usage_estimate.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/active_usage.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/energy_intensity.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card">
+                                                            <div class="card-header table-card-header">
+                                                                <img style="width: 100%;" src="{% static 'img/carbon_footprint.png' %}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>
