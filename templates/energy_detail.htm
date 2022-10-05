@@ -19,7 +19,7 @@
                                     <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
-                                                <li><a href=""><button class="btn-primary btn-sm mt-1">Summary</button></a></li>
+                                                <li><a href="{% url 'energy' %}"><button class="btn-primary btn-sm mt-1">Summary</button></a></li>
                                                 <li><a href="{% url 'energy-detail' %}"><button class="btn-primary btn-sm mt-1">Energy Usage</button></a></li>
                                                 <li><a href=""><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
                                             </ul>
@@ -53,45 +53,31 @@
                         </div>
                                             <div class="col-sm-12 col-md-12">
                                                 <div class="row">
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/cost_estimated.png' %}"/>
+                                                                <img style="width: 100%;" src="{% static 'img/detail_consumption.png' %}"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/change_in_cost.png' %}"/>
+                                                                <img style="width: 100%;" src="{% static 'img/electricity.png' %}"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/usage_estimate.png' %}"/>
+                                                                <img style="width: 100%;" src="{% static 'img/gas.png' %}"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/active_usage.png' %}"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="card">
-                                                            <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/energy_intensity.png' %}"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="card">
-                                                            <div class="card-header table-card-header">
-                                                                <img style="width: 100%;" src="{% static 'img/carbon_footprint.png' %}"/>
+                                                                <img style="width: 100%;" src="{% static 'img/hvac.png' %}"/>
                                                             </div>
                                                         </div>
                                                     </div>
