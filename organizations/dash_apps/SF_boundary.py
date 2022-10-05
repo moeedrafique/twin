@@ -1,10 +1,13 @@
+import datetime
 import pathlib
 
 import dash
 import gridfs
+import numpy as np
 import pandas as pd
 import pymongo
 #from bson.json_util import dumps
+import pytz
 from bson.json_util import dumps
 from dash import dcc
 from dash import html
@@ -34,7 +37,7 @@ myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@c
 mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
 
-app = DjangoDash('outlet')
+app = DjangoDash('SF_boundary')
 
 app.layout = html.Div([
 html.Div([
@@ -50,6 +53,35 @@ html.Div([
 xx = []
 yy = []
 
+
+today = datetime.date.today()
+yesterday = datetime.date.today() - datetime.timedelta(hours=6)
+# yesterday = datetime.date.today() - datetime.timedelta(days=1)
+
+start = datetime.datetime.combine(yesterday, datetime.time(0, 0)).replace(tzinfo=pytz.utc)
+end = datetime.datetime.combine(today, datetime.time(0, 0)).replace(tzinfo=pytz.utc)
+occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': start}})
+
+occu_dt = []
+for c in occupant_records:
+    occu_dt.append(c)
+# print(len(occu_dt))
+data = pd.DataFrame(occu_dt)
+
+main_data = data['data']
+
+for i in main_data:
+    res = i['SF1_2boundary'] + i['SF2_2boundary']
+    mean_sf = res / 2
+    print(mean_sf)
+    yy.append(mean_sf)
+
+for t in data['timestamp']:
+    # print(t)
+    xx.append(t)
+# print(len(xx))
+
+
 def read_stream():
     for change in mycol_sim.watch([{
         '$match': {
@@ -61,9 +93,9 @@ def read_stream():
     ):
         x = change["fullDocument"]
         sim_main_data = x['data']
-        outlet = sim_main_data['SF1_2boundary']
-        print(outlet)
-        yy.append(outlet)
+        add_sf = sim_main_data['SF1_2boundary'] + sim_main_data['SF2_2boundary']
+        mean_s_f = add_sf / 2
+        yy.append(mean_s_f)
 
         time = x['timestamp']
         xx.append(time)

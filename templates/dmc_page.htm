@@ -123,6 +123,13 @@
                                                 <div class="card">
                                                     <div class="card-header table-card-header">
                                                         <h6>Simulation Sensor Locations</h6>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="feather icon-maximize full-card"></i></li>
+<!--                                                                <li><i class="feather icon-minus minimize-card"></i></li>-->
+<!--                                                                <li><i class="feather icon-trash-2 close-card"></i></li>-->
+                                                            </ul>
+                                                        </div>
                                                         <div class="chart" id="fcu9">
 <!-- Styles -->
 <style>
@@ -134,18 +141,18 @@
 <!-- HTML -->
 <div id="graph" style="height:372px;">
         <select  id="colorselector" name="select" class="form-control form-control-default">
-            <option value="red">Inletsinlet1</option>
-            <option value="yellow">Inletsinlet2</option>
-            <option value="blue">Outlet</option>
+            <option value="blue">Air Handling Uni</option>
+            <option value="red">Supply Grills</option>
+            <option value="yellow">Supply Fans</option>
         </select>
-          <div class="colors {% plotly_class name="example" %}" style="height:100%;width: 100%;" id="red">
+            <div class="colors {% plotly_class name="SG_boundary" %}" style="height:100%;width: 100%;display:none;" id="red">
+          {% plotly_app name='SG_boundary' ratio=0.65 %}
+      </div>
+            <div class="colors {% plotly_class name="SF_boundary" %}" style="height:100%;width: 100%;display:none;" id="yellow">
+          {% plotly_app name='SF_boundary' ratio=0.65 %}
+      </div>
+            <div class="colors {% plotly_class name="example" %}" style="height:100%;width: 100%;" id="blue">
           {% plotly_app name='example' ratio=0.65 %}
-      </div>
-            <div class="colors {% plotly_class name="inlet2" %}" style="height:100%;width: 100%;display:none;" id="yellow">
-          {% plotly_app name='inlet2' ratio=0.65 %}
-      </div>
-            <div class="colors {% plotly_class name="outlet" %}" style="height:100%;width: 100%;display:none;" id="blue">
-          {% plotly_app name='outlet' ratio=0.65 %}
       </div>
 
 </div>
@@ -171,8 +178,8 @@
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
-                                                                <li><i class="feather icon-minus minimize-card"></i></li>
-                                                                <li><i class="feather icon-trash-2 close-card"></i></li>
+<!--                                                                <li><i class="feather icon-minus minimize-card"></i></li>-->
+<!--                                                                <li><i class="feather icon-trash-2 close-card"></i></li>-->
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -190,26 +197,14 @@
 
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="card" style="height: 85%;">
-                                                    <div class="card-header table-card-header">
+                                                    <div class="card-header table-card-header" style="background-color: #52576e;">
                                                         <h5>Floor Plan</h5>
                                                         <div class="row">
                                                         <div class="col-lg-6">
-                                                        <div class="blob_svg" style="transform: translate(-15px, -20px) scale(0.85);">
+                                                        <div class="blob_svg" style="transform: translate(45px, -8px) scale(1.14);">
                                                             {{blob_output|safe}}
                                                         </div>
                                                         </div>
-                                                        <div class="col-lg-6" style="transform: translate(125px, 95px);">
-                                                                <h5>Occupants Capacity = 81</h5>
-                                                                <br>
-                                                                <h5>Settings</h5>
-                                                                 <br>
-                                                                <h5 style="margin-top: 45px;">Tables = 10</h5>
-                                                                 <br>
-                                                                <h5>Chairs = 8 per person</h5>
-                                                                <br>
-                                                                <h5>Total Chairs = 80</h5>
-                                                            </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,25 +212,14 @@
 
                                              <div class="col-sm-6 col-md-6">
                                                 <div class="card" style="height: 85%;">
-                                                    <div class="card-header table-card-header">
+                                                    <div class="card-header table-card-header" style="background-color: #52576e;">
                                                         <h5>Floor Plan</h5>
                                                         <div class="row">
                                                         <div class="col-lg-6">
-                                                        <div class="floor_svg" style="transform: translate(-15px, -20px) scale(0.85);">
+                                                        <div class="floor_svg" style="transform: translate(45px, -8px) scale(1.14);">
                                                             {{floor_output|safe}}
                                                         </div>
                                                         </div>
-                                                        <div class="col-lg-6" style="transform: translate(125px, 95px);">
-                                                                <h5>Occupants Capacity = 81</h5>
-                                                                <br>
-                                                                <h5>Settings</h5>
-                                                                 <br>
-                                                                <h5 style="margin-top: 45px;">Tables = 10</h5>
-                                                                 <br>
-                                                                <h5>Chairs = 8 per person</h5>
-                                                                <br>
-                                                                <h5>Total Chairs = 80</h5>
-                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -250,13 +234,11 @@
                         </div>
 
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                        <script>
+                       <script>
                                 // Data define for bar chart
                             var myData = {
                                 labels: ["O1T0", "O1T1", "O2T1", "O3T1", "O4T1", "O5T1", "O6T1","O7T1","O8T1","O1T2","O2T2","O3T2","O4T2", "O5T2", "O6T2", "O7T2", "O8T2",
-                                        "01T3", "02T3", "03T3", "04T3", "05T3", "06T3", "07T3", "08T3", "01T4", "02T4", "03T4", "04T4", "05T4", "06T4", "07T4", "08T4",
-                                        "01T5", "02T5", "03T5", "04T5", "05T5", "06T5", "07T5", "08T5", "01T6", "02T6", "03T6", "04T6", "05T6", "06T6", "07T6", "08T6", "01T7"
-                                        , "02T7", "03T7", "04T7", "05T7", "06T7", "07T7", "08T7", "01T8", "02T8", "03T8", "04T8", "05T8", "06T8", "07T8", "08T8"],
+                                        "01T3", "02T3", "03T3", "04T3", "05T3", "06T3", "07T3", "08T3", "01T4", "02T4", "03T4", "04T4", "05T4", "06T4", "07T4", "08T4"],
                                 datasets: [{
                                     label: "Occupants Chart",
                                     fill: false,
@@ -272,11 +254,7 @@
                                     data: [{% for i in occu_dt %}{{i.data.o1t0}}, {{i.data.o1t1}}, {{i.data.o2t1}}, {{i.data.o3t1}}, {{i.data.o4t1}}, {{i.data.o5t1}}, {{i.data.o6t1}}
                                     , {{i.data.o7t1}}, {{i.data.o8t1}}, {{i.data.o1t2}}, {{i.data.o2t2}}, {{i.data.o3t2}}, {{i.data.o4t2}}, {{i.data.o5t2}}, {{i.data.o6t2}}, {{i.data.o7t2}}
                                     , {{i.data.o8t2}}, {{i.data.o1t3}}, {{i.data.o2t3}}, {{i.data.o3t3}}, {{i.data.o4t3}}, {{i.data.o5t3}}, {{i.data.o6t3}}, {{i.data.o7t3}}, {{i.data.o8t3}}
-                                    , {{i.data.o1t4}}, {{i.data.o2t4}}, {{i.data.o3t4}}, {{i.data.o5t4}}, {{i.data.o6t4}}, {{i.data.o7t4}}, {{i.data.o8t4}}, {{i.data.o1t5}}, {{i.data.o2t5}}
-                                    , {{i.data.o3t5}}, {{i.data.o4t5}}, {{i.data.o5t5}}, {{i.data.o6t5}}, {{i.data.o7t5}}, {{i.data.o8t5}}, {{i.data.o1t6}}, {{i.data.o2t6}}
-                                    , {{i.data.o3t6}}, {{i.data.o4t6}}, {{i.data.o5t6}}, {{i.data.o6t6}}, {{i.data.o7t6}}, {{i.data.o8t6}}, {{i.data.o1t7}}, {{i.data.o2t7}}
-                                    , {{i.data.o3t7}}, {{i.data.o4t7}}, {{i.data.o5t7}}, {{i.data.o6t7}}, {{i.data.o7t7}}, {{i.data.o8t7}}, {{i.data.o1t8}}, {{i.data.o2t8}}
-                                    , {{i.data.o3t8}}, {{i.data.o4t8}}, {{i.data.o5t8}}, {{i.data.o6t8}}, {{i.data.o7t8}}, {{i.data.o8t8}}{% endfor %}],
+                                    , {{i.data.o1t4}}, {{i.data.o2t4}}, {{i.data.o3t4}}, {{i.data.o5t4}}, {{i.data.o6t4}}, {{i.data.o7t4}}, {{i.data.o8t4}} {% endfor %}],
                                 }]
                             };
 

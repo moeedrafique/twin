@@ -3,6 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
+import pytz
 from bson import ObjectId
 from django.contrib.auth import authenticate, get_user_model
 
@@ -29,7 +30,7 @@ import pymongo
 from pymongo import MongoClient
 from pymongo.read_preferences import ReadPreference
 import random
-from datetime import datetime, timedelta
+import datetime
 import gridfs
 import math, random
 import svgutils.compose as sc
@@ -38,6 +39,10 @@ from IPython.display import SVG, display, display_svg
 
 def home(request):
     return render(request, 'home.html')
+
+
+def energyDash(request):
+    return render(request, 'energy.htm')
 
 def accountsSetup(request):
     return render(request, 'account-setup.htm')
@@ -199,10 +204,33 @@ def register(request):
         form = MyCustomSignupForm()
     return render(request, 'account/signup.html', {'form': form})
 
-# def allRecords(request):
-#     all = Business.objects.all()
-#     context = {'all': all}
-#     return render(request, 'business-customer-list.htm', context)
+def allRecords(request):
+    today = datetime.date.today()
+    yesterday = datetime.date.today() - datetime.timedelta(hours=6)
+
+    start = datetime.datetime.combine(yesterday, datetime.time(0, 0)).replace(tzinfo=pytz.utc)
+    end = datetime.datetime.combine(today, datetime.time(0, 0)).replace(tzinfo=pytz.utc)
+    occupant_records = mycol_sim.find({'ref_id':'DMC02-CWS'}).sort('_id',1).limit(3)
+
+    occu_dt = []
+    for c in occupant_records:
+        occu_dt.append(c)
+    # print(len(occu_dt))
+    data = pd.DataFrame(occu_dt)
+
+    main_data = data['data']
+
+    SF1_2boundary = []
+    for i in main_data:
+        res = i['SF1_2boundary'] + i['SF2_2boundary']
+        mean_first_inlet = res / 2
+        # print(res)
+        # print(i['SF1_2boundary'])
+        print(mean_first_inlet)
+        SF1_2boundary.append(mean_first_inlet)
+
+    context = {'all': all}
+    return render(request, 'business-customer-list.htm', context)
 
 
 myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
