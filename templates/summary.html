@@ -54,35 +54,21 @@
                                                 <div class="row">
                                                     <!-- order-visitor start -->
                                                     <div class="col-md-3">
-                                                        <div class="carousel owl-carousel ">
-                                                            <div class="card text-center text-white bg-c-green">
+                                                        <div class="card text-center text-white bg-c-green">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Temperature AHU</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_ahu|floatformat:2}}℃</h4>
+                                                                <h4 id="temp_ahu" class="m-t-10 m-b-10">
+                                                                    <i class="feather icon-arrow-down m-r-15"></i>
+                                                                    {{change_in_temp|floatformat:2}}℃</h4>
                                                                 <p class="m-b-0">Daily Average</p>
                                                             </div>
-                                                        </div>
-                                                            <div class="card text-center text-white bg-c-green">
-                                                            <div class="card-block">
-                                                                <h6 class="m-b-0">Temperature FC9</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_fcu_09|floatformat:2}} ℃</h4>
-                                                                <p class="m-b-0">Daily Average</p>
-                                                            </div>
-                                                        </div>
-                                                            <div class="card text-center text-white bg-c-green">
-                                                            <div class="card-block">
-                                                                <h6 class="m-b-0">Temperature FC10</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{avg_temp_fcu_10|floatformat:2}} ℃</h4>
-                                                                <p class="m-b-0">Daily Average</p>
-                                                            </div>
-                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="card text-center text-white bg-c-pink">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Comfort</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-down m-r-15"></i>{{avg_ahu_fr|floatformat:2}}%</h4>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>2%</h4>
                                                                 <p class="m-b-0">Daily Average</p>
                                                             </div>
                                                         </div>
@@ -90,8 +76,8 @@
                                                     <div class="col-md-3">
                                                         <div class="card text-center text-white bg-c-lite-green">
                                                             <div class="card-block">
-                                                                <h6 class="m-b-0">Relative Humidity</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>42%</h4>
+                                                                <h6 class="m-b-0">Energy Consumption</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>{{change_in_energy|floatformat:2}}%</h4>
                                                                 <p class="m-b-0">Daily Average</p>
                                                             </div>
                                                         </div>
@@ -99,30 +85,21 @@
                                                     <div class="col-md-3">
                                                         <div class="card text-center text-white bg-c-yellow">
                                                             <div class="card-block">
-                                                                <h6 class="m-b-0">Pressure</h6>
-                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-up m-r-15"></i>90%</h4>
+                                                                <h6 class="m-b-0">Carbon Emissions</h6>
+                                                                <h4 class="m-t-10 m-b-10"><i class="feather icon-arrow-down m-r-15"></i>3.5%</h4>
                                                                 <p class="m-b-0">Daily Average</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
-                                            <!--------OWL Carousel Script----------->
-                                            <script>
-                                                    $(document).ready(function(){
-                                                        $('.owl-carousel').owlCarousel({
-                                                            items:1,
-                                                            loop:true,
-                                                            autoplay:true,
-                                                            autoplayTimeout:3500,
-                                                            autoplayHoverPause:true
-                                                        });
-                                                    });
-                                                </script>
+
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="card">
                                                     <div class="card-header table-card-header">
-                                                        <h6>Simulation Sensor Locations</h6>
+                                                        <h6>Vents Data</h6>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
@@ -141,13 +118,13 @@
 <!-- HTML -->
 <div id="graph" style="height:372px;">
         <select  id="colorselector" name="select" class="form-control form-control-default">
-            <option value="blue">Air Handling Uni</option>
-            <option value="red">Supply Grills</option>
-            <option value="yellow">Supply Fans</option>
+            <option value="blue">Temperature</option>
+            <option value="red">Flow Rate</option>
         </select>
-            <div class="colors {% plotly_class name="example" %}" style="height:100%;width: 100%;" id="blue">
-          {% plotly_app name='example' ratio=0.65 %}
-      </div>
+
+        <div class="colors {% plotly_class name="temp_vent_data" %}" style="height:100%;width: 100%;" id="blue">
+          {% plotly_app name='temp_vent_data' ratio=0.65 %}
+       </div>
 
 </div>
                                                 <script>
@@ -166,9 +143,12 @@
                                             <div class="col-sm-6 col-md-6">
                                             <div class="row">
                                             <div class="col-sm-12 col-md-12">
-                                                <div class="card">
+                                                <div class="card" style="height: 442px;" >
                                                     <div class="card-header">
-                                                        <h5>Occupants</h5>
+                                                        <h5>Energy Usage</h5>
+                                                            <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;" id="blue">
+                                                              {% plotly_app name='energy' ratio=0.65 %}
+                                                          </div>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
@@ -190,33 +170,204 @@
 
 
                                             <div class="col-sm-6 col-md-6">
-                                                <div class="card" style="height: 85%;">
-                                                    <div class="card-header table-card-header" style="background-color: #52576e;">
-                                                        <h5>Floor Plan</h5>
-                                                        <div class="row">
-                                                        <div class="col-lg-6">
-                                                        <div class="blob_svg" style="transform: translate(45px, -8px) scale(1.14);">
+                                                <div class="card" style="height: 735px;">
+                                                      <div class="card-header table-card-header">
+                                                            <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <h4>Vents Data</h4>
+                                        </div>
+                                        <div class="mid-btn">
+                                            <span class="switch">
+   <label class="svg_lbl">Floorplan</label>
+    <input type="checkbox" class="switch" id="switch-id" checked>
+    <label for="switch-id"></label>
+  </span>
+                                        </div>
+                                        <div class="right-btn">
+                                            <select class="form-control">
+                                                <option>Temperature</option>
+                                                <option>Flow Rate</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                                            <hr>
+                                                            <div class="mb-1"></div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                        <div class="blob_svg contentA" style="transform: translate(60px, 55px) scale(1.2);">
                                                             {{blob_output|safe}}
                                                         </div>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                            </div>
-
-                                             <div class="col-sm-6 col-md-6">
-                                                <div class="card" style="height: 85%;">
-                                                    <div class="card-header table-card-header" style="background-color: #52576e;">
-                                                        <h5>Floor Plan</h5>
-                                                        <div class="row">
-                                                        <div class="col-lg-6">
-                                                        <div class="floor_svg" style="transform: translate(45px, -8px) scale(1.14);">
+                                                        <div class="floor_svg contentB" style="transform: translate(60px, 55px) scale(1.2);">
                                                             {{floor_output|safe}}
                                                         </div>
-                                                        </div>
 
                                                         </div>
-                                                    </div>
+                                                      </div>
+                                            </div>
+                                                </div>
+                                                                                                    <style>
+                                                                .switch {
+  font-size: 1rem;
+  position: relative;
+}
+.switch input {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  background: none;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  padding: 0;
+}
+.switch input + label {
+  position: relative;
+  min-width: calc(calc(2.375rem * .8) * 2);
+  border-radius: calc(2.375rem * .8);
+  height: calc(2.375rem * .8);
+  line-height: calc(2.375rem * .8);
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  vertical-align: middle;
+  text-indent: calc(calc(calc(2.375rem * .8) * 2) + .5rem);
+}
+.switch input + label::before,
+.switch input + label::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(calc(2.375rem * .8) * 2);
+  bottom: 0;
+  display: block;
+}
+.switch input + label::before {
+  right: 0;
+  background-color: #dee2e6;
+  border-radius: calc(2.375rem * .8);
+  transition: 0.2s all;
+}
+.switch input + label::after {
+  top: 2px;
+  left: 2px;
+  width: calc(calc(2.375rem * .8) - calc(2px * 2));
+  height: calc(calc(2.375rem * .8) - calc(2px * 2));
+  border-radius: 50%;
+  background-color: white;
+  transition: 0.2s all;
+}
+.switch input:checked + label::before {
+  background-color: #08d;
+}
+.switch input:checked + label::after {
+  margin-left: calc(2.375rem * .8);
+}
+.switch input:focus + label::before {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 136, 221, 0.25);
+}
+.switch input:disabled + label {
+  color: #868e96;
+  cursor: not-allowed;
+}
+.switch input:disabled + label::before {
+  background-color: #e9ecef;
+}
+.switch.switch-sm {
+  font-size: 0.875rem;
+}
+.switch.switch-sm input + label {
+  min-width: calc(calc(1.9375rem * .8) * 2);
+  height: calc(1.9375rem * .8);
+  line-height: calc(1.9375rem * .8);
+  text-indent: calc(calc(calc(1.9375rem * .8) * 2) + .5rem);
+}
+.switch.switch-sm input + label::before {
+  width: calc(calc(1.9375rem * .8) * 2);
+}
+.switch.switch-sm input + label::after {
+  width: calc(calc(1.9375rem * .8) - calc(2px * 2));
+  height: calc(calc(1.9375rem * .8) - calc(2px * 2));
+}
+.switch.switch-sm input:checked + label::after {
+  margin-left: calc(1.9375rem * .8);
+}
+.switch.switch-lg {
+  font-size: 1.25rem;
+}
+.switch.switch-lg input + label {
+  min-width: calc(calc(3rem * .8) * 2);
+  height: calc(3rem * .8);
+  line-height: calc(3rem * .8);
+  text-indent: calc(calc(calc(3rem * .8) * 2) + .5rem);
+}
+.switch.switch-lg input + label::before {
+  width: calc(calc(3rem * .8) * 2);
+}
+.switch.switch-lg input + label::after {
+  width: calc(calc(3rem * .8) - calc(2px * 2));
+  height: calc(calc(3rem * .8) - calc(2px * 2));
+}
+.switch.switch-lg input:checked + label::after {
+  margin-left: calc(3rem * .8);
+}
+.switch + .switch {
+  margin-left: 1rem;
+}
+.contentA {
+  display: none;
+}
+                                                            </style>
+                                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                                            <script>
+                                                                $(function () {
+        $("#switch-id").change(function () {
+            if ($(this).is(":checked")) {
+                $(".contentB").show();
+                $(".contentA").hide();
+                document.querySelector('.svg_lbl').innerHTML = "Floorplan";
+            } else {
+                $(".contentB").hide();
+                $(".contentA").show();
+                document.querySelector('.svg_lbl').innerHTML = "Seating";
+            }
+        });
+    });
+                                                            </script>
+                                                                    <script>
+                                                                 var socket = new WebSocket('ws://localhost:8000/ws/graph1/');
+                                                                    socket.onmessage = function(e){
+                                                                        var djangoData = JSON.parse(e.data);
+                                                                        console.log(djangoData);
+                                                                        document.querySelector('.blob_svg').innerHTML = djangoData.blob_output;
+                                                                    }
+                                                                </script>
+                                                                <script>
+                                                                 var socket = new WebSocket('ws://localhost:8000/ws/graph2/');
+                                                                    socket.onmessage = function(e){
+                                                                        var djangoData = JSON.parse(e.data);
+                                                                        console.log(djangoData);
+                                                                        document.querySelector('.floor_svg').innerHTML = djangoData.floor_output;
+                                                                    }
+                                                                </script>
+
+                                             <div class="col-sm-6 col-md-6">
+                                                <div class="card" style="height: 735px;">
+                                                       <div class="card-header table-card-header">
+                                                            <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <h4>Alerts</h4>
+                                        </div>
+                                    </div>
+
+                                                            <hr>
+                                                            <div class="mb-1"></div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                        </div>
+                                                      </div>
                                                 </div>
                                                             </div>
 
@@ -229,64 +380,20 @@
 
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
                        <script>
-                                // Data define for bar chart
-                            var myData = {
-                                labels: ["O1T0", "O1T1", "O2T1", "O3T1", "O4T1", "O5T1", "O6T1","O7T1","O8T1","O1T2","O2T2","O3T2","O4T2", "O5T2", "O6T2", "O7T2", "O8T2",
-                                        "01T3", "02T3", "03T3", "04T3", "05T3", "06T3", "07T3", "08T3", "01T4", "02T4", "03T4", "04T4", "05T4", "06T4", "07T4", "08T4"],
-                                datasets: [{
-                                    label: "Occupants Chart",
-                                    fill: false,
-                                    //backgroundColor: ['#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00'],
-                                    backgroundColor: ['#0d0887', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#41039d', '#a01b9b', '#a01b9b'
-                                    , '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b', '#a01b9b','#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83', '#c03b83',
-                                     '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164', '#de6164',
-                                    '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#fa9d3b', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24', '#f9da24'
-                                    , '#f9da24', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921', '#f0f921'
-                                    , '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00', '#40ff00'
-                                    ],
-                                    borderColor: 'black',
-                                    data: [{% for i in occu_dt %}{{i.data.o1t0}}, {{i.data.o1t1}}, {{i.data.o2t1}}, {{i.data.o3t1}}, {{i.data.o4t1}}, {{i.data.o5t1}}, {{i.data.o6t1}}
-                                    , {{i.data.o7t1}}, {{i.data.o8t1}}, {{i.data.o1t2}}, {{i.data.o2t2}}, {{i.data.o3t2}}, {{i.data.o4t2}}, {{i.data.o5t2}}, {{i.data.o6t2}}, {{i.data.o7t2}}
-                                    , {{i.data.o8t2}}, {{i.data.o1t3}}, {{i.data.o2t3}}, {{i.data.o3t3}}, {{i.data.o4t3}}, {{i.data.o5t3}}, {{i.data.o6t3}}, {{i.data.o7t3}}, {{i.data.o8t3}}
-                                    , {{i.data.o1t4}}, {{i.data.o2t4}}, {{i.data.o3t4}}, {{i.data.o5t4}}, {{i.data.o6t4}}, {{i.data.o7t4}}, {{i.data.o8t4}} {% endfor %}],
-                                }]
-                            };
-
-                            // Code to drow Chart
-                            // Default chart defined with type: 'bar'
-                            var ctx = document.getElementById('my_Chart').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'bar',    	// Define chart type
-                                data: myData,   	// Chart data
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    scales: {
-                                        xAxes: [{
-                                            scaleLabel: {
-                                                display: true,
-                                                //labelString: 'Month'
-                                            }
-                                        }],
-                                        yAxes: [{
-                                            ticks: {
-                                                //beginAtZero: true
-                                            },
-                                            scaleLabel: {
-                                                display: true,
-                                                labelString: 'T[K]'
-                                            }
-                                        }]
-                                    }
-                                },
-                            });
-
-                            var socket = new WebSocket('ws://localhost:8000/ws/graph/');
+                         var socket = new WebSocket('ws://localhost:8000/ws/graph/');
                             socket.onmessage = function(e){
                                 var djangoData = JSON.parse(e.data);
                                 console.log(djangoData);
-                                myChart.data.datasets[0].data = djangoData.value;
-                                myChart.update();
+                                document.querySelector('#temp_ahu').innerHTML = djangoData.avg + '℃';
+                                //alert(Object.keys(djangoData).map(function(key) { return djangoData[key]; }););
+                                for (var key in djangoData){
+                                    console.log(djangoData[key]);
+                                    i = djangoData[key];
+                                    //document.querySelector('#temp_ahu').innerHTML = i + '℃';
+                                    document.querySelector('.sg1_2').innerHTML = i[1];
+                                }
+
+
                             }
                         </script>
                         <script>
@@ -479,13 +586,3 @@
                                                 </div>
                                                             </div>
 
-
-          <div class="colors {% plotly_class name="example" %}" style="height:100%;width: 100%;" id="red">
-          {% plotly_app name='example' ratio=0.65 %}
-      </div>
-        <div class="colors {% plotly_class name="inlet2" %}" style="height:100%;width: 100%;display:none;" id="yellow">
-          {% plotly_app name='inlet2' ratio=0.65 %}
-      </div>
-            <div class="colors {% plotly_class name="outlet" %}" style="height:100%;width: 100%;display:none;" id="blue">
-          {% plotly_app name='outlet' ratio=0.65 %}
-      </div>

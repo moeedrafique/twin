@@ -243,7 +243,7 @@ EMAIL_BACKEND = 'des.backends.ConfiguredEmailBackend'
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 # ACCOUNT_FORMS = {'login': 'main_app.forms.MyCustomSignupForm'}
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/accounts/login/'
 INVITATIONS_SIGNUP_REDIRECT = 'account_signup'
 INVITATION_ONLY = True
 

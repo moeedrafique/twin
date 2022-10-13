@@ -14,7 +14,7 @@
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu active pcoded-trigger">
                     {% for post_category in post_category|slice:":1" %}
-                    <a class="ajd-size" href="{% url 'dashboard' post_category.pk %}">
+                    <a class="ajd-size" href="{% url 'summary' post_category.pk %}">
                         <span class="pcoded-micon"><svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 20V22H8.586L2 28.586L3.414 30L10 23.414V28H12V20H4Z" fill="white"/>
                         <path d="M24 21H26V26H24V21Z" fill="white"/>

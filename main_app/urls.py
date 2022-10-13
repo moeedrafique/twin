@@ -5,6 +5,8 @@ from . import views
 # from main_app.dash_apps import outlet
 urlpatterns = [
     path('', views.home, name='home'),
+    path('air/', views.Air, name='air'),
+    path('<slug:slug>/local/', views.viewDashboard, name='local'),
     path('energy/', views.energyDash, name='energy'),
     path('energy-usage/', views.energyDetail, name='energy-detail'),
     # path('business/<slug:slug>/', views.business, name='business'),
