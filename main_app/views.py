@@ -47,6 +47,16 @@ def energyDash(request):
 def energyDetail(request):
     return render(request, 'energy_detail.htm')
 
+
+def LocalFlow(request):
+    return render(request, 'local_flow.html')
+
+def Air(request):
+    main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
+
+    context = {'i':main_data}
+    return render(request, 'air_terminals.html', context)
+
 def accountsSetup(request):
     return render(request, 'account-setup.htm')
 
@@ -266,7 +276,7 @@ def viewDashboard(request, slug):
     # print(floor_output)
 
     context = {'business_detail': business_detail, 'blob_output':blob_output, 'floor_output':floor_output}
-    return render(request, 'svg.htm', context)
+    return render(request, 'local_flow.html', context)
 
 
 

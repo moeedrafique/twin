@@ -5,9 +5,11 @@ from django.urls import include
 from django.urls import path
 
 from organizations.views import default as views
+from organizations.dash_apps import temp_vent_data
+# from organizations.dash_apps import update_db
 from organizations.dash_apps import AHU_OUTboundary
-from organizations.dash_apps import SG_boundary
-from organizations.dash_apps import SF_boundary
+# from organizations.dash_apps import SG_boundary
+# from organizations.dash_apps import SF_boundary
 # app_name = "organizations"
 
 urlpatterns = [
