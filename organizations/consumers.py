@@ -107,11 +107,11 @@ class GraphConsumer(WebsocketConsumer):
                 sum_all = O1T0 + O1T1 + O2T1 + O3T1 + O4T1 + O5T1 + O6T1 + O7T1 + O8T1 + O1T2 + O2T2 + O3T2
                 print(f'Sum is {sum_all}')
                 today_sim_total.append(sum_all)
-                avg = float("{:.2f}".format(change_in_temp)).replace("-","")
+                avg = "{:.2f}".format(change_in_temp).replace("-","")
                 if avg > 0:
-                    class_name = "feather icon-arrow-up"
+                    class_name = "feather icon-arrow-up m-r-15"
                 else:
-                    class_name = "feather icon-arrow-down"
+                    class_name = "feather icon-arrow-down m-r-15"
 
                 self.send(json.dumps({'value': data, 'avg':avg, 'class_name':class_name}))
             # for change in mycol_energy_data.watch([{

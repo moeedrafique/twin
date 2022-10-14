@@ -388,7 +388,11 @@ def viewSummary(request, organization_pk):
 
     subtract_temp = (yesterday_avg - today_avg)
     divide_temp = (subtract_temp / yesterday_avg) * 100
-    change_in_temp = divide_temp
+    change_in_temp = "{:.2f}".format(divide_temp).replace("-","")
+    if divide_temp > 0:
+        temp_class_name = "feather icon-arrow-up m-r-15"
+    else:
+        temp_class_name = "feather icon-arrow-down m-r-15"
     # print(change_in_temp)
     # fcu_3 = []
     # for i in main_data:
@@ -427,7 +431,7 @@ def viewSummary(request, organization_pk):
         res = i['electricity'] + i['gas']
         today_total.append(res)
     today_sum = sum(today_total)
-    print(today_sum)
+    # print(today_sum)
 
 
 
@@ -445,13 +449,17 @@ def viewSummary(request, organization_pk):
         res = i['electricity'] + i['gas']
         yesterday_today_total.append(res)
     yesterday_sum = sum(yesterday_today_total)
-    print(yesterday_sum)
+    # print(yesterday_sum)
 
 
     subtract_energies = (yesterday_sum - today_sum)
     divide_energy = (subtract_energies / yesterday_sum) * 100
-    change_in_energy = divide_energy
-    print(change_in_energy)
+    change_in_energy = "{:.2f}".format(divide_energy).replace("-","")
+    # print(change_in_energy)
+    if divide_energy > 0:
+        energy_class_name = "feather icon-arrow-up m-r-15"
+    else:
+        energy_class_name = "feather icon-arrow-down m-r-15"
     #
     elec = []
     for i in en_main_data:
@@ -478,30 +486,30 @@ def viewSummary(request, organization_pk):
     floor_output_data = fs.get(floor_filename_id).read()
     floor_output = floor_output_data.decode()
 
-    context = {"energy_dt": energy_dt, 'blob_output': blob_output, 'floor_output': floor_output,
-               "change_in_temp":change_in_temp, "change_in_energy":change_in_energy}
+    context = {"energy_dt": energy_dt, 'blob_output': blob_output, 'floor_output': floor_output, 'energy_class_name':energy_class_name,
+               "change_in_temp":change_in_temp, "change_in_energy":change_in_energy, 'temp_class_name':temp_class_name}
     template = 'summary.html'
     return render(request, template, context)
 
 def energyDash(request, organization_pk):
-    business_detail = get_object_or_404(Organization, slug=organization_pk)
+    business_detail = get_object_or_404(Organization, id=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'energy.htm', context)
 
 def energyDetail(request, organization_pk):
-    business_detail = get_object_or_404(Organization, slug=organization_pk)
+    business_detail = get_object_or_404(Organization, id=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'energy_detail.htm', context)
 
 def AirTerminals(request, organization_pk):
-    business_detail = get_object_or_404(Organization, slug=organization_pk)
+    business_detail = get_object_or_404(Organization, id=organization_pk)
     main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
 
     context = {'business_detail': business_detail, 'i':main_data}
     return render(request, 'air_terminals.html', context)
 
 def FlowDistribution(request, organization_pk):
-    business_detail = get_object_or_404(Organization, slug=organization_pk)
+    business_detail = get_object_or_404(Organization, id=organization_pk)
 
     occupant_records = mycol_occu.find({}).limit(1)
     occu_dt = []
