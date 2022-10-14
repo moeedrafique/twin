@@ -59,7 +59,7 @@
                                                                 <h6 class="m-b-0">Temperature AHU</h6>
                                                                 <h4 id="temp_ahu" class="m-t-10 m-b-10">
                                                                     <i class="feather icon-arrow-down m-r-15"></i>
-                                                                    {{change_in_temp|floatformat:2}}℃</h4>
+                                                                    {{change_in_temp|floatformat:2}}%</h4>
                                                                 <p class="m-b-0">Daily Average</p>
                                                             </div>
                                                         </div>
@@ -146,7 +146,7 @@
                                                 <div class="card" style="height: 442px;" >
                                                     <div class="card-header">
                                                         <h5>Energy Usage</h5>
-                                                            <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;" id="blue">
+                                                            <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;">
                                                               {% plotly_app name='energy' ratio=0.65 %}
                                                           </div>
                                                         <div class="card-header-right">

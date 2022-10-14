@@ -483,7 +483,48 @@ def viewSummary(request, organization_pk):
     template = 'summary.html'
     return render(request, template, context)
 
+def energyDash(request, slug):
+    business_detail = get_object_or_404(Organization, slug=slug)
+    context = {'business_detail': business_detail}
+    return render(request, 'energy.htm', context)
 
+def energyDetail(request, slug):
+    business_detail = get_object_or_404(Organization, slug=slug)
+    context = {'business_detail': business_detail}
+    return render(request, 'energy_detail.htm', context)
+
+def AirTerminals(request, slug):
+    business_detail = get_object_or_404(Organization, slug=slug)
+    main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
+
+    context = {'business_detail': business_detail, 'i':main_data}
+    return render(request, 'air_terminals.html', context)
+
+def FlowDistribution(request, slug):
+    business_detail = get_object_or_404(Organization, slug=slug)
+
+    occupant_records = mycol_occu.find({}).limit(1)
+    occu_dt = []
+    for c in occupant_records:
+        occu_dt.append(c)
+
+    fs = gridfs.GridFS(mydb)
+
+    blob_name = "boxes"
+    blob_filename_obj = mydb.fs.files.find_one({'filename.business':business_detail.name, 'filename.type': blob_name}, sort=[( '_id', pymongo.DESCENDING )])
+    blob_filename_id = blob_filename_obj['_id']
+    blob_output_data = fs.get(blob_filename_id).read()
+    blob_output = blob_output_data.decode()
+
+    floor_name = "floorplan"
+    floor_filename_obj = mydb.fs.files.find_one({'filename.business':business_detail.name, 'filename.type': floor_name}, sort=[( '_id', pymongo.DESCENDING )])
+    floor_filename_id = floor_filename_obj['_id']
+    floor_output_data = fs.get(floor_filename_id).read()
+    floor_output = floor_output_data.decode()
+    # print(floor_output)
+
+    context = {'business_detail': business_detail, 'blob_output':blob_output, 'floor_output':floor_output}
+    return render(request, 'local_flow.html', context)
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):
     template_name = "organizations/update-employee.htm"

@@ -32,9 +32,21 @@ urlpatterns = [
                 path('summary/', views.viewSummary,
                      name='summary'
                      ),
-                path('dashboard/', views.viewDashboard,
-                     name='dashboard'
-                ),
+                path('air-terminals/', views.AirTerminals,
+                     name='air_terminals'
+                     ),
+                path('localised_flow_distribution/', views.FlowDistribution,
+                     name='flow_distribution'
+                     ),
+                path('energy-dashboard/', views.energyDash,
+                     name='energy'
+                     ),
+                path('energy-usage/', views.energyDetail,
+                     name='energy-detail'
+                     ),
+                # path('dashboard/', views.viewDashboard,
+                #      name='dashboard'
+                # ),
                 path(
                     "",
                     view=login_required(views.OrganizationDetail.as_view()),
