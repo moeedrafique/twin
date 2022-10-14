@@ -19,8 +19,10 @@
                                     <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
-                                                <li><a href="{% url 'energy' %}"><button class="btn-primary btn-sm mt-1">Summary</button></a></li>
-                                                <li><a href="{% url 'energy-detail' %}"><button class="btn-primary btn-sm mt-1">Energy Usage</button></a></li>
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'energy' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Summary</button></a></li>
+                                                <li><a href="{% url 'energy-detail' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Energy Usage</button></a></li>
+                                                {% endfor %}
                                                 <li><a href=""><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
                                             </ul>
                                         </div>
