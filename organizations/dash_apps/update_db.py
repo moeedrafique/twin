@@ -49,7 +49,7 @@ html.Div([
             interval=75000,
             n_intervals=0
         ),
-    ],className="card-header table-card-header mb-3",),
+    ],className="card-header table-card-header mb-3", style={'margin-bottom': '13px'}),
 html.Div([
         dcc.Graph(id='live-graph-4', animate=True,style={'height': '320px'}),
         dcc.Interval(
@@ -57,7 +57,7 @@ html.Div([
             interval=75000,
             n_intervals=0
         ),
-    ],className="card-header table-card-header mb-3",),
+    ],className="card-header table-card-header mb-3", style={'margin-bottom': '13px'}),
 html.Div([
         dcc.Graph(id='live-graph-5', animate=True,style={'height': '320px'}),
         dcc.Interval(
@@ -65,7 +65,7 @@ html.Div([
             interval=75000,
             n_intervals=0
         ),
-    ],className="card-header table-card-header mb-3",),
+    ],className="card-header table-card-header mb-3", style={'margin-bottom': '13px'}),
 html.Div([
         dcc.Graph(id='live-graph-6', animate=True,style={'height': '320px'}),
         dcc.Interval(
@@ -73,7 +73,7 @@ html.Div([
             interval=75000,
             n_intervals=0
         ),
-    ],className="card-header table-card-header mb-3",),
+    ],className="card-header table-card-header mb-3", style={'margin-bottom': '13px'}),
 html.Div([
         dcc.Graph(id='live-graph-7', animate=True,style={'height': '320px'}),
         dcc.Interval(
@@ -81,7 +81,7 @@ html.Div([
             interval=75000,
             n_intervals=0
         ),
-    ],className="card-header table-card-header mb-3",),
+    ],className="card-header table-card-header mb-3", style={'margin-bottom': '13px'}),
     ])
 
 xx = []
@@ -393,16 +393,16 @@ def update_graph_scatter_5(n):
         font=dict(color='white'),
         xaxis={
             "title": "Solar Radiation",
-            "showgrid": False,
-            "showline": False,
-            "fixedrange": True,
+            # "showgrid": False,
+            # "showline": False,
+            # "fixedrange": True,
         },
         yaxis={
-            "showgrid": False,
-            "showline": False,
-            "zeroline": False,
+            # "showgrid": False,
+            # "showline": False,
+            # "zeroline": False,
             "title": "Temperature(F)",
-            "fixedrange": True,
+            # "fixedrange": True,
         },
     #
     )

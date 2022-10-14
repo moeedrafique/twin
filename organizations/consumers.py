@@ -108,7 +108,8 @@ class GraphConsumer(WebsocketConsumer):
                 print(f'Sum is {sum_all}')
                 today_sim_total.append(sum_all)
                 avg = "{:.2f}".format(change_in_temp).replace("-","")
-                if avg > 0:
+                avg_value = change_in_temp
+                if avg_value > 0:
                     class_name = "feather icon-arrow-up m-r-15"
                 else:
                     class_name = "feather icon-arrow-down m-r-15"
