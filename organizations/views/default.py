@@ -483,25 +483,25 @@ def viewSummary(request, organization_pk):
     template = 'summary.html'
     return render(request, template, context)
 
-def energyDash(request, slug):
-    business_detail = get_object_or_404(Organization, slug=slug)
+def energyDash(request, organization_pk):
+    business_detail = get_object_or_404(Organization, slug=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'energy.htm', context)
 
-def energyDetail(request, slug):
-    business_detail = get_object_or_404(Organization, slug=slug)
+def energyDetail(request, organization_pk):
+    business_detail = get_object_or_404(Organization, slug=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'energy_detail.htm', context)
 
-def AirTerminals(request, slug):
-    business_detail = get_object_or_404(Organization, slug=slug)
+def AirTerminals(request, organization_pk):
+    business_detail = get_object_or_404(Organization, slug=organization_pk)
     main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
 
     context = {'business_detail': business_detail, 'i':main_data}
     return render(request, 'air_terminals.html', context)
 
-def FlowDistribution(request, slug):
-    business_detail = get_object_or_404(Organization, slug=slug)
+def FlowDistribution(request, organization_pk):
+    business_detail = get_object_or_404(Organization, slug=organization_pk)
 
     occupant_records = mycol_occu.find({}).limit(1)
     occu_dt = []

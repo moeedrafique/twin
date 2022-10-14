@@ -41,21 +41,21 @@ def home(request):
     return render(request, 'home.html')
 
 
-def energyDash(request):
-    return render(request, 'energy.htm')
+# def energyDash(request):
+#     return render(request, 'energy.htm')
+#
+# def energyDetail(request):
+#     return render(request, 'energy_detail.htm')
 
-def energyDetail(request):
-    return render(request, 'energy_detail.htm')
-
-
-def LocalFlow(request):
-    return render(request, 'local_flow.html')
-
-def Air(request):
-    main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
-
-    context = {'i':main_data}
-    return render(request, 'air_terminals.html', context)
+#
+# def LocalFlow(request):
+#     return render(request, 'local_flow.html')
+#
+# def Air(request):
+#     main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
+#
+#     context = {'i':main_data}
+#     return render(request, 'air_terminals.html', context)
 
 def accountsSetup(request):
     return render(request, 'account-setup.htm')

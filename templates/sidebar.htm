@@ -61,7 +61,8 @@
                             </li>
 
                 <li class="pcoded-hasmenu">
-                    <a class="ajd-size" href="{% url 'energy' %}">
+                    {% for post_category in post_category|slice:":1" %}
+                    <a class="ajd-size" href="{% url 'energy' post_category.pk %}">
                         <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="mask0_615_40" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="38" height="38">
 <path d="M8.33398 25H13.334C14.6601 25 15.9318 25.5268 16.8695 26.4645C17.8072 27.4021 18.334 28.6739 18.334 30C18.334 31.3261 17.8072 32.5979 16.8695 33.5355C15.9318 34.4732 14.6601 35 13.334 35H8.33398V25Z" fill="#555555" stroke="white" stroke-width="4" stroke-linejoin="round"/>
@@ -78,6 +79,7 @@
 
                         </span>
                     </a>
+                    {% endfor %}
                             </li>
 
                 <li class="pcoded-hasmenu">
