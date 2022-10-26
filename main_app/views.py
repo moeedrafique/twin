@@ -44,8 +44,8 @@ def home(request):
 # def energyDash(request):
 #     return render(request, 'energy.htm')
 #
-# def energyDetail(request):
-#     return render(request, 'energy_detail.htm')
+def Summary(request):
+     return render(request, 'summary.html')
 
 #
 # def LocalFlow(request):

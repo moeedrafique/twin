@@ -41,7 +41,7 @@ app = DjangoDash('temp_vent_data')
 
 app.layout = html.Div([
 html.Div([
-        dcc.Graph(id='live-graph-2', animate=True,style={'height': '320px'}),
+        dcc.Graph(id='live-graph-2', animate=True,style={'height': '305px', 'margin-top':'-87px'}),
         dcc.Interval(
             id='graph-update',
             interval=75000,
@@ -57,7 +57,7 @@ yy = []
 now = timezone.now()
 today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1).limit(30)
+occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1)
 
 occu_dt = []
 for c in occupant_records:
@@ -90,13 +90,13 @@ def read_stream():
     ]
     ):
         x = change["fullDocument"]
-        sim_main_data = x['data']
+        i = x['data']
         add_sg = i['AHU_OUTboundary'] + i['SF1_2boundary'] + i['SF2_2boundary'] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + i['SG4_2boundary'] + i['SG5_2boundary'] + i['SG6_2boundary']
         mean_sg = add_sg / 9
-        yy.append(mean_sg)
+        yy.extend(mean_sg)
 
         time = x['timestamp']
-        xx.append(time)
+        xx.extend(time)
 
 st = Thread(target=read_stream, args=())
 st.start()

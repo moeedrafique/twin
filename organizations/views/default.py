@@ -533,6 +533,7 @@ def FlowDistribution(request, organization_pk):
 
     context = {'business_detail': business_detail, 'blob_output':blob_output, 'floor_output':floor_output}
     return render(request, 'local_flow.html', context)
+
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):
     template_name = "organizations/update-employee.htm"
