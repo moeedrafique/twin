@@ -1,0 +1,222 @@
+.wi-100{
+    width: 100%;
+}
+.h-372-id-graph{
+    height: 372px;
+}
+.h-422-id-graph{
+    height: 422px;
+}
+
+
+/* @media(min-width: 1024px) and (max-width: 1151px){
+    .main-body .page-wrapper .page-header {
+        margin-bottom: 5px;
+    }
+    .fc-c{
+        height: 24px;
+        width: 26rem;
+        margin-left: -64px;
+    }
+    .wi-100energy-dash{
+        width: 90%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 90%;
+        height: 240px;
+    }
+    .wi-80-res{
+        width: 80%;
+    }
+}
+@media(min-width: 1152px) and (max-width: 1279px){
+    .main-body .page-wrapper .page-header {
+        margin-bottom: 5px;
+    }
+    .fc-c{
+        height: 30px;
+        width: 30rem;
+        margin-left: -60px;
+    }
+    .wi-100energy-dash{
+        width: 90%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 93%;
+        height: 290px;
+    }
+    .wi-80-res{
+        width: 80%;
+    }    
+}
+@media(min-width: 1280px) and (max-width: 1399px){
+    .main-body .page-wrapper .page-header {
+        margin-bottom: 5px;
+    }
+    .fc-c{
+        height: 22px;
+        width: 30rem;
+    }
+    .wi-100energy-dash{
+        width: 68%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 80%;
+        height: 240px;
+    }
+    .wi-80-res{
+        width: 60%;
+    }    
+}
+@media(min-width: 1400px) and (max-width: 1599px){
+    .main-body .page-wrapper .page-header {
+        margin-bottom: 5px;
+    }
+    .fc-c{
+        height: 36px;
+        margin-left: -64px;
+    }
+    .wi-100energy-dash{
+        width: 80%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 80%;
+        height: 290px;
+    }
+    .wi-80-res{
+        width: 80%;
+    }    
+}
+@media(min-width: 1600px) and (max-width: 1919px){
+    .main-body .page-wrapper .page-header {
+        margin-bottom: 5px;
+    }
+    .fc-c{
+        height: 36px;
+        margin-left: -64px;
+    }
+    .wi-100energy-dash{
+        width: 70%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 80%;
+        height: 290px;
+    }
+    .wi-80-res{
+        width: 70%;
+    }    
+}
+@media(min-width: 1600px) and (max-width: 1919px){
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        width: 80%;
+        height: 290px;
+    }
+    .wi-80-res{
+        width: 70%;
+    }    
+} */
+@media(min-width: 1920px){
+    .card .card-header .card-header-right{
+        top: 0;
+    }
+    .h-422-id-graph{
+        height: 332px;
+    }
+    .h-372-id-graph{
+        height: 295px;
+        margin-top: -6px;
+    }
+    .wi-100energy-dash{
+        width: 75%;
+    }
+    .main-body .page-wrapper{
+        padding: 0.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 0.25rem!important;
+    }
+    .card{
+        margin-bottom: 4px;
+    }
+    .card .card-header{
+        padding: 10px 15px;
+    }
+    .detail-cons-wi{
+        height: 400px;
+    }
+    .wi-80-res{
+        height: 340px;
+    }    
+}

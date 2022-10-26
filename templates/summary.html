@@ -53,7 +53,7 @@
                                             <div class="col-xl-12 col-md-12">
                                                 <div class="row">
                                                     <!-- order-visitor start -->
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="card text-center text-white bg-c-green">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Temperature AHU</h6>
@@ -64,7 +64,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="card text-center text-white bg-c-pink">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Comfort</h6>
@@ -73,7 +73,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="card text-center text-white bg-c-lite-green">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Energy Consumption</h6>
@@ -82,7 +82,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="card text-center text-white bg-c-yellow">
                                                             <div class="card-block">
                                                                 <h6 class="m-b-0">Carbon Emissions</h6>
@@ -91,12 +91,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
 
 
                                             </div>
 
-                                            <div class="col-sm-6 col-md-6">
+                                            <div class="col-sm-6 col-md-8">
                                                 <div class="card">
                                                     <div class="card-header table-card-header">
                                                         <h6>Vents Data</h6>
@@ -116,8 +117,8 @@
 }
 </style>
 <!-- HTML -->
-<div id="graph" style="height:372px;">
-        <select  id="colorselector" name="select" class="form-control form-control-default">
+<div id="graph" style="height:255px;">
+        <select  id="colorselector" name="select" class="form-control">
             <option value="blue">Temperature</option>
             <option value="red">Flow Rate</option>
         </select>
@@ -125,6 +126,7 @@
             <div class="colors {% plotly_class name="temp_vent_data" %}" style="height:100%;width: 100%;" id="blue">
           {% plotly_app name='temp_vent_data' ratio=0.65 %}
        </div>
+
 
 </div>
                                                 <script>
@@ -140,10 +142,30 @@
                                                     </div>
                                                 </div>
                                                             </div>
-                                            <div class="col-sm-6 col-md-6">
+
+                                            <div class="col-sm-6 col-md-4" style="margin-top:-137px;">
+                                                <div class="card">
+                                                       <div class="card-header table-card-header">
+                                                            <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <h4>Alerts</h4>
+                                        </div>
+                                    </div>
+
+                                                            <hr>
+                                                            <div class="mb-1"></div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <img src="{% static 'img/alerts.jpeg' %}" style="width: 100%;height:135px;">
+
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                                            </div>
+
+                                            <div class="col-sm-6 col-md-8">
                                             <div class="row">
                                             <div class="col-sm-12 col-md-12">
-                                                <div class="card" style="height: 442px;" >
+                                                <div class="card" style="height:380px;" >
                                                     <div class="card-header">
                                                         <h5>Energy Usage</h5>
                                                             <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;">
@@ -169,174 +191,6 @@
                                                 </div>
 
 
-                                            <div class="col-sm-6 col-md-6">
-                                                <div class="card" style="height: 735px;">
-                                                      <div class="card-header table-card-header">
-                                                            <div class="flex-contianer" style="display: flex; justify-content: space-between">
-                                        <div class="left-btn box-inner-title">
-                                            <h4>Vents Data</h4>
-                                        </div>
-                                        <div class="mid-btn">
-                                            <span class="switch">
-   <label class="svg_lbl">Floorplan</label>
-    <input type="checkbox" class="switch" id="switch-id" checked>
-    <label for="switch-id"></label>
-  </span>
-                                        </div>
-                                        <div class="right-btn">
-                                            <select class="form-control">
-                                                <option>Temperature</option>
-                                                <option>Flow Rate</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                                            <hr>
-                                                            <div class="mb-1"></div>
-                                                        <div class="col-sm-12 col-md-12">
-                                                        <div class="blob_svg contentA" style="transform: translate(60px, 55px) scale(1.2);">
-                                                            {{blob_output|safe}}
-                                                        </div>
-                                                        <div class="floor_svg contentB" style="transform: translate(60px, 55px) scale(1.2);">
-                                                            {{floor_output|safe}}
-                                                        </div>
-
-                                                        </div>
-                                                      </div>
-                                            </div>
-                                                </div>
-                                                                                                    <style>
-                                                                .switch {
-  font-size: 1rem;
-  position: relative;
-}
-.switch input {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  background: none;
-  border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  overflow: hidden;
-  padding: 0;
-}
-.switch input + label {
-  position: relative;
-  min-width: calc(calc(2.375rem * .8) * 2);
-  border-radius: calc(2.375rem * .8);
-  height: calc(2.375rem * .8);
-  line-height: calc(2.375rem * .8);
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  vertical-align: middle;
-  text-indent: calc(calc(calc(2.375rem * .8) * 2) + .5rem);
-}
-.switch input + label::before,
-.switch input + label::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(calc(2.375rem * .8) * 2);
-  bottom: 0;
-  display: block;
-}
-.switch input + label::before {
-  right: 0;
-  background-color: #dee2e6;
-  border-radius: calc(2.375rem * .8);
-  transition: 0.2s all;
-}
-.switch input + label::after {
-  top: 2px;
-  left: 2px;
-  width: calc(calc(2.375rem * .8) - calc(2px * 2));
-  height: calc(calc(2.375rem * .8) - calc(2px * 2));
-  border-radius: 50%;
-  background-color: white;
-  transition: 0.2s all;
-}
-.switch input:checked + label::before {
-  background-color: #08d;
-}
-.switch input:checked + label::after {
-  margin-left: calc(2.375rem * .8);
-}
-.switch input:focus + label::before {
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(0, 136, 221, 0.25);
-}
-.switch input:disabled + label {
-  color: #868e96;
-  cursor: not-allowed;
-}
-.switch input:disabled + label::before {
-  background-color: #e9ecef;
-}
-.switch.switch-sm {
-  font-size: 0.875rem;
-}
-.switch.switch-sm input + label {
-  min-width: calc(calc(1.9375rem * .8) * 2);
-  height: calc(1.9375rem * .8);
-  line-height: calc(1.9375rem * .8);
-  text-indent: calc(calc(calc(1.9375rem * .8) * 2) + .5rem);
-}
-.switch.switch-sm input + label::before {
-  width: calc(calc(1.9375rem * .8) * 2);
-}
-.switch.switch-sm input + label::after {
-  width: calc(calc(1.9375rem * .8) - calc(2px * 2));
-  height: calc(calc(1.9375rem * .8) - calc(2px * 2));
-}
-.switch.switch-sm input:checked + label::after {
-  margin-left: calc(1.9375rem * .8);
-}
-.switch.switch-lg {
-  font-size: 1.25rem;
-}
-.switch.switch-lg input + label {
-  min-width: calc(calc(3rem * .8) * 2);
-  height: calc(3rem * .8);
-  line-height: calc(3rem * .8);
-  text-indent: calc(calc(calc(3rem * .8) * 2) + .5rem);
-}
-.switch.switch-lg input + label::before {
-  width: calc(calc(3rem * .8) * 2);
-}
-.switch.switch-lg input + label::after {
-  width: calc(calc(3rem * .8) - calc(2px * 2));
-  height: calc(calc(3rem * .8) - calc(2px * 2));
-}
-.switch.switch-lg input:checked + label::after {
-  margin-left: calc(3rem * .8);
-}
-.switch + .switch {
-  margin-left: 1rem;
-}
-.contentA {
-  display: none;
-}
-                                                            </style>
-                                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                                                            <script>
-                                                                $(function () {
-        $("#switch-id").change(function () {
-            if ($(this).is(":checked")) {
-                $(".contentB").show();
-                $(".contentA").hide();
-                document.querySelector('.svg_lbl').innerHTML = "Floorplan";
-            } else {
-                $(".contentB").hide();
-                $(".contentA").show();
-                document.querySelector('.svg_lbl').innerHTML = "Seating";
-            }
-        });
-    });
-                                                            </script>
                                                                     <script>
                                                                  var socket = new WebSocket('ws://localhost:8000/ws/graph1/');
                                                                     socket.onmessage = function(e){
@@ -354,24 +208,46 @@
                                                                     }
                                                                 </script>
 
-                                             <div class="col-sm-6 col-md-6">
-                                                <div class="card" style="height: 735px;">
-                                                       <div class="card-header table-card-header">
+                                                                                                                                     <div class="col-sm-6 col-md-4">
+                                                <div class="card" style="height:615px;margin-top:-237px;">
+                                                      <div class="card-header table-card-header">
                                                             <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
-                                            <h4>Alerts</h4>
+                                            <select  id="svgselector" name="select" class="form-control">
+                                                <option value="floorplan" selected>Floorplan</option>
+                                                <option value="seating">Seating</option>
+                                            </select>
+                                        </div>
+                                        <script>
+                                              $(function() {
+                                              $('#svgselector').change(function(){
+                                                $('.svg_div').hide();
+                                                $('#' + $(this).val()).show();
+                                              });
+                                            });
+                                        </script>
+                                        <div class="right-btn">
+                                            <select class="form-control">
+                                                <option>Temperature</option>
+                                                <option>Flow Rate</option>
+                                            </select>
                                         </div>
                                     </div>
 
                                                             <hr>
                                                             <div class="mb-1"></div>
                                                         <div class="col-sm-12 col-md-12">
-                                                            <img src="{% static 'img/alerts.jpeg' %}" style="width: 100%;">
+                                                        <div id="floorplan" class="svg_div floor_svg">
+                                                            {{floor_output|safe}}
+                                                        </div>
+                                                        <div id="seating" class="svg_div blob_svg" style="display:none;">
+                                                            {{blob_output|safe}}
+                                                        </div>
 
                                                         </div>
                                                       </div>
+                                            </div>
                                                 </div>
-                                                            </div>
 
                                         </div>
                                     </div>
@@ -409,174 +285,3 @@
     {% endblock %}
 </body>
 </html>
-                                     <div class="col-sm-12 col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header table-card-header">
-                                                        <h5>Floor Plan</h5>
-                                                        <div class="row">
-
-                                                        <img src="{% static 'img/floorplan.bmp' %}"/>
-                                                            <button class="btn btn-primary fp1"></button>
-                                                            <button class="btn btn-primary fp2"></button>
-                                                            <button class="btn btn-primary fp3"></button>
-                                                            <button class="btn btn-primary fp4"></button>
-                                                            <button class="btn btn-primary fp5"></button>
-                                                            <button class="btn btn-primary fp6"></button>
-                                                            <button class="btn btn-primary fp7"></button>
-                                                            <button class="btn btn-primary fp8"></button>
-                                                            <button class="btn btn-primary fp9"></button>
-                                                            <button class="btn btn-primary fp10"></button>
-                                                            <button class="btn btn-primary fp11"></button>
-                                                            <button class="btn btn-primary fp12"></button>
-                                                            <button class="btn btn-primary fp13"></button>
-                                                            <button class="btn btn-primary fp14"></button>
-                                                            <button class="btn btn-primary fp15"></button>
-                                                            <button class="btn btn-primary fp16"></button>
-                                                            <button class="btn btn-primary fp17"></button>
-                                                            <button class="btn btn-primary fp18"></button>
-                                                            <button class="btn btn-primary fp19"></button>
-                                                            <button class="btn btn-primary fp20"></button>
-                                                            <button class="btn btn-primary fp21"></button>
-                                                            <button class="btn btn-primary fp22"></button>
-                                                            <button class="btn btn-primary fp23"></button>
-                                                            <style>
-                                                                .fp1 {
-                                                                    position: absolute;
-                                                                    top: 32%;
-                                                                    left: 34%;
-                                                                }
-                                                                .fp2 {
-                                                                    position: absolute;
-                                                                    top: 38.35%;
-                                                                    left: 34%;
-                                                                }
-                                                                .fp3 {
-                                                                    position: absolute;
-                                                                    top: 44.35%;
-                                                                    left: 34%;
-                                                                }
-                                                                .fp4 {
-                                                                    position: absolute;
-                                                                    top: 50.8%;
-                                                                    left: 34%;
-                                                                }
-                                                                .fp5 {
-                                                                    position: absolute;
-                                                                    top: 32%;
-                                                                    left: 40.7%;
-                                                                }
-                                                                .fp6 {
-                                                                    position: absolute;
-                                                                    top: 38.35%;
-                                                                    left: 40.7%;
-                                                                }
-                                                                .fp7 {
-                                                                    position: absolute;
-                                                                    top: 44.35%;
-                                                                    left: 40.7%;
-                                                                }
-                                                                .fp8 {
-                                                                    position: absolute;
-                                                                    top: 50.8%;
-                                                                    left: 40.7%;
-                                                                }
-                                                                .fp9 {
-    position: absolute;
-    top: 62.9%;
-    left: 43.2%;
-    transform: rotate(90deg);
-}
-.fp10 {
-    position: absolute;
-    top: 62.9%;
-    left: 40.8%;
-    transform: rotate(90deg);
-}
-.fp11 {
-    position: absolute;
-    top: 62.9%;
-    left: 36.7%;
-    transform: rotate(90deg);
-}
-.fp12 {
-    position: absolute;
-    top: 22%;
-    left: 36.2%;
-    transform: rotate(90deg);
-}
-.fp13 {
-    position: absolute;
-    top: 22%;
-    left: 40.2%;
-    transform: rotate(96deg);
-}
-.fp14 {
-    position: absolute;
-    top: 23%;
-    left: 43.5%;
-    transform: rotate(108deg);
-}
-.fp15 {
-    position: absolute;
-    top: 26%;
-    left: 46.9%;
-    transform: rotate(127deg);
-}
-.fp18 {
-    position: absolute;
-    top: 62.9%;
-    left: 33.7%;
-    transform: rotate(90deg);
-}
-.fp19 {
-    position: absolute;
-    top: 62.9%;
-    left: 30.7%;
-    transform: rotate(90deg);
-}
-.fp20 {
-    position: absolute;
-    top: 62.9%;
-    left: 26.5%;
-    transform: rotate(90deg);
-}
-.fp21 {
-    position: absolute;
-    top: 55.9%;
-    left: 51%;
-    transform: rotate(90deg);
-}
-.fp22 {
-    position: absolute;
-    top: 37.9%;
-    left: 27.5%;
-    transform: rotate(90deg);
-}
-.fp23 {
-    position: absolute;
-    top: 56.9%;
-    left: 21%;
-    transform: rotate(90deg);
-}
-                                                                .btn {
-                                                                    width: 70px;
-                                                                    height: 27px;
-                                                                }
-                                                                .btn-primary {
-                                                                    background-color: #655d5900;
-                                                                    border-color: rgb(0 0 0 / 34%);
-                                                                }
-                                                                .btn-primary:hover {
-                                                                    background-color: rgba(101,93,89,0.5);
-                                                                }
-                                                               .btn-primary:focus {
-                                                                    background-color: rgba(101,93,89,0.5);
-                                                                }
-                                                            </style>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                            </div>
-

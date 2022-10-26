@@ -36,9 +36,9 @@ class GraphConsumer(WebsocketConsumer):
             previous_end = now - timedelta(days=1)
 
             today_sim_records = mycol_sim.find(
-                {'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte': today_end}})
+                {'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}})
             yesterday_sim_records = mycol_sim.find(
-                {'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start, "$lte": previous_end}})
+                {'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start, '$lte':previous_end}})
 
             today_sim_dt = []
             for c in today_sim_records:

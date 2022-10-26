@@ -106,7 +106,7 @@ MAIN_DOOR = []
 now = timezone.now()
 today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1).limit(30)
+occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id',-1).limit(30)
 
 occu_dt = []
 for c in occupant_records:
