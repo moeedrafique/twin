@@ -41,7 +41,7 @@ app = DjangoDash('temp_vent_data')
 
 app.layout = html.Div([
 html.Div([
-        dcc.Graph(id='live-graph-2', animate=True,style={'height': '305px', 'margin-top':'-87px'}),
+        dcc.Graph(id='live-graph-2', animate=True,style={'height': '335px'}),
         dcc.Interval(
             id='graph-update',
             interval=75000,
@@ -55,7 +55,7 @@ yy = []
 
 
 now = timezone.now()
-today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
+today_start = now.replace(hour=8, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
 occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1)
 
@@ -93,10 +93,10 @@ def read_stream():
         i = x['data']
         add_sg = i['AHU_OUTboundary'] + i['SF1_2boundary'] + i['SF2_2boundary'] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + i['SG4_2boundary'] + i['SG5_2boundary'] + i['SG6_2boundary']
         mean_sg = add_sg / 9
-        yy.extend(mean_sg)
+        yy.append(mean_sg)
 
         time = x['timestamp']
-        xx.extend(time)
+        xx.append(time)
 
 st = Thread(target=read_stream, args=())
 st.start()

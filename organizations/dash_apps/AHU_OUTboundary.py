@@ -45,7 +45,7 @@ app = DjangoDash("energy")
 
 app.layout = html.Div([
 html.Div([
-        dcc.Graph(id='live-graph', animate=True,style={'height': '320px'}),
+        dcc.Graph(id='live-graph', animate=True,style={'height': '395px'}),
         dcc.Interval(
             id='graph-update',
             interval=75000,
