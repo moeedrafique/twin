@@ -20,8 +20,12 @@
                                     <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
-                                                <li><a href=""><button class="btn-primary btn-sm mt-1">Localised Flow Distribution</button></a></li>
-                                                <li><a href=""><button class="btn-primary btn-sm mt-1 active">Air Terminals</button></a></li>
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Localised Flow Distribution</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Air Terminals</button></a></li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <div class="right-btn">

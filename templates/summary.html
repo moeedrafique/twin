@@ -117,7 +117,7 @@
 }
 </style>
 <!-- HTML -->
-<div id="graph" style="height:255px;">
+<div id="graph" style="height:355px;">
         <select  id="colorselector" name="select" class="form-control">
             <option value="blue">Temperature</option>
             <option value="red">Flow Rate</option>
@@ -155,7 +155,41 @@
                                                             <hr>
                                                             <div class="mb-1"></div>
                                                         <div class="col-sm-12 col-md-12">
-                                                            <img src="{% static 'img/alerts.jpeg' %}" style="width: 100%;height:135px;">
+                                                            <a href="javascript:void(0)">
+                                                                <span class="pcoded-badge label label-danger">HIGH</span>
+                                                                <span class="pcoded-mtext">Occupancy is reducing due to change in ventilation
+                                                                    The Diamond - 3rd Floor
+                                                                    Assigned to frank@thecompany.com
+                                                                </span>
+                                                            </a>
+                                                            <a href="javascript:void(0)">
+                                                                <span class="pcoded-badge label label-warning">MED</span>
+                                                                <span class="pcoded-mtext">Thermal comfort is higher than expected
+                                                                    The Diamond - 3rd Floor
+                                                                    Assigned to james@thecompany.com
+                                                                </span>
+                                                            </a>
+                                                            <a href="javascript:void(0)">
+                                                                <span class="pcoded-badge label label-warning" style="background:saddlebrown;">LOW</span>
+                                                                <span class="pcoded-mtext">Occupancy is reducing due to change in ventilation
+                                                                    The Diamond - 3rd Floor
+                                                                    Assigned to james@thecompany.com
+                                                                </span>
+                                                            </a>
+                                                            <a href="javascript:void(0)">
+                                                                <span class="pcoded-badge label label-warning" style="background:saddlebrown;">LOW</span>
+                                                                <span class="pcoded-mtext">Occupancy is reducing due to change in ventilation
+                                                                    The Diamond - 3rd Floor
+                                                                    Assigned to james@thecompany.com
+                                                                </span>
+                                                            </a>
+                                                            <a href="javascript:void(0)">
+                                                                <span class="pcoded-badge label label-warning" style="background:saddlebrown;">LOW</span>
+                                                                <span class="pcoded-mtext">Occupancy is reducing due to change in ventilation
+                                                                    The Diamond - 3rd Floor
+                                                                    Assigned to james@thecompany.com
+                                                                </span>
+                                                            </a>
 
                                                         </div>
                                                       </div>
@@ -165,12 +199,14 @@
                                             <div class="col-sm-6 col-md-8">
                                             <div class="row">
                                             <div class="col-sm-12 col-md-12">
-                                                <div class="card" style="height:380px;" >
+                                                <div class="card" style="height:465px;" >
                                                     <div class="card-header">
                                                         <h5>Energy Usage</h5>
+
                                                             <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;">
                                                               {% plotly_app name='energy' ratio=0.65 %}
                                                           </div>
+
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
@@ -209,7 +245,7 @@
                                                                 </script>
 
                                                                                                                                      <div class="col-sm-6 col-md-4">
-                                                <div class="card" style="height:615px;margin-top:-237px;">
+                                                <div class="card" style="height:615px;margin-top:-150px;">
                                                       <div class="card-header table-card-header">
                                                             <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
