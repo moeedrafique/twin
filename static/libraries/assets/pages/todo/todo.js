@@ -53,7 +53,7 @@
 
           $(this).parent().parent().parent().fadeOut();
       });
-      var i = 7;
+      var i = 2;
       $("#add-btn").on("click", function() {
           $(".md-form-control").removeClass("md-valid");
           var task = $('.add_task_todo').val();
@@ -75,33 +75,27 @@
 
 
       /*3rd todo list code*/
-      $(".save_btn").on("click", function() {
-          $(".md-form-control").removeClass("md-valid");
-          var saveTask = $('.save_task_todo').val();
-          if (saveTask == "") {
-              alert("please enter task");
-          } else {
-              var add_todo = $('<div class="to-do-label" id="' + i + '"><div class="checkbox-fade fade-in-primary"><label class="check-task"><input type="checkbox" onclick="check_label(' + i + ')" id="checkbox' + i + '"><span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span><span class="task-title-sp">' + saveTask + '</span><div class="f-right hidden-phone"><i class="icofont icofont-ui-delete delete_todo" onclick="delete_todo(' + i + ');"></i></div></label></div></div>');
-              i++;
-              $(add_todo).appendTo(".task-content").hide().fadeIn(300);
-              $('.save_task_todo').val('');
-              $("#flipFlop").modal('hide');
+      $("#add_t").on("click", function() {
+          //var add_todo = $('<div class="to-do-label" id="' + i + '"><div class="checkbox-fade fade-in-primary"><label class="check-task"><input type="checkbox" onclick="check_label(' + i + ')" id="checkbox' + i + '"><span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span><span class="task-title-sp">' + saveTask + '</span><div class="f-right hidden-phone"><i class="icofont icofont-ui-delete delete_todo" onclick="delete_todo(' + i + ');"></i></div></label></div></div>');
+          var add_todo = $('<input type="hidden" name="count" value="' + i + '"/><div class="to-do-label" id="' + i + '"><div class="checkbox-fade fade-in-primary"><div class="row"><div class="col-sm-2 task-title-sp">Schedule Data Range ' + i + '</div><div class="col-sm-1"><input type="time" class="form-control mb-1" placeholder="" value="" name="timestart' + i + '"></div><div class="col-sm-1"><input type="time" class="form-control mb-1" placeholder="" value="" name="timeend' + i + '"></div><div class="col-sm-1"></div><div class="col-sm-1"><input type="number" min="0" max="30" class="form-control mb-1" placeholder="" value="" name="set_point' + i + '"></div><div class="col-sm-5"></div><div class="col-sm-1"><div class="f-right hidden-phone"><i class="icofont icofont-ui-delete delete_todo" onclick="delete_todo(' + i + ');"></i></div></div></div></div>');
+          i++;
+          $(add_todo).appendTo(".task-content").hide().fadeIn(300);
           }
 
-      });
+      );
 
       $(".close_btn").on("click", function() {
           $('.save_task_todo').val('');
       });
 
       $(".delete_todo").on("click", function() {
-          $(this).parent().parent().parent().parent().fadeOut();
+          $(this).parent().parent().parent().parent().parent().remove();
       });
   });
 
   function delete_todo(e) {
 
-      $('#' + e).fadeOut();
+      $('#' + e).remove();
   }
   $('.to-do-list input[type=checkbox]').on("click", function() {
       if ($(this).prop('checked'))

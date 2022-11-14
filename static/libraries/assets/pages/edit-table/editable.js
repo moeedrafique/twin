@@ -24,7 +24,7 @@ $('#example-1').Tabledit({
 });
 function add_row()
 {
-    var table = document.getElementById("example-1");
+    var table = document.getElementById("example-2");
     var t1=(table.rows.length);
     var row = table.insertRow(t1);
     var cell1 = row.insertCell(0);

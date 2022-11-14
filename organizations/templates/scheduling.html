@@ -1,0 +1,290 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load plotly_dash %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vanilla JS Datepicker Demo</title>
+
+  </head>
+  <body>
+  {% block content %}
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+
+...
+
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+                          <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Localised Flow Distribution</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Air Terminals</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                            <h4>SCHEDULING</h4>
+                                <hr>
+                                <div class="mb-1"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header" style="padding: 0px 20px;">
+                                                        <h5></h5>
+
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <section class="task-panel tasks-widget">
+                                                            <div class="panel-body">
+                                                            <div class="row">
+
+                                                                <div class="col-lg-10">
+                                                                    <div class="button-group-pills text-start" data-toggle="buttons">
+        <label class="btn btn-default active">
+          <input type="radio" name="season" value="Summer" checked="">
+          <div>Summer</div>
+        </label>
+        <label class="btn btn-default">
+          <input type="radio" value="Winter" name="season">
+          <div>Winter</div>
+        </label>
+      </div>
+                                                                    <style>
+                                                                        .button-group-pills .btn {
+  border-radius: 20px;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  border-color: #bbbbbb;
+  background-color: #FFF;
+  color: #14a4be;
+}
+.button-group-pills .btn.active {
+  border-color: #14a4be;
+  background-color: #14a4be;
+  color: #FFF;
+  box-shadow: none;
+}
+.button-group-pills .btn:hover {
+  border-color: #158b9f;
+  background-color: #158b9f;
+  color: #FFF;
+}
+                                                                    </style>
+                                                                    <div class="mb-5"></div>
+                                                                    <div class=""><form id="types">
+                                                                <div class="field">
+                                                                  <div class="control">
+                                                                    <label class="radio">
+                                                                      <input type="radio" name="type" value="input" checked>
+                                                                      Input
+                                                                    </label>
+                                                                    <label class="radio">
+                                                                      <input type="radio" name="type" value="inline">
+                                                                      Inline
+                                                                    </label>
+                                                                    <label class="radio">
+                                                                      <input type="radio" name="type" value="range">
+                                                                      Range
+                                                                    </label>
+                                                                  </div>
+                                                                </div>
+                                                              </form></div>
+
+                                                                    <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <style>
+                                                                                        .datepicker-inline {
+    position: absolute;
+    left: 100%;
+    top: -25%;
+                                                                                        }
+                                                                                    </style>
+                                                                                <div class="row">
+                                                                                <div class="col-sm-2"><h5>Date Range</h5></div>
+                                                                                    <div id="sandbox"></div>
+                                                                                <div class="col-sm-2"></div>
+                                                                                <div class="col-sm-2"><h5>Color</h5></div>
+                                                                                <div class="col-sm-2"><input type="hidden" id="hidden-input" name="color" class="demo" value="#2d35ec"><style>.minicolors-swatch-color {width:15%!important;}</style></div>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                <div class="col-sm-2 mt-3"><h5>Apply To</h5></div>
+                                                                                <div class="col-sm-4">
+                                                                                    <div class="tile is-child">
+                                                                                        <form id="options">
+                                                                <div class="field">
+                                                                  <label class="label">daysOfWeekDisabled</label>
+                                                                  <div class="control">
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="0"> Sun
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="1"> Mon
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="2"> Tue
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="3"> Wed
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="4"> Th
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="5"> Fri
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input type="checkbox" name="daysOfWeekDisabled" value="6"> Sat
+                                                                    </label>&nbsp;
+                                                                  </div>
+                                                                </div>
+
+                                                                <div class="field" style="display:none;">
+                                                                  <label class="label">language</label>
+                                                                  <div class="control">
+                                                                    <div class="select">
+                                                                      <select name="language" >
+                                                                        <option value="en">en – English (US)</option>
+                                                                      </select>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+
+                                                              </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-1"></div>
+                                                                                <div class="col-sm-3 mt-3"><h5>Schedule Day Name</h5></div>
+                                                                                <div class="col-sm-2 mt-3"><input type="text" class="form-control mb-1" placeholder="" name="schedule_day_name"></div>
+
+                                                                                </div>
+                                                                                </div>
+                                                                            </div>
+                                                                    <div class="mb-5"></div>
+                                                                    <form method="post">
+                                                                        {% csrf_token %}
+                                                                    <div class="task-content">
+                                                                    <div class="to-do-label">
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <div class="row">
+                                                                            <div class="col-sm-2 task-title-sp">Schedule Data Range 1</div>
+                                                                            <div class="col-sm-1"><input type="time" class="form-control mb-1" min="00:00" placeholder="" name="timestart1"></div>
+                                                                            <div class="col-sm-1"><input type="time" class="form-control mb-1" placeholder="" name="timeend1"></div>
+                                                                            <div class="col-sm-1"></div>
+                                                                            <div class="col-sm-1"><input type="number" min="0" max="30" class="form-control mb-1" placeholder="" name="set_point1"></div>
+                                                                            <div class="col-sm-5"></div>
+                                                                            <div class="col-sm-1"><span class="f-right hidden-phone">
+                                                                                                    <i class="icofont icofont-ui-delete delete_todo"></i>
+                                                                                                </span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                    <div>
+                                                                    <a id="add_t" class="btn btn-primary waves-effect waves-light m-t-10" href="#"><i class="icofont icofont-plus"></i> Add New Schedule</a>
+                                                                    <form method="post">
+                                                                        {% csrf_token %}
+                                                                    <button class="btn btn-primary waves-effect waves-light m-t-10" type="submit">Save</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                                <div class="col-lg-2">
+                                                                    <div class="columns">
+                                                                    <div class="column">
+                                                            </div>
+                                                                </div>
+
+
+                                                          <div class="tile is-parent is-vertical">
+                                                            <div class="tile is-child">
+
+                                                            </div>
+                                                            <div class="tile is-child">
+                                                              <form id="direction">
+                                                                <div class="field">
+                                                                </div>
+                                                              </form>
+                                                            </div>
+                                                          </div>
+                                                                </div>
+                                                                </div>
+                                                                </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                            </div>
+                                    <!-- Page-body end -->
+                        </div>
+                </div>
+
+
+    <div class="toggle-btn"></div>
+    <script src="../dist/js/datepicker-full.js"></script>
+    <script src="{% static '/js/live-demo.js' %}"></script>
+    <script>
+      /*global initialize onChangeType onChnageDirection onChangeInputOption onChangeInputOption onChangeTextareaOption onClickCheckboxOptions switchPicker */
+      initialize();
+
+      document.getElementById('types').querySelectorAll('input').forEach((el) => {
+        el.addEventListener('change', onChangeType);
+      });
+
+      document.getElementById('direction').querySelectorAll('input').forEach((el) => {
+        el.addEventListener('change', onChnageDirection);
+      });
+
+      const optsForm = document.getElementById('options');
+      optsForm.querySelectorAll('input[type=text], input[type=radio], select').forEach((el) => {
+        el.addEventListener('change', onChangeInputOption);
+      });
+      optsForm.querySelectorAll('textarea').forEach((el) => {
+        el.addEventListener('change', onChangeTextareaOption);
+      });
+      optsForm.querySelectorAll('.checkbox').forEach((el) => {
+        el.addEventListener('click', onClickCheckboxOptions);
+      });
+
+      switchPicker('input');
+    </script>
+  {% endblock %}
+  </body>
+</html>
