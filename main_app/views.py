@@ -45,7 +45,7 @@ def home(request):
 #     return render(request, 'energy.htm')
 #
 def Summary(request):
-     return render(request, 'summary.html')
+     return render(request, 'scheduling.html')
 
 #
 # def LocalFlow(request):

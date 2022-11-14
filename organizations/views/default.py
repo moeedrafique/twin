@@ -127,6 +127,7 @@ mycol = mydb["iiot"]
 mycol_sim = mydb["simulation_sensor_locations"]
 mycol_occu = mydb["occupants"]
 mycol_energy = mydb["energy_data"]
+mycol_schedule = mydb["schedules"]
 
 
 def viewDashboard(request, organization_pk):
@@ -533,6 +534,60 @@ def FlowDistribution(request, organization_pk):
 
     context = {'business_detail': business_detail, 'blob_output':blob_output, 'floor_output':floor_output}
     return render(request, 'local_flow.html', context)
+
+
+def Scheduling(request, organization_pk):
+    business_detail = get_object_or_404(Organization, id=organization_pk)
+    if request.method == 'POST':
+        schedule_data = {}
+        for i in range(int(request.POST.get('count'))):  #####schedule data range is your ui info
+            i = i + 1
+            schedule_data.update({
+                f"Schedule Data Range {i}": {
+                    "time_range": {
+                        "start_time": request.POST.get(f"timestart{i}"),
+                        "end_time": request.POST.get(f"timeend{i}")
+                    },
+                    "temperature": request.POST.get(f"set_point{i}")
+                },
+            })
+
+        range_data = {}
+        if request.POST['range-start'] and request.POST['range-end']:
+            range_data.update({
+            "range_start": request.POST.get("range-start"),
+            "range_end": request.POST.get("range-end"),
+            })
+        elif request.POST['date-in']:
+            range_data.update({
+            "range": request.POST.get("date-in"),
+            })
+        elif request.POST['date']:
+            range_data.update({
+            "range": request.POST.get("date"),
+            })
+        emp_rec1 = {
+        "ref_id": "DMC02-CWS_SD001",
+        "user_id": f"{request.user.id}/{request.user.username}",
+        "status": "enabled",
+        "timestamp": "",
+        "post_time": "",
+        "business": "",
+        "building": "",
+        "floor": "",
+        "room": "",
+        "data_of": "",
+        "schedule_type": "",
+        "name": request.POST["schedule_day_name"],
+        "date_range": range_data,
+        "days": [request.POST.get("daysOfWeekDisabled")],
+        "season": request.POST["season"],
+        "color": request.POST["color"],
+        "schedule_data": schedule_data
+    }
+        rec_id1 = mycol_schedule.insert_one(emp_rec1)
+    context = {'business_detail': business_detail}
+    return render(request, 'scheduling.html', context)
 
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):

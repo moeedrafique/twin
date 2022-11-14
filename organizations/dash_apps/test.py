@@ -81,7 +81,7 @@ def update_graph_live(n):
         'mode': 'lines+markers',
         'type': 'scatter'
     }, 1, 1)
-    fig.append_trace({
+    fig.add_trace({
         'x': data['time'],
         'y': data['CON'],
         'name': 'Conductivity',
