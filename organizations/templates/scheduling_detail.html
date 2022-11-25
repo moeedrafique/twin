@@ -74,6 +74,7 @@
                                                                 <div class="col-lg-10">
                                                                     <form method="post">
                                                                         {% csrf_token %}
+                                                                        {{schedule}}
                                                                     <div class="button-group-pills text-start" data-toggle="buttons">
                                                                         <label class="btn btn-default active">
                                                                           <input type="radio" name="season" value="Summer" checked="">
@@ -145,10 +146,7 @@
                                                                                 <div class="col-sm-2"></div>
                                                                                 <div class="col-sm-2"><h5>Color</h5></div>
                                                                                 <div class="col-sm-2">
-                                                                                    <form method="post">
-                                                                                        {% csrf_token %}
-                                                                                    <input type="hidden" id="hidden-input" name="color" class="demo" value="#2d35ec"><style>.minicolors-swatch-color {width:15%!important;}</style>
-                                                                                    </form>
+                                                                                    <input type="hidden" id="hidden-input" name="color" class="demo" value="{{schedule.color}}"><style>.minicolors-swatch-color {width:15%!important;}</style>
                                                                                 </div>
                                                                                 </div>
                                                                                 </div>
@@ -202,37 +200,37 @@
                                                                                 <div class="col-sm-1"></div>
                                                                                 <div class="col-sm-3 mt-3"><h5>Schedule Day Name</h5></div>
                                                                                 <div class="col-sm-2 mt-3">
-                                                                                    <form method="post">
-                                                                                        {% csrf_token %}
-                                                                                    <input type="text" class="form-control mb-1" placeholder="" name="schedule_day_name">
-                                                                                    </form>
+                                                                                    <input type="text" class="form-control mb-1" placeholder="" value="{{schedule.name}}" name="schedule_day_name">
                                                                                 </div>
 
                                                                                 </div>
                                                                                 </div>
                                                                             </div>
                                                                     <div class="mb-5"></div>
-                                                                    <form method="post">
-                                                                        {% csrf_token %}
+
+                                                                    {% for i in schedule.schedule_data %}
                                                                     <div class="task-content">
                                                                     <div class="to-do-label">
                                                                         <div class="checkbox-fade fade-in-primary">
                                                                             <div class="row">
-                                                                            <div class="col-sm-2 task-title-sp">Schedule Data Range 1</div>
-                                                                            <div class="col-sm-1"><input type="time" class="form-control mb-1" min="00:00" placeholder="" name="timestart1"></div>
-                                                                            <div class="col-sm-1"><input type="time" class="form-control mb-1" placeholder="" name="timeend1"></div>
-                                                                            <div class="col-sm-1"></div>
-                                                                            <div class="col-sm-1"><input type="number" min="0" max="30" class="form-control mb-1" placeholder="" name="set_point1"></div>
-                                                                            <div class="col-sm-5"></div>
-                                                                            <div class="col-sm-1"><span class="f-right hidden-phone">
-                                                                                                    <i class="icofont icofont-ui-delete delete_todo"></i>
-                                                                                                </span></div>
+                                                                                <div class="col-sm-2 task-title-sp">{{i}}</div>
+                                                                                {% for j in i. %}
+                                                                                <div class="col-sm-1"><input type="time" class="form-control mb-1" value="{{j}}" placeholder="" name="timestart1"></div>
+                                                                                <div class="col-sm-1"><input type="time" class="form-control mb-1" placeholder="" name="timeend1"></div>
+                                                                                {% endfor %}
+                                                                                <div class="col-sm-1"></div>
+                                                                                <div class="col-sm-1"><input type="number" value="{{i.temperature}}" class="form-control mb-1" placeholder="" name="set_point1"></div>
+                                                                                <div class="col-sm-5"></div>
+                                                                                <div class="col-sm-1"><span class="f-right hidden-phone">
+                                                                                                        <i class="icofont icofont-ui-delete delete_todo"></i>
+                                                                                                    </span>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                    </form>
 
+                                                                    {% endfor %}
                                                                     <div>
                                                                     <a id="add_t" class="btn btn-primary waves-effect waves-light m-t-10" href="#"><i class="icofont icofont-plus"></i> Add New Schedule</a>
                                                                     <form method="post">

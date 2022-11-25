@@ -540,7 +540,8 @@ def Scheduling(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     if request.method == 'POST':
         schedule_data = {}
-        for i in range(int(request.POST.get('count'))):  #####schedule data range is your ui info
+        print(request.POST.get('count'))
+        for i in range(2):  #####schedule data range is your ui info
             i = i + 1
             schedule_data.update({
                 f"Schedule Data Range {i}": {
@@ -553,19 +554,10 @@ def Scheduling(request, organization_pk):
             })
 
         range_data = {}
-        if request.POST['range-start'] and request.POST['range-end']:
-            range_data.update({
-            "range_start": request.POST.get("range-start"),
-            "range_end": request.POST.get("range-end"),
-            })
-        elif request.POST['date-in']:
-            range_data.update({
-            "range": request.POST.get("date-in"),
-            })
-        elif request.POST['date']:
-            range_data.update({
-            "range": request.POST.get("date"),
-            })
+        range_data.update({
+        "range_start": request.POST.get("range-start"),
+        "range_end": request.POST.get("range-end"),
+        })
         emp_rec1 = {
         "ref_id": "DMC02-CWS_SD001",
         "user_id": f"{request.user.id}/{request.user.username}",
@@ -578,16 +570,63 @@ def Scheduling(request, organization_pk):
         "room": "",
         "data_of": "",
         "schedule_type": "",
-        "name": request.POST["schedule_day_name"],
+        "name": request.POST.get("schedule_day_name"),
         "date_range": range_data,
         "days": [request.POST.get("daysOfWeekDisabled")],
-        "season": request.POST["season"],
-        "color": request.POST["color"],
+        "season": request.POST.get("season"),
+        "color": request.POST.get("color"),
         "schedule_data": schedule_data
     }
         rec_id1 = mycol_schedule.insert_one(emp_rec1)
     context = {'business_detail': business_detail}
     return render(request, 'scheduling.html', context)
+
+def SchedulingList(request, organization_pk):
+    business_detail = get_object_or_404(Organization, id=organization_pk)
+    main_data = mycol_schedule.find()
+    context = {'business_detail': business_detail, 'main_data':main_data}
+    return render(request, 'scheduling_list.html', context)
+
+def SchedulingDetail(request, organization_pk):
+    business_detail = get_object_or_404(Organization, id=organization_pk)
+    schedule = mycol_schedule.find_one(
+        {'ref_id': 'DMC02-CWS_SD001'},
+        sort=[('_id', pymongo.DESCENDING)])
+    context = {'schedule':schedule, 'business_detail': business_detail}
+    return render(request, 'scheduling_detail.html', context)
+
+def Tariffs(request, organization_pk):
+    business_detail = get_object_or_404(Organization, id=organization_pk)
+    if request.method == 'POST':
+        form = joinForm(request.POST)
+        if request.method == 'POST':
+            form = joinForm(request.POST, request.FILES)
+            if form.is_valid():
+                name = form.cleaned_data.get('name')
+                email = form.cleaned_data.get('email')
+                template = render_to_string('main_app/email_template.html', {'name': name})
+
+                email = EmailMessage(
+                    'Thank you for your interest.',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                )
+
+                email.fail_silently = False
+                email.content_subtype = 'html'
+                email.send()
+                form.save()
+                messages.success(request, 'Business Customer Added successfully!')
+                return redirect('organization_list')
+            else:
+                messages.error(request, 'Something Went Wrong! Carefully Check Configuration Setting...')
+    else:
+
+        form = joinForm()
+    context = {'form': form, 'business_detail':business_detail}
+    return render(request, 'tariffs.html', context)
+
 
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):

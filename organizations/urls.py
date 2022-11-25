@@ -53,9 +53,15 @@ urlpatterns = [
                 path('scheduling/', views.Scheduling,
                      name='scheduling'
                      ),
-                # path('dashboard/', views.viewDashboard,
-                #      name='dashboard'
-                # ),
+                path('scheduling-detail/', views.SchedulingDetail,
+                     name='scheduling_detail'
+                     ),
+                path('scheduling-list/', views.SchedulingList,
+                     name='scheduling_list'
+                ),
+                path('tariffs/', views.Tariffs,
+                     name='tariffs'
+                     ),
                 path(
                     "",
                     view=login_required(views.OrganizationDetail.as_view()),
