@@ -1,6 +1,7 @@
 {% extends 'base.htm' %}
 {% load static %}
 {% load widget_tweaks %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,8 +108,8 @@ var pieChart = new Chart(oilCanvas, {
 
 var oilData = {
     labels: [
-        "",
-        "",
+        "{{last_month_var}}",
+        "{{current_month_strft}}",
     ],
     datasets: [
         {
