@@ -1,0 +1,276 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load plotly_dash %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vanilla JS Datepicker Demo</title>
+
+  </head>
+  <body>
+  {% block content %}
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+                          <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <div style="background-color:#26ceba8c;" class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">HVAC</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Tariffs</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Users</button></a></li>
+                                                {% endfor %}
+                                                  {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Admin</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                            <h4>SCHEDULING [{{schedule.ref_id}}]</h4>
+                                <hr>
+                                <div class="mb-1"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header" style="padding: 0px 20px;">
+                                                        <h5></h5>
+
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <section class="task-panel tasks-widget">
+                                                            <div class="panel-body">
+                                                            <div class="row">
+
+                                                                <div class="col-lg-12">
+                                                                    <form method="post">
+                                                                        {% csrf_token %}
+                                                                    <div class="button-group-pills text-start" data-toggle="buttons">
+
+                                                                        <label style="cursor: not-allowed;" class="btn btn-default active">
+                                                                          <input type="radio" name="season" value="{{schedule.season}}" checked>
+                                                                          <div>{{schedule.season}}</div>
+                                                                        </label>
+
+                                                                    </div>
+                                                                    </form>
+                                                                    <style>
+                                                                        .button-group-pills .btn {
+  border-radius: 20px;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  border-color: #bbbbbb;
+  background-color: #FFF;
+  color: #14a4be;
+}
+.button-group-pills .btn.active {
+  border-color: #14a4be;
+  background-color: #14a4be;
+  color: #FFF;
+  box-shadow: none;
+}
+.button-group-pills .btn:hover {
+  border-color: #158b9f;
+  background-color: #158b9f;
+  color: #FFF;
+}
+                                                                    </style>
+                                                                    <div class="mb-5"></div>
+
+                                                                    <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                <div class="col-sm-2"><h5>Date Range</h5></div>
+                                                                                <div style="display: flex;" class="field has-addons date">
+                                                                                    <div class="col-sm-6"><input disabled type="text" class="input form-control mb-1 datepicker-input" placeholder="" value="{{schedule.date_range.range_start}}" name="range-start"><div class="datepicker datepicker-dropdown datepicker-orient-left datepicker-orient-bottom" style="left: 318.594px; top: 433.492px;"><div class="datepicker-picker"><div class="datepicker-header"><div class="datepicker-title" style="display: none;"></div><div class="datepicker-controls"><button type="button" class="button prev-btn">«</button><button type="button" class="button view-switch">November 2022</button><button type="button" class="button next-btn">»</button></div></div><div class="datepicker-main"><div class="datepicker-view"><div class="days"><div class="days-of-week"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span></div><div class="datepicker-grid"><span class="datepicker-cell day prev" data-date="1667070000000">30</span><span class="datepicker-cell day prev" data-date="1667156400000">31</span><span class="datepicker-cell day" data-date="1667242800000">1</span><span class="datepicker-cell day" data-date="1667329200000">2</span><span class="datepicker-cell day" data-date="1667415600000">3</span><span class="datepicker-cell day" data-date="1667502000000">4</span><span class="datepicker-cell day" data-date="1667588400000">5</span><span class="datepicker-cell day" data-date="1667674800000">6</span><span class="datepicker-cell day" data-date="1667761200000">7</span><span class="datepicker-cell day" data-date="1667847600000">8</span><span class="datepicker-cell day" data-date="1667934000000">9</span><span class="datepicker-cell day" data-date="1668020400000">10</span><span class="datepicker-cell day" data-date="1668106800000">11</span><span class="datepicker-cell day" data-date="1668193200000">12</span><span class="datepicker-cell day" data-date="1668279600000">13</span><span class="datepicker-cell day" data-date="1668366000000">14</span><span class="datepicker-cell day" data-date="1668452400000">15</span><span class="datepicker-cell day" data-date="1668538800000">16</span><span class="datepicker-cell day" data-date="1668625200000">17</span><span class="datepicker-cell day" data-date="1668711600000">18</span><span class="datepicker-cell day" data-date="1668798000000">19</span><span class="datepicker-cell day" data-date="1668884400000">20</span><span class="datepicker-cell day" data-date="1668970800000">21</span><span class="datepicker-cell day" data-date="1669057200000">22</span><span class="datepicker-cell day" data-date="1669143600000">23</span><span class="datepicker-cell day" data-date="1669230000000">24</span><span class="datepicker-cell day" data-date="1669316400000">25</span><span class="datepicker-cell day focused" data-date="1669402800000">26</span><span class="datepicker-cell day" data-date="1669489200000">27</span><span class="datepicker-cell day" data-date="1669575600000">28</span><span class="datepicker-cell day" data-date="1669662000000">29</span><span class="datepicker-cell day" data-date="1669748400000">30</span><span class="datepicker-cell day next" data-date="1669834800000">1</span><span class="datepicker-cell day next" data-date="1669921200000">2</span><span class="datepicker-cell day next" data-date="1670007600000">3</span><span class="datepicker-cell day next" data-date="1670094000000">4</span><span class="datepicker-cell day next" data-date="1670180400000">5</span><span class="datepicker-cell day next" data-date="1670266800000">6</span><span class="datepicker-cell day next" data-date="1670353200000">7</span><span class="datepicker-cell day next" data-date="1670439600000">8</span><span class="datepicker-cell day next" data-date="1670526000000">9</span><span class="datepicker-cell day next" data-date="1670612400000">10</span></div></div></div></div><div class="datepicker-footer"><div class="datepicker-controls"><button type="button" class="button today-btn" style="display: none;">Today</button><button type="button" class="button clear-btn" style="display: none;">Clear</button></div></div></div></div></div>
+                                                                                    <div class="col-sm-6"><input disabled type="text" class="input form-control mb-1 datepicker-input" placeholder="" value="{{schedule.date_range.range_start}}" name="range-end"><div class="datepicker datepicker-dropdown datepicker-orient-left datepicker-orient-bottom" style="left: 541.594px; top: 433.492px;"><div class="datepicker-picker"><div class="datepicker-header"><div class="datepicker-title" style="display: none;"></div><div class="datepicker-controls"><button type="button" class="button prev-btn">«</button><button type="button" class="button view-switch">November 2022</button><button type="button" class="button next-btn">»</button></div></div><div class="datepicker-main"><div class="datepicker-view"><div class="days"><div class="days-of-week"><span class="dow">Su</span><span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span></div><div class="datepicker-grid"><span class="datepicker-cell day prev" data-date="1667070000000">30</span><span class="datepicker-cell day prev" data-date="1667156400000">31</span><span class="datepicker-cell day" data-date="1667242800000">1</span><span class="datepicker-cell day" data-date="1667329200000">2</span><span class="datepicker-cell day" data-date="1667415600000">3</span><span class="datepicker-cell day" data-date="1667502000000">4</span><span class="datepicker-cell day" data-date="1667588400000">5</span><span class="datepicker-cell day" data-date="1667674800000">6</span><span class="datepicker-cell day" data-date="1667761200000">7</span><span class="datepicker-cell day" data-date="1667847600000">8</span><span class="datepicker-cell day" data-date="1667934000000">9</span><span class="datepicker-cell day" data-date="1668020400000">10</span><span class="datepicker-cell day" data-date="1668106800000">11</span><span class="datepicker-cell day" data-date="1668193200000">12</span><span class="datepicker-cell day" data-date="1668279600000">13</span><span class="datepicker-cell day" data-date="1668366000000">14</span><span class="datepicker-cell day" data-date="1668452400000">15</span><span class="datepicker-cell day" data-date="1668538800000">16</span><span class="datepicker-cell day" data-date="1668625200000">17</span><span class="datepicker-cell day" data-date="1668711600000">18</span><span class="datepicker-cell day" data-date="1668798000000">19</span><span class="datepicker-cell day" data-date="1668884400000">20</span><span class="datepicker-cell day" data-date="1668970800000">21</span><span class="datepicker-cell day" data-date="1669057200000">22</span><span class="datepicker-cell day" data-date="1669143600000">23</span><span class="datepicker-cell day" data-date="1669230000000">24</span><span class="datepicker-cell day" data-date="1669316400000">25</span><span class="datepicker-cell day focused" data-date="1669402800000">26</span><span class="datepicker-cell day" data-date="1669489200000">27</span><span class="datepicker-cell day" data-date="1669575600000">28</span><span class="datepicker-cell day" data-date="1669662000000">29</span><span class="datepicker-cell day" data-date="1669748400000">30</span><span class="datepicker-cell day next" data-date="1669834800000">1</span><span class="datepicker-cell day next" data-date="1669921200000">2</span><span class="datepicker-cell day next" data-date="1670007600000">3</span><span class="datepicker-cell day next" data-date="1670094000000">4</span><span class="datepicker-cell day next" data-date="1670180400000">5</span><span class="datepicker-cell day next" data-date="1670266800000">6</span><span class="datepicker-cell day next" data-date="1670353200000">7</span><span class="datepicker-cell day next" data-date="1670439600000">8</span><span class="datepicker-cell day next" data-date="1670526000000">9</span><span class="datepicker-cell day next" data-date="1670612400000">10</span></div></div></div></div><div class="datepicker-footer"><div class="datepicker-controls"><button type="button" class="button today-btn" style="display: none;">Today</button><button type="button" class="button clear-btn" style="display: none;">Clear</button></div></div></div></div></div>
+                                                                                </div>
+                                                                                <div class="col-sm-1"></div>
+                                                                                <div class="col-sm-3"><h5>Color</h5></div>
+                                                                                <div class="col-sm-2">
+                                                                                    <input disabled type="hidden" id="hidden-input" name="color" class="demo" value="{{schedule.color}}"><style>.minicolors-swatch-color {width:15%!important;}</style>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                <div class="row">
+                                                                                <div class="col-sm-2 mt-3"><h5>Apply To</h5></div>
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="tile is-child">
+                                                                <div class="field">
+                                                                  <label class="label">daysOfWeekDisabled</label>
+                                                                  <div class="control">
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="0" {% if "0" in schedule.days %} checked{% endif %}> Sun
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="1" {% if "1" in schedule.days %} checked{% endif %}> Mon
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="2" {% if "2" in schedule.days %} checked{% endif %}> Tue
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="3" {% if "3" in schedule.days %} checked{% endif %}> Wed
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="4" {% if "4" in schedule.days %} checked{% endif %}> Th
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="5" {% if "5" in schedule.days %} checked{% endif %}> Fri
+                                                                    </label>&nbsp;
+                                                                    <label class="checkbox">
+                                                                      <input disabled type="checkbox" name="daysOfWeekDisabled" value="6" {% if "6" in schedule.days %} checked{% endif %}> Sat
+                                                                    </label>&nbsp;
+                                                                  </div>
+                                                                </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-1"></div>
+                                                                                <div class="col-sm-3 mt-3"><h5>Schedule Day Name</h5></div>
+                                                                                <div class="col-sm-3 mt-3">
+                                                                                    <input disabled type="text" class="form-control mb-1" placeholder="" value="{{schedule.name}}" name="schedule_day_name">
+                                                                                </div>
+
+                                                                                </div>
+                                                                                </div>
+                                                                            </div>
+                                                                    <div class="mb-5"></div>  
+                                                                    
+                                                                    
+                                                                    {% for k, v in schedule.schedule_data.items %}
+                                                                    <div class="task-content">
+                                                                    <div class="to-do-label">
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-2 task-title-sp">{{k}}</div>
+                                                                                
+                                                                                <div class="col-sm-1" style="max-width:100%"><input disabled type="time" class="form-control mb-1" value="{{v.time_range.start_time}}" placeholder="" name="timestart1"></div>
+                                                                                <div class="col-sm-1" style="max-width:100%"><input disabled type="time" class="form-control mb-1" value="{{v.time_range.end_time}}" placeholder="" name="timeend1"></div>
+                                                                                
+                                                                                
+                                                                                <div class="col-sm-1"></div>
+                                                                                <div class="col-sm-1"><input disabled type="string" value="{{v.temperature}}" class="form-control mb-1" placeholder="" name="set_point1"></div>
+                                                                                
+                                                                                <div class="col-sm-5"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                    {% endfor %}
+                                                            </div>
+
+                                                                <div class="col-lg-2">
+                                                                    <div class="columns">
+                                                                    <div class="column">
+                                                            </div>
+                                                                </div>
+
+
+                                                          <div class="tile is-parent is-vertical">
+                                                            <div class="tile is-child">
+
+                                                            </div>
+                                                            <div class="tile is-child">
+                                                              <form id="direction">
+                                                                <div class="field">
+                                                                </div>
+                                                              </form>
+                                                            </div>
+                                                          </div>
+                                                                </div>
+                                                                </div>
+                                                                </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                            </div>
+                                    <!-- Page-body end -->
+                        </div>
+                </div>
+
+
+    <div class="toggle-btn"></div>
+    <script src="../dist/js/datepicker-full.js"></script>
+    <script src="{% static '/js/live-demo.js' %}"></script>
+    <script>
+      /*global initialize onChangeType onChnageDirection onChangeInputOption onChangeInputOption onChangeTextareaOption onClickCheckboxOptions switchPicker */
+      initialize();
+
+      document.getElementById('types').querySelectorAll('input').forEach((el) => {
+        el.addEventListener('change', onChangeType);
+      });
+
+      document.getElementById('direction').querySelectorAll('input').forEach((el) => {
+        el.addEventListener('change', onChnageDirection);
+      });
+
+      const optsForm = document.getElementById('options');
+      optsForm.querySelectorAll('input[type=text], input[type=radio], select').forEach((el) => {
+        el.addEventListener('change', onChangeInputOption);
+      });
+      optsForm.querySelectorAll('textarea').forEach((el) => {
+        el.addEventListener('change', onChangeTextareaOption);
+      });
+      optsForm.querySelectorAll('.checkbox').forEach((el) => {
+        el.addEventListener('click', onClickCheckboxOptions);
+      });
+
+      switchPicker('input');
+    </script>
+  {% endblock %}
+  </body>
+</html>
