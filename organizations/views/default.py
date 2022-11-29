@@ -8,6 +8,7 @@ import pymongo
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib import messages
+import plotly.graph_objs as go
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
@@ -127,7 +128,9 @@ mycol = mydb["iiot"]
 mycol_sim = mydb["simulation_sensor_locations"]
 mycol_occu = mydb["occupants"]
 mycol_energy = mydb["energy_data"]
+mycol_energy_building = mydb["energy_building"]
 mycol_schedule = mydb["schedules"]
+mycol_tariff = mydb["tariffs"]
 
 
 def viewDashboard(request, organization_pk):
@@ -494,7 +497,159 @@ def viewSummary(request, organization_pk):
 
 def energyDash(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
-    context = {'business_detail': business_detail}
+    now = timezone.now()
+    current_month = datetime.now().month
+    month_start = datetime.today().replace(day=1)
+    month_start_strft = month_start.strftime('%Y-%m-%d')
+    current_month_strft = month_start.strftime('%B')
+    print(month_start)
+    current_date = datetime.today()
+    current_date_strft = current_date.strftime('%Y-%m-%d')
+    print(current_date)
+
+    diff = current_date - month_start
+    actual_diff = diff.days + 1
+
+    tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
+    tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
+    # print(tariff['anytime'])
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': current_date_strft}})
+
+    ener_data = pd.DataFrame(energy_building)
+    # print(ener_data.count())
+    #
+    en_main_data = ener_data['data']
+
+
+    energy_dt = []
+    for i in en_main_data:
+        res = i['electricity']
+        energy_dt.append(res)
+    elec_sum = sum(energy_dt)
+    print(elec_sum)
+    # print(tariff_elec['anytime'])
+    tariff_cost_elec = elec_sum * tariff_elec['anytime'] / 100
+    print("Tarriffs Cost", tariff_cost_elec)
+    standing_charge_elec = actual_diff * tariff_elec['standing_cnarge'] / 100
+    print(standing_charge_elec)
+
+    cost_elec = tariff_cost_elec + standing_charge_elec
+    print(cost_elec)
+
+    gas_dt = []
+    for i in en_main_data:
+        res = i['gas']
+        gas_dt.append(res)
+    gas_sum = sum(gas_dt)
+    # print(gas_sum)
+
+    tariff_cost_gas = gas_sum * tariff_gas['anytime'] / 100
+    standing_charge_gas =  actual_diff * tariff_gas['standing_cnarge'] / 100
+    cost_gas = tariff_cost_gas + standing_charge_gas
+    print(cost_gas)
+
+    total_cost = cost_elec + cost_gas
+    print("Total Cost is:", total_cost)
+
+
+    # CHANGE IN COST
+    current_month = datetime.now().month
+    month_start = datetime.today().replace(day=1)
+
+    first = now.replace(day=1)
+    first_month = first - timedelta(days=31)
+    first_month_strft = first_month.strftime('%Y-%m-%d')
+    last_month = first - timedelta(days=1)
+    last_month_strft = last_month.strftime('%Y-%m-%d')
+    last_month_var = last_month.strftime("%B")
+    print("Last Month First Day", first_month)
+    print("Last Month Last Day", last_month)
+    energy_building_lm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': first_month_strft, '$lte': last_month_strft}})
+    ener_data_lm = pd.DataFrame(energy_building_lm)
+    en_main_data_lm = ener_data_lm['data']
+
+
+    energy_dt_lm = []
+    for i in en_main_data_lm:
+        res = i['electricity']
+        energy_dt_lm.append(res)
+    elec_sum_lm = sum(energy_dt_lm)
+    print("Last Month ELEC Sum", elec_sum_lm)
+
+    tariff_cost_elec_lm = elec_sum_lm * tariff_elec['anytime'] / 100
+    print("Tarriffs Cost Last Month", tariff_cost_elec_lm)
+    standing_charge_elec_lm = 31 * tariff_elec['standing_cnarge'] / 100
+    print(standing_charge_elec_lm)
+
+    cost_elec_lm = tariff_cost_elec_lm + standing_charge_elec_lm
+    print(cost_elec_lm)
+
+
+    energy_gas_dt_lm = []
+    for i in en_main_data_lm:
+        res = i['gas']
+        energy_gas_dt_lm.append(res)
+    gas_sum_lm = sum(energy_gas_dt_lm)
+    print("Last Month GAS Sum", gas_sum_lm)
+
+    tariff_cost_gas_lm = gas_sum_lm * tariff_gas['anytime'] / 100
+    print("Tarriffs Cost Last Month", tariff_cost_gas_lm)
+    standing_charge_gas_lm = 31 * tariff_gas['standing_cnarge'] / 100
+    print(standing_charge_gas_lm)
+
+    cost_gas_lm = tariff_cost_gas_lm + standing_charge_gas_lm
+    print(cost_gas_lm)
+
+    total_cost_cic_lm = cost_elec_lm + cost_gas_lm
+    print("Total Cost Last Month:", total_cost_cic_lm)
+
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-11-30'}})
+    ener_data_cm = pd.DataFrame(energy_building_cm)
+    en_main_data_cm = ener_data_cm['data']
+
+    first = now.replace(day=1)
+    c_month = first - timedelta(days=31)
+    c_strft = first_month.strftime('%Y-%m-%d')
+    last_month = first - timedelta(days=1)
+    last_month_strft = last_month.strftime('%Y-%m-%d')
+
+    energy_dt_cm = []
+    for i in en_main_data_cm:
+        res = i['electricity']
+        energy_dt_cm.append(res)
+    elec_sum_cm = sum(energy_dt_cm)
+    print("Current Month ELEC Sum", elec_sum_cm)
+
+    energy_gas_dt_cm = []
+    for i in en_main_data_cm:
+        res = i['gas']
+        energy_gas_dt_cm.append(res)
+    gas_sum_cm = sum(energy_gas_dt_cm)
+    print("Current Month GAS Sum", gas_sum_cm)
+
+
+    tariff_cost_elec_cm = elec_sum_cm * tariff_elec['anytime'] / 100
+    print("", tariff_cost_elec_cm)
+    standing_charge_elec_cm = 31 * tariff_elec['standing_cnarge'] / 100
+    print(standing_charge_elec_cm)
+
+    cost_elec_cm = tariff_cost_elec_cm + standing_charge_elec_cm
+    print("Cost Elec Current Month", cost_elec_cm)
+
+    tariff_cost_gas_cm = gas_sum_cm * tariff_gas['anytime'] / 100
+    # print("Tarriffs Cost Gas Current Month", tariff_cost_gas_cm)
+    standing_charge_gas_cm = 31 * tariff_gas['standing_cnarge'] / 100
+    print(standing_charge_gas_cm)
+
+    cost_gas_cm = tariff_cost_gas_cm + standing_charge_gas_cm
+    print("Cost Gas Current Month", cost_gas_cm)
+
+    total_cost_cic = cost_elec_cm + cost_gas_cm
+    print("Total Cost is:", total_cost_cic)
+    # any_time_cost = tariff.anytime
+    context = {'business_detail': business_detail, 'cost_elec':cost_elec, 'cost_gas':cost_gas, 'total_cost':total_cost,
+               'total_cost_cic_lm':total_cost_cic_lm, 'total_cost_cic':total_cost_cic, 'last_month_var':last_month_var,
+               'current_month_strft':current_month_strft}
     return render(request, 'energy.htm', context)
 
 def energyDetail(request, organization_pk):
@@ -584,13 +739,17 @@ def Scheduling(request, organization_pk):
 def SchedulingList(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     main_data = mycol_schedule.find()
+
+    if request.method == 'POST':
+        print(request.POST.get('ref_id'))
     context = {'business_detail': business_detail, 'main_data':main_data}
     return render(request, 'scheduling_list.html', context)
 
 def SchedulingDetail(request, organization_pk):
+    print(request.POST.get('ref_id'))
     business_detail = get_object_or_404(Organization, id=organization_pk)
     schedule = mycol_schedule.find_one(
-        {'ref_id': 'DMC02-CWS_SD001'},
+        {'ref_id': request.POST.get('ref_id')},
         sort=[('_id', pymongo.DESCENDING)])
     context = {'schedule':schedule, 'business_detail': business_detail}
     return render(request, 'scheduling_detail.html', context)
@@ -598,33 +757,13 @@ def SchedulingDetail(request, organization_pk):
 def Tariffs(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     if request.method == 'POST':
-        form = joinForm(request.POST)
-        if request.method == 'POST':
-            form = joinForm(request.POST, request.FILES)
-            if form.is_valid():
-                name = form.cleaned_data.get('name')
-                email = form.cleaned_data.get('email')
-                template = render_to_string('main_app/email_template.html', {'name': name})
+        mylist = [
+            {"ref_id": "DMC02-T1", "user_id": f"{request.user.id}/{request.user.username}", "timestamp": datetime.now(), "business": "Digital Media Centre", "building": "DMC02", "data_of": "tariffs", "energy_type": "electricity", "energy_company_name": request.POST.get('energy_company_name1'), "other": request.POST.get('other1'), "meter point_admin_no": request.POST.get('mpan1'), "product_name": request.POST.get('product_name1'), "product_type": request.POST.get('product_type1'), "product_end_date": request.POST.get('product_end_date1'), "vat": request.POST.get('vat1'), "anytime": request.POST.get('any_time_elec'), "standing_cnarge": request.POST.get('standing_charges_elec')},
+            {"ref_id": "DMC02-T1", "user_id": f"{request.user.id}/{request.user.username}", "timestamp": datetime.now(), "business": "Digital Media Centre", "building": "DMC02", "data_of": "tariffs", "energy_type": "gas", "energy_company_name": request.POST.get('energy_company_name2'), "other": request.POST.get('other2'), "meter point_admin_no": request.POST.get('mpan2'), "product_name": request.POST.get('product_name2'), "product_type": request.POST.get('product_type2'), "product_end_date": request.POST.get('product_end_date2'), "vat": request.POST.get('vat2'), "anytime": request.POST.get('any_time_gas'), "standing_cnarge": request.POST.get('standing_charges_gas')},
 
-                email = EmailMessage(
-                    'Thank you for your interest.',
-                    template,
-                    settings.EMAIL_HOST_USER,
-                    [email],
-                )
-
-                email.fail_silently = False
-                email.content_subtype = 'html'
-                email.send()
-                form.save()
-                messages.success(request, 'Business Customer Added successfully!')
-                return redirect('organization_list')
-            else:
-                messages.error(request, 'Something Went Wrong! Carefully Check Configuration Setting...')
-    else:
-
-        form = joinForm()
-    context = {'form': form, 'business_detail':business_detail}
+        ]
+        rec_id1 = mycol_tariff.insert_many(mylist)
+    context = {'business_detail':business_detail}
     return render(request, 'tariffs.html', context)
 
 

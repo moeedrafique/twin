@@ -21,15 +21,38 @@
                           <div class="main-body">
                             <div class="page-wrapper">
                                 <!-- Page-header start -->
+                                <div style="background-color:#26ceba8c;" class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">HVAC</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Tariffs</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                                 <div class="tab-bar mb-3">
                                     <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
                                                 {% for post_category in post_category|slice:":1" %}
-                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Localised Flow Distribution</button></a></li>
+                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
                                                 {% endfor %}
                                                 {% for post_category in post_category|slice:":1" %}
-                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Air Terminals</button></a></li>
+                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Users</button></a></li>
+                                                {% endfor %}
+                                                  {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Admin</button></a></li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
@@ -103,10 +126,13 @@
                                                                         ><i class="fa fa-ellipsis-v"></i>
                                                                         </a>
                                                                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(23px, 27px, 0px);">
-                                                                        <a href="" class="dropdown-item edit_click">
-                                                                        <i class="fa fa-pencil m-r-5"></i>View Details </a>
-                                                                        <a href="" class="dropdown-item edit_click">
-                                                                            <i class="fa fa-edit m-r-5"></i>Edit Details</a>
+                                                                                                                                    <form action="{% url 'scheduling_detail' business_detail.pk %}" method="post">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" value="{{ i.ref_id }}" name="ref_id"/>
+                                                                                                              <button type="submit" class="dropdown-item edit_click">
+
+                                                                            <i class="fa fa-pencil m-r-5"></i>View Details</button>
+                                                                                                                                         </form>
                                                                         </div>
                                                                         </div><style>.dropdown-toggle::after{display:none;}</style></td>
                                                             </tr>

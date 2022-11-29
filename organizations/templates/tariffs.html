@@ -51,17 +51,45 @@
                                                                 <div class="card">
                                         <div class="card-header table-card-header">
                                 <hr>
-                                <div class="tab-bar">
+                                                                <div style="background-color:#26ceba8c;" class="tab-bar mb-3">
                                     <div class="flex-contianer" style="display: flex; justify-content: space-between">
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
-                                                <li><button disabled="" href="#" class="btn-primary btn-sm mt-1">{{ business_detail.unique_business.uniqueId }}</button></li>
                                             </ul>
                                         </div>
                                         <div class="right-btn">
                                             <ul class="tab-bar-ul">
-                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>
-                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1">HVAC</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Tariffs</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Users</button></a></li>
+                                                {% endfor %}
+                                                  {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Admin</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
 
 
                                             </ul>
@@ -75,10 +103,20 @@
 
                         </div>
                         </div>
-                        <div class="col-sm-12 col-md-12">
-                            <form class="business-detail" method="POST" action="" novalidate="" enctype="multipart/form-data">
+                                                                        <form class="business-detail" method="POST" action="" novalidate="" enctype="multipart/form-data">
                             {% csrf_token %}
+                        <div class="col-sm-12 col-md-12">
                                 <div class="row">
+                                    <div class="col-sm-12">
+                                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                            <h4>TARIFFS</h4>
+                                <hr>
+                                <div class="mb-1"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
                                     <div class="col-sm-6">
                                         <div class="row">
                                             <div class="col-sm-12">
@@ -92,44 +130,53 @@
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="energy_company_name" maxlength="256" class="form-control fc-c" placeholder="Energy Company Name" required="">                                                        </div>
+                                                                        <input type="text" name="energy_company_name1" maxlength="256" class="form-control fc-c" placeholder="Energy Company Name" required="">                                                        </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="other" maxlength="256" class="form-control fc-c" placeholder="Other" required="">                                                        </div>
+                                                                        <input type="text" name="other1" maxlength="256" class="form-control fc-c" placeholder="Other" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="mpan" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
+                                                                        <input type="text" name="mpan1" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_name" maxlength="256" class="form-control fc-c" placeholder="Product Name" required="">                                                        </div>
+                                                                        <input type="text" name="product_name1" maxlength="256" class="form-control fc-c" placeholder="Product Name" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_type" maxlength="256" class="form-control fc-c" placeholder="Product Type" required="">                                                        </div>
+                                                                        <input type="text" name="product_type1" maxlength="256" class="form-control fc-c" placeholder="Product Type" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_end_date" maxlength="256" class="form-control fc-c" placeholder="Product End Date" required="">                                                        </div>
+                                                                        <input type="text" name="product_end_date1" maxlength="256" class="form-control fc-c" placeholder="Product End Date" required="">                                                        </div>
                                                                     </div>
                                                                 <hr>
                                                                 <div class="mb-5"></div>
+                                                                </div>
+
+                                                            <div class="col-lg-12">
+                                                                <div class="row g-3 align-items-center">
+                                                                    <div class="col-auto">
+                                                                        <h6>TARIFF / RATE</h6>                                                       </div>
+                                                                    <div class="col-auto">
+                                                                       VAT Included  <input type="checkbox" name="vat1"/>                                                    </div>
+                                                                    </div>
                                                                 </div>
 
 
@@ -172,58 +219,66 @@
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="energy_company_name" maxlength="256" class="form-control fc-c" placeholder="Energy Company Name" required="">                                                        </div>
+                                                                        <input type="text" name="energy_company_name2" maxlength="256" class="form-control fc-c" placeholder="Energy Company Name" required="">                                                        </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="other" maxlength="256" class="form-control fc-c" placeholder="Other" required="">                                                        </div>
+                                                                        <input type="text" name="other2" maxlength="256" class="form-control fc-c" placeholder="Other" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="mpan" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
+                                                                        <input type="text" name="mpan2" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_name" maxlength="256" class="form-control fc-c" placeholder="Product Name" required="">                                                        </div>
+                                                                        <input type="text" name="product_name2" maxlength="256" class="form-control fc-c" placeholder="Product Name" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_type" maxlength="256" class="form-control fc-c" placeholder="Product Type" required="">                                                        </div>
+                                                                        <input type="text" name="product_type2" maxlength="256" class="form-control fc-c" placeholder="Product Type" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="product_end_date" maxlength="256" class="form-control fc-c" placeholder="Product End Date" required="">                                                        </div>
+                                                                        <input type="text" name="product_end_date2" maxlength="256" class="form-control fc-c" placeholder="Product End Date" required="">                                                        </div>
                                                                     </div>
                                                                 <hr>
                                                                 <div class="mb-5"></div>
                                                                 </div>
 
-
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
-                                                                    <div class="col-auto ml-5">
-                                                                        <input type="text" name="any_time_elec" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
+                                                                    <div class="col-auto">
+                                                                        <h6>TARIFF / RATE</h6>                                                       </div>
+                                                                    <div class="col-auto">
+                                                                       VAT Included  <input type="checkbox" name="vat2"/>                                                    </div>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="col-lg-12">
                                                                 <div class="row g-3 align-items-center">
                                                                     <div class="col-auto ml-5">
-                                                                        <input type="text" name="standing_charges_elec" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
+                                                                        <input type="text" name="any_time_gas" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            <div class="col-lg-12">
+                                                                <div class="row g-3 align-items-center">
+                                                                    <div class="col-auto ml-5">
+                                                                        <input type="text" name="standing_charges_gas" maxlength="256" class="form-control fc-c" placeholder="" required="">                                                        </div>
                                                                     </div>
                                                                 </div>
 
@@ -240,10 +295,12 @@
                                         </div>
                                     </div><!--col-sm-6 ends here-->
                                 </div>
-                            </form>
 
 
-                            <div class="col-sm-12">
+
+
+                        </div>
+                                                                            <div class="col-sm-12">
                                                                 <div class="card">
                                         <div class="card-header table-card-header">
                                 <hr>
@@ -257,9 +314,8 @@
 
                         </div><!--col-sm-12 ends here-->
                         </div><!--col-sm-12 ends here-->
-                        </div>
 
-                                            </div>
+                              </form>              </div>
                                         </div>
                                     </div>
                                     <!-- Page-body end -->
