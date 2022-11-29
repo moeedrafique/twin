@@ -756,6 +756,8 @@ def SchedulingDetail(request, organization_pk):
 
 def Tariffs(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
+    tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
+    tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     if request.method == 'POST':
         mylist = [
             {"ref_id": "DMC02-T1", "user_id": f"{request.user.id}/{request.user.username}", "timestamp": datetime.now(), "business": "Digital Media Centre", "building": "DMC02", "data_of": "tariffs", "energy_type": "electricity", "energy_company_name": request.POST.get('energy_company_name1'), "other": request.POST.get('other1'), "meter point_admin_no": request.POST.get('mpan1'), "product_name": request.POST.get('product_name1'), "product_type": request.POST.get('product_type1'), "product_end_date": request.POST.get('product_end_date1'), "vat": request.POST.get('vat1'), "anytime": request.POST.get('any_time_elec'), "standing_cnarge": request.POST.get('standing_charges_elec')},
@@ -763,7 +765,7 @@ def Tariffs(request, organization_pk):
 
         ]
         rec_id1 = mycol_tariff.insert_many(mylist)
-    context = {'business_detail':business_detail}
+    context = {'business_detail':business_detail, 'tariff_elec':tariff_elec, 'tariff_gas':tariff_gas}
     return render(request, 'tariffs.html', context)
 
 
