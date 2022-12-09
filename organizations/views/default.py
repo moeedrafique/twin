@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import base64
+import codecs
 from statistics import mean
 
 import gridfs
@@ -335,24 +337,8 @@ def viewSummary(request, organization_pk):
     previous_end = now - timedelta(days=1)
     # all_records = mycol.find({'timestamp': {"$lt": now - timedelta(hours=24)}}).sort('_id',-1).limit(96)
     # all_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id', -1).limit(1)
-    today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}})
-    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start,"$lte": previous_end}})
-
-    # print(dt)
-    #
-    # data = pd.DataFrame(today_sim_dt)
-    # # print(data)
-    # main_data = data['data']
-    # ahu = []
-    # for i in main_data:
-    #     res = i["SF1_2boundary"] + i["SF2_2boundary"] + i["AHU_OUTboundary"] + i["EG1_1boundary"] + i[
-    #         "FCU_INboundary"] + i["MAIN_DOORboundary"] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + \
-    #           i['SG4_2boundary'] + i['SG5_2boundary'] + \
-    #           i['SG6_2boundary']
-    #     mean_first_inlet = res / 12
-    #     ahu.append(mean_first_inlet)
-    #
-    # avg_temp_ahu = np.mean(ahu)
+    today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'})
+    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'})
 
     today_sim_dt = []
     for c in today_sim_records:
@@ -364,10 +350,11 @@ def viewSummary(request, organization_pk):
     #
     today_sim_total = []
     for i in today_sim_main_data:
-        res = i["SF1_2boundary"] + i["SF2_2boundary"] + i["AHU_OUTboundary"] + i["EG1_1boundary"] + i[
-            "FCU_INboundary"] + i["MAIN_DOORboundary"] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + \
-              i['SG4_2boundary'] + i['SG5_2boundary'] + \
-              i['SG6_2boundary']
+        res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+            "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                  'sg3_2'] + \
+              i['sg4_2'] + i['sg5_2'] + \
+              i['sg6_2']
         today_sim_total.append(res)
     today_avg = mean(today_sim_total)
     # print(today_avg)
@@ -382,46 +369,26 @@ def viewSummary(request, organization_pk):
     #
     yesterday_sim_total = []
     for i in yesterday_sim_main_data:
-        res = i["SF1_2boundary"] + i["SF2_2boundary"] + i["AHU_OUTboundary"] + i["EG1_1boundary"] + i[
-            "FCU_INboundary"] + i["MAIN_DOORboundary"] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + \
-              i['SG4_2boundary'] + i['SG5_2boundary'] + \
-              i['SG6_2boundary']
+        res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+            "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                  'sg3_2'] + \
+              i['sg4_2'] + i['sg5_2'] + \
+              i['sg6_2']
         yesterday_sim_total.append(res)
     yesterday_avg = mean(yesterday_sim_total)
     # print(yesterday_avg)
 
     subtract_temp = (yesterday_avg - today_avg)
     divide_temp = (subtract_temp / yesterday_avg) * 100
-    change_in_temp = "{:.2f}".format(divide_temp).replace("-","")
+    change_in_temp = "{:.2f}".format(divide_temp).replace("-", "")
     if divide_temp > 0:
         temp_class_name = "feather icon-arrow-up m-r-15"
     else:
         temp_class_name = "feather icon-arrow-down m-r-15"
-    # print(change_in_temp)
-    # fcu_3 = []
-    # for i in main_data:
-    #     res = i['fcu_3'][0]
-    #     fcu_3.append(res)
-    #
-    # avg_temp_fcu_3 = np.mean(fcu_3)
-    #
-    # fcu_4 = []
-    # for i in main_data:
-    #     res = i['fcu_4'][0]
-    #     fcu_4.append(res)
-    #
-    # avg_temp_fcu_4 = np.mean(fcu_4)
-    #
-    # # FLOW RATE / Comfort
-    # ahu_fr = []
-    # for i in main_data:
-    #     res = i['ahu'][1]
-    #     ahu_fr.append(res)
 
-    # avg_ahu_fr = np.mean(ahu_fr)
-
-    today_energy_records = mycol_energy.find({'ref_id': 'DMC02', 'timestamp': {'$gte': today_start, '$lte':today_end}})
-    yesterday_energy_records = mycol_energy.find({'ref_id': 'DMC02', 'timestamp': {'$gte': previous_start,"$lte": previous_end}})
+    today_energy_records = mycol_energy.find({'ref_id': 'DMC02'})
+    yesterday_energy_records = mycol_energy.find(
+        {'ref_id': 'DMC02'})
     energy_dt = []
     for c in today_energy_records:
         energy_dt.append(c)
@@ -436,9 +403,6 @@ def viewSummary(request, organization_pk):
         today_total.append(res)
     today_sum = sum(today_total)
     # print(today_sum)
-
-
-
 
     yesterdy_energy_dt = []
     for c in yesterday_energy_records:
@@ -455,10 +419,9 @@ def viewSummary(request, organization_pk):
     yesterday_sum = sum(yesterday_today_total)
     # print(yesterday_sum)
 
-
     subtract_energies = (yesterday_sum - today_sum)
     divide_energy = (subtract_energies / yesterday_sum) * 100
-    change_in_energy = "{:.2f}".format(divide_energy).replace("-","")
+    change_in_energy = "{:.2f}".format(divide_energy).replace("-", "")
     # print(change_in_energy)
     if divide_energy > 0:
         energy_class_name = "feather icon-arrow-up m-r-15"
@@ -481,17 +444,26 @@ def viewSummary(request, organization_pk):
         {'filename.business': 'Digital Media Centre', 'filename.type': blob_name}, sort=[('_id', pymongo.DESCENDING)])
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
-    blob_output = blob_output_data.decode()
+    # blob_output = blob_output_data.decode()
+    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
+    outputFile.write(blob_output_data)
+    outputFile.close()
 
     floor_name = "floorplan"
     floor_filename_obj = mydb.fs.files.find_one(
         {'filename.business': 'Digital Media Centre', 'filename.type': floor_name}, sort=[('_id', pymongo.DESCENDING)])
     floor_filename_id = floor_filename_obj['_id']
     floor_output_data = fs.get(floor_filename_id).read()
-    floor_output = floor_output_data.decode()
+    # floor_output = floor_output_data.decode()
+    outputFile1 = codecs.open(location + f"{floor_name}.jpeg", "wb")
+    outputFile1.write(floor_output_data)
+    outputFile1.close()
 
-    context = {"energy_dt": energy_dt, 'blob_output': blob_output, 'floor_output': floor_output, 'energy_class_name':energy_class_name,
-               "change_in_temp":change_in_temp, "change_in_energy":change_in_energy, 'temp_class_name':temp_class_name}
+    context = {"energy_dt": energy_dt,
+               'energy_class_name': energy_class_name,
+               "change_in_temp": change_in_temp, "change_in_energy": change_in_energy,
+               'temp_class_name': temp_class_name}
     template = 'summary.html'
     return render(request, template, context)
 
@@ -519,14 +491,18 @@ def energyDash(request, organization_pk):
     # print(ener_data.count())
     #
     en_main_data = ener_data['data']
-
+    time_main_data = ener_data['datetime']
+    print(time_main_data)
+    time_dt = []
+    for i in time_main_data:
+        time_dt.append(i)
 
     energy_dt = []
     for i in en_main_data:
         res = i['electricity']
         energy_dt.append(res)
     elec_sum = sum(energy_dt)
-    print(elec_sum)
+    print("EDT", energy_dt)
     # print(tariff_elec['anytime'])
     tariff_cost_elec = elec_sum * tariff_elec['anytime'] / 100
     print("Tarriffs Cost", tariff_cost_elec)
@@ -603,7 +579,7 @@ def energyDash(request, organization_pk):
     total_cost_cic_lm = cost_elec_lm + cost_gas_lm
     print("Total Cost Last Month:", total_cost_cic_lm)
 
-    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-11-30'}})
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-12-31'}})
     ener_data_cm = pd.DataFrame(energy_building_cm)
     en_main_data_cm = ener_data_cm['data']
 
@@ -647,9 +623,12 @@ def energyDash(request, organization_pk):
     total_cost_cic = cost_elec_cm + cost_gas_cm
     print("Total Cost is:", total_cost_cic)
     # any_time_cost = tariff.anytime
+
+    total_energy_usuage = energy_dt + gas_dt
+    print(total_energy_usuage)
     context = {'business_detail': business_detail, 'cost_elec':cost_elec, 'cost_gas':cost_gas, 'total_cost':total_cost,
                'total_cost_cic_lm':total_cost_cic_lm, 'total_cost_cic':total_cost_cic, 'last_month_var':last_month_var,
-               'current_month_strft':current_month_strft}
+               'current_month_strft':current_month_strft, 'total_energy_usuage':total_energy_usuage, 'time_dt':time_dt}
     return render(request, 'energy.htm', context)
 
 def energyDetail(request, organization_pk):
@@ -675,19 +654,27 @@ def FlowDistribution(request, organization_pk):
     fs = gridfs.GridFS(mydb)
 
     blob_name = "boxes"
-    blob_filename_obj = mydb.fs.files.find_one({'filename.business':business_detail.name, 'filename.type': blob_name}, sort=[( '_id', pymongo.DESCENDING )])
+    blob_filename_obj = mydb.fs.files.find_one(
+        {'filename.business': 'Digital Media Centre', 'filename.type': blob_name}, sort=[('_id', pymongo.DESCENDING)])
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
-    blob_output = blob_output_data.decode()
+    # blob_output = blob_output_data.decode()
+    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
+    outputFile.write(blob_output_data)
+    outputFile.close()
 
     floor_name = "floorplan"
-    floor_filename_obj = mydb.fs.files.find_one({'filename.business':business_detail.name, 'filename.type': floor_name}, sort=[( '_id', pymongo.DESCENDING )])
+    floor_filename_obj = mydb.fs.files.find_one(
+        {'filename.business': 'Digital Media Centre', 'filename.type': floor_name}, sort=[('_id', pymongo.DESCENDING)])
     floor_filename_id = floor_filename_obj['_id']
     floor_output_data = fs.get(floor_filename_id).read()
-    floor_output = floor_output_data.decode()
-    # print(floor_output)
+    # floor_output = floor_output_data.decode()
+    outputFile1 = codecs.open(location + f"{floor_name}.jpeg", "wb")
+    outputFile1.write(floor_output_data)
+    outputFile1.close()
 
-    context = {'business_detail': business_detail, 'blob_output':blob_output, 'floor_output':floor_output}
+    context = {'business_detail': business_detail}
     return render(request, 'local_flow.html', context)
 
 

@@ -123,10 +123,9 @@
             <option value="red">Flow Rate</option>
         </select>
 
-            <div class="colors {% plotly_class name="temp_vent_data" %}" style="height:100%;width: 100%;" id="blue">
-          {% plotly_app name='temp_vent_data' ratio=0.65 %}
-       </div>
-
+        <div class="colors {% plotly_class name="temp_vent_data" %}" style="height:100%;width: 100%;" id="blue">
+        {% plotly_app name='temp_vent_data' ratio=0.65 %}
+        </div>
 
 </div>
                                                 <script>
@@ -202,11 +201,11 @@
                                                 <div class="card" style="height:465px;" >
                                                     <div class="card-header">
                                                         <h5>Energy Usage</h5>
-                                                        {% comment %}
+
                                                             <div class="colors {% plotly_class name="energy" %}" style="height:100%;width: 100%;">
                                                               {% plotly_app name='energy' ratio=0.65 %}
                                                           </div>
-                                                        {% endcomment %}
+
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
@@ -274,10 +273,10 @@
                                                             <div class="mb-1"></div>
                                                         <div class="col-sm-12 col-md-12">
                                                         <div id="floorplan" class="svg_div floor_svg">
-                                                            {{floor_output|safe}}
+                                                            <img width="100%" height="100%" alt="sample" src="{% static 'img/floorplan.jpeg' %}">
                                                         </div>
                                                         <div id="seating" class="svg_div blob_svg" style="display:none;">
-                                                            {{blob_output|safe}}
+                                                            <img width="100%" height="100%" alt="sample" src="{% static 'img/boxes.jpeg' %}">
                                                         </div>
 
                                                         </div>

@@ -143,7 +143,11 @@ options: {
                                                     <div class="col-lg-4">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
-                                                                <img style="width: 100%; height: 370px" src="{% static 'img/usage_estimate.png' %}"/>
+                                                                <h6>Usuage Estimation</h6>
+                                                                <div style="width: 100%; height: 370px background: #1f335a;">
+                                                                <canvas id="oilChart3" width="600" height="400"></canvas>
+                                                                    <p class="text-center mt-4 white">Change In Cost:  &#xa3 {{total_cost|floatformat:0}}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -154,6 +158,44 @@ options: {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <script>
+                                                        var oilCanvas = document.getElementById("oilChart3");
+
+var oilData = {
+    labels: ["a","b","c","d","e","f"],
+    datasets: [
+        {
+            data: {{total_energy_usuage}},
+            backgroundColor: [
+                "#57e2c2",
+                "#fae93a",
+                "#fae93a",
+                "#fae93a",
+                "#fae93a",
+                "#fae93a",
+            ]
+        }],
+
+};
+
+var pieChart = new Chart(oilCanvas, {
+  type: 'bar',
+  data: oilData,
+options: {
+         legend: {
+            display: false
+         },
+    	scales: {
+        	yAxes: [{
+            	ticks: {
+                	beginAtZero: true
+            	}
+        	}]
+    	}
+	}
+
+});
+                                                    </script>
                                                     <div class="col-lg-4">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">

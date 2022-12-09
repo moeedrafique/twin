@@ -68,7 +68,7 @@ data = pd.DataFrame(occu_dt)
 main_data = data['data']
 
 for i in main_data:
-    res = i['AHU_OUTboundary'] + i['SF1_2boundary'] + i['SF2_2boundary'] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + i['SG4_2boundary'] + i['SG5_2boundary'] + i['SG6_2boundary']
+    res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i['sg1_1'] + i['sg2_2'] + i['sg3_2'] + i['sg4_2'] + i['sg5_2'] + i['sg6_2']
     mean_first_inlet = res / 9
     yy.append(mean_first_inlet)
 # print(len(yy))
@@ -91,7 +91,7 @@ def read_stream():
     ):
         x = change["fullDocument"]
         i = x['data']
-        add_sg = i['AHU_OUTboundary'] + i['SF1_2boundary'] + i['SF2_2boundary'] + i['SG1_1boundary'] + i['SG2_2boundary'] + i['SG3_2boundary'] + i['SG4_2boundary'] + i['SG5_2boundary'] + i['SG6_2boundary']
+        add_sg = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i['sg1_1'] + i['sg2_2'] + i['sg3_2'] + i['sg4_2'] + i['sg5_2'] + i['sg6_2']
         mean_sg = add_sg / 9
         yy.append(mean_sg)
 
