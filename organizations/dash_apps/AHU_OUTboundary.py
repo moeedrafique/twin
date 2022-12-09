@@ -39,7 +39,7 @@ import threading
 myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
-mycol_energy = mydb["energy_data"]
+mycol_energy = mydb["energy_building"]
 #
 app = DjangoDash("energy")
 
@@ -62,7 +62,7 @@ html.Div([
 now = timezone.now()
 today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1).limit(30)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy'}).sort('_id',-1).limit(3)
 #
 
 

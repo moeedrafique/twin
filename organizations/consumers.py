@@ -50,11 +50,11 @@ class GraphConsumer(WebsocketConsumer):
             #
             today_sim_total = []
             for i in today_sim_main_data:
-                res = i["SF1_2boundary"] + i["SF2_2boundary"] + i["AHU_OUTboundary"] + i["EG1_1boundary"] + i[
-                    "FCU_INboundary"] + i["MAIN_DOORboundary"] + i['SG1_1boundary'] + i['SG2_2boundary'] + i[
-                          'SG3_2boundary'] + \
-                      i['SG4_2boundary'] + i['SG5_2boundary'] + \
-                      i['SG6_2boundary']
+                res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+                    "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                          'sg3_2'] + \
+                      i['sg4_2'] + i['sg5_2'] + \
+                      i['sg6_2']
                 today_sim_total.append(res)
             today_avg = mean(today_sim_total)
             print(today_avg)
@@ -69,11 +69,11 @@ class GraphConsumer(WebsocketConsumer):
             #
             yesterday_sim_total = []
             for i in yesterday_sim_main_data:
-                res = i["SF1_2boundary"] + i["SF2_2boundary"] + i["AHU_OUTboundary"] + i["EG1_1boundary"] + i[
-                    "FCU_INboundary"] + i["MAIN_DOORboundary"] + i['SG1_1boundary'] + i['SG2_2boundary'] + i[
-                          'SG3_2boundary'] + \
-                      i['SG4_2boundary'] + i['SG5_2boundary'] + \
-                      i['SG6_2boundary']
+                res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+                    "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                          'sg3_2'] + \
+                      i['sg4_2'] + i['sg5_2'] + \
+                      i['sg6_2']
                 yesterday_sim_total.append(res)
             yesterday_avg = mean(yesterday_sim_total)
             print(yesterday_avg)
@@ -89,18 +89,18 @@ class GraphConsumer(WebsocketConsumer):
                     'fullDocument.business': 'Digital Media Centre',
                 }}]):
 
-                O1T0 = change["fullDocument"]["data"]["AHU_OUTboundary"]
-                O1T1 = change["fullDocument"]["data"]["EG1_1boundary"]
-                O2T1 = change["fullDocument"]["data"]["FCU_INboundary"]
-                O3T1 = change["fullDocument"]["data"]["MAIN_DOORboundary"]
-                O4T1 = change["fullDocument"]["data"]["SF1_2boundary"]
-                O5T1 = change["fullDocument"]["data"]["SF2_2boundary"]
-                O6T1 = change["fullDocument"]["data"]["SG1_1boundary"]
-                O7T1 = change["fullDocument"]["data"]["SG2_2boundary"]
-                O8T1 = change["fullDocument"]["data"]["SG3_2boundary"]
-                O1T2 = change["fullDocument"]["data"]["SG4_2boundary"]
-                O2T2 = change["fullDocument"]["data"]["SG5_2boundary"]
-                O3T2 = change["fullDocument"]["data"]["SG6_2boundary"]
+                O1T0 = change["fullDocument"]["data"]["ahu_out"]
+                O1T1 = change["fullDocument"]["data"]["eg1_1"]
+                O2T1 = change["fullDocument"]["data"]["fcu_in"]
+                O3T1 = change["fullDocument"]["data"]["main_door"]
+                O4T1 = change["fullDocument"]["data"]["sf1_2"]
+                O5T1 = change["fullDocument"]["data"]["sf2_2"]
+                O6T1 = change["fullDocument"]["data"]["sg1_1"]
+                O7T1 = change["fullDocument"]["data"]["sg2_2"]
+                O8T1 = change["fullDocument"]["data"]["sg3_2"]
+                O1T2 = change["fullDocument"]["data"]["sg4_2"]
+                O2T2 = change["fullDocument"]["data"]["sg5_2"]
+                O3T2 = change["fullDocument"]["data"]["sg6_2"]
 
                 data = [O1T0, O1T1, O2T1, O3T1, O4T1, O5T1, O6T1, O7T1, O8T1, O1T2, O2T2, O3T2]
 

@@ -106,7 +106,7 @@ MAIN_DOOR = []
 now = timezone.now()
 today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id',-1).limit(30)
+occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id',-1).limit(3)
 
 occu_dt = []
 for c in occupant_records:
@@ -115,53 +115,53 @@ for c in occupant_records:
 data = pd.DataFrame(occu_dt)
 
 main_data = data['data']
-
+print(main_data)
 for i in main_data:
-    res = i['SG1_1boundary']
+    res = i['sg1_1']
     SG1.append(res)
 
 for i in main_data:
-    res = i['SG2_2boundary']
+    res = i['sg2_2']
     SG2.append(res)
 
 for i in main_data:
-    res = i['SG3_2boundary']
+    res = i['sg3_2']
     SG3.append(res)
 
 for i in main_data:
-    res = i['SG4_2boundary']
+    res = i['sg4_2']
     SG4.append(res)
 
 for i in main_data:
-    res = i['SG5_2boundary']
+    res = i['sg5_2']
     SG5.append(res)
 
 for i in main_data:
-    res = i['SG6_2boundary']
+    res = i['sg6_2']
     SG6.append(res)
 
 for i in main_data:
-    res = i['SF1_2boundary']
+    res = i['sf1_2']
     SF1.append(res)
 
 for i in main_data:
-    res = i['SF2_2boundary']
+    res = i['sf2_2']
     SF2.append(res)
 
 for i in main_data:
-    res = i['EG1_1boundary']
+    res = i['eg1_1']
     EG1.append(res)
 
 for i in main_data:
-    res = i['FCU_INboundary']
+    res = i['fcu_in']
     FCU_IN.append(res)
 
 for i in main_data:
-    res = i['AHU_OUTboundary']
+    res = i['ahu_out']
     AHU_OUT.append(res)
 
 for i in main_data:
-    res = i['MAIN_DOORboundary']
+    res = i['main_door']
     MAIN_DOOR.append(res)
 
 for t in data['timestamp']:
@@ -181,41 +181,41 @@ def read_stream():
     ):
         x = change["fullDocument"]
         i = x['data']
-        sf1 = i['SF1_2boundary']
+        sf1 = i['sf1_2']
         # print(sf1)
         SF1.append(sf1)
 
-        sf2 = i['SF2_2boundary']
+        sf2 = i['sf2_2']
         SF2.append(sf2)
 
-        sg1 = i['SG1_1boundary']
+        sg1 = i['sg1_1']
         SG1.append(sg1)
 
-        sg2 = i['SG2_2boundary']
+        sg2 = i['sg2_2']
         SG2.append(sg2)
 
-        sg3 = i['SG3_2boundary']
+        sg3 = i['sg3_2']
         SG3.append(sg3)
 
-        sg4 = i['SG4_2boundary']
+        sg4 = i['sg4_2']
         SG4.append(sg4)
 
-        sg5 = i['SG5_2boundary']
+        sg5 = i['sg5_2']
         SG5.append(sg5)
 
-        sg6 = i['SG6_2boundary']
+        sg6 = i['sg6_2']
         SG6.append(sg6)
 
-        eg1 = i['EG1_1boundary']
+        eg1 = i['eg1_1']
         EG1.append(eg1)
 
-        ahu_out = i['AHU_OUTboundary']
+        ahu_out = i['ahu_out']
         AHU_OUT.append(ahu_out)
 
-        fcu_in = i['FCU_INboundary']
+        fcu_in = i['fcu_in']
         FCU_IN.append(fcu_in)
 
-        main_door = i['MAIN_DOORboundary']
+        main_door = i['main_door']
         MAIN_DOOR.append(main_door)
 
         time = x['timestamp']
