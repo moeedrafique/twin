@@ -129,7 +129,7 @@ mydb = myclient["twin_dynamics"]
 mycol = mydb["iiot"]
 mycol_sim = mydb["simulation_sensor_locations"]
 mycol_occu = mydb["occupants"]
-mycol_energy = mydb["energy_data"]
+mycol_energy = mydb["energy_building"]
 mycol_energy_building = mydb["energy_building"]
 mycol_schedule = mydb["schedules"]
 mycol_tariff = mydb["tariffs"]
@@ -337,8 +337,8 @@ def viewSummary(request, organization_pk):
     previous_end = now - timedelta(days=1)
     # all_records = mycol.find({'timestamp': {"$lt": now - timedelta(hours=24)}}).sort('_id',-1).limit(96)
     # all_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id', -1).limit(1)
-    today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'})
-    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'})
+    today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}})
+    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start, '$lte':previous_end}})
 
     today_sim_dt = []
     for c in today_sim_records:
@@ -386,9 +386,12 @@ def viewSummary(request, organization_pk):
     else:
         temp_class_name = "feather icon-arrow-down m-r-15"
 
-    today_energy_records = mycol_energy.find({'ref_id': 'DMC02'})
-    yesterday_energy_records = mycol_energy.find(
-        {'ref_id': 'DMC02'})
+
+    datetime_today = now.strftime('%Y-%m-%d')
+    calc_yesterday = now - timedelta(days=1)
+    datetime_yesterday = calc_yesterday.strftime('%Y-%m-%d')
+    today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': datetime_today})
+    yesterday_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': datetime_yesterday})
     energy_dt = []
     for c in today_energy_records:
         energy_dt.append(c)
@@ -485,7 +488,7 @@ def energyDash(request, organization_pk):
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
     tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     # print(tariff['anytime'])
-    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': current_date_strft}})
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-12-31'}})
 
     ener_data = pd.DataFrame(energy_building)
     # print(ener_data.count())

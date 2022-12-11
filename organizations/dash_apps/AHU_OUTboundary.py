@@ -60,9 +60,8 @@ html.Div([
 #
 #
 now = timezone.now()
-today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
-today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy'}).sort('_id',-1).limit(3)
+datetime_today = now.strftime('%Y-%m-%d')
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2022-12-01', '$lte': datetime_today}}).sort('_id',-1)
 #
 
 
@@ -111,7 +110,7 @@ for i in main_data:
 # print(elec)
 #
 time = []
-for t in data['timestamp']:
+for t in data['datetime']:
     # print(t)
     time.append(t)
 # print(len(time))
@@ -136,7 +135,7 @@ def read_stream():
         add_gas = sim_main_data['gas']
         gas.append(add_gas)
 
-        add_time = x['timestamp']
+        add_time = x['datetime']
         time.append(add_time)
 
 

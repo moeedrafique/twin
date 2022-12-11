@@ -146,7 +146,7 @@ options: {
                                                                 <h6>Usuage Estimation</h6>
                                                                 <div style="width: 100%; height: 370px background: #1f335a;">
                                                                 <canvas id="oilChart3" width="600" height="400"></canvas>
-                                                                    <p class="text-center mt-4 white">Change In Cost:  &#xa3 {{total_cost|floatformat:0}}</p>
+                                                                    <p class="text-center mt-4 white">{% now "F Y" %}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -162,7 +162,7 @@ options: {
                                                         var oilCanvas = document.getElementById("oilChart3");
 
 var oilData = {
-    labels: ["a","b","c","d","e","f"],
+    labels: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
     datasets: [
         {
             data: {{total_energy_usuage}},
@@ -186,6 +186,11 @@ options: {
             display: false
          },
     	scales: {
+    	    xAxes: [{
+                ticks: {
+                    fontSize: 12
+                }
+            }],
         	yAxes: [{
             	ticks: {
                 	beginAtZero: true
