@@ -448,7 +448,7 @@ def viewSummary(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    location = '/home/moeedrafique/twin/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -662,7 +662,7 @@ def FlowDistribution(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    location = '/home/moeedrafique/twin/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -758,6 +758,8 @@ def Tariffs(request, organization_pk):
     context = {'business_detail':business_detail, 'tariff_elec':tariff_elec, 'tariff_gas':tariff_gas}
     return render(request, 'tariffs.html', context)
 
+def underConstruction(request):
+    return render(request, 'under_conc.html')
 
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):

@@ -14,36 +14,34 @@
                             <!-- Main-body start -->
                         <div class="main-body">
                             <div class="page-wrapper">
-                                <!-- Page-header start -->
-                                <div class="page-header">
-                                    <div class="row align-items-end">
-                                        <div class="col-lg-8">
-                                            <div class="page-header-title">
-                                                <div class="d-inline">
-                                                        {% block organization %}
-                                                        <h4>All Members - ({{ organization }})</h4>
-                                                        {% endblock %}
-                                                    <span>This is a list of all the business customers.</span>
-                                                </div>
-                                            </div>
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'organization_detail' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'organization_user_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Users</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Admin</button></a></li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="page-header-breadcrumb">
-                                                <ul class="breadcrumb-title">
-                                                    <li class="breadcrumb-item">
-                                                        {% if user.is_superuser %}
-                                                        <a href=""> <i class="feather icon-home"></i></a>
-                                                        {% else %}
-                                                        <a href=""> <i class="feather icon-home"></i></a>
-                                                        {% endif %}
-                                                    </li>
-                                                    <li class="breadcrumb-item"><a href="#">View Business Customers</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
+
+
+                                            </ul>
                                         </div>
                                     </div>
+
+
                                 </div>
+                                <!-- Page-header start -->
                                 <!-- Page-header end -->
 
                                     <!-- Page-body start -->

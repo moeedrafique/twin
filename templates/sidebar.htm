@@ -29,7 +29,7 @@
             </ul>
             <ul class="pcoded-hasmenu active pcoded-trigger  pcoded-left-item">
                 <li class="pcoded-hasmenu ">
-                    <a class="ajd-size" href="#">
+                    <a class="ajd-size" href="{% url 'under_conc' %}">
                         <span class="pcoded-mtext mt-2"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M33.452 25.282C31.766 28.008 26.382 30.004 20 30.004C13.618 30.004 8.234 28.008 6.546 25.282C6.19 24.702 6 25.012 6 25.296V29.3C6 33.18 12.268 37.2 20 37.2C27.732 37.2 34 33.18 34 29.302V25.298C34 25.012 33.808 24.702 33.452 25.282ZM33.474 15.05C31.814 17.46 26.41 19.23 20 19.23C13.59 19.23 8.184 17.46 6.524 15.05C6.182 14.554 6 14.824 6 15.046V19.76C6 23.284 12.268 26.138 20 26.138C27.732 26.138 34 23.282 34 19.76V15.046C34 14.824 33.816 14.554 33.474 15.05ZM20 2C12.268 2 6 4.36 6 7.266V9.786C6 12.868 12.268 15.368 20 15.368C27.732 15.368 34 12.868 34 9.786V7.266C34 4.36 27.732 2 20 2Z" fill="white"/>
                         </svg>
@@ -49,7 +49,7 @@
                 {% endfor %}
 
                 <li class="pcoded-hasmenu">
-                    <a class="ajd-size" href="#">
+                    <a class="ajd-size" href="{% url 'under_conc' %}">
                         <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path opacity="0.3" d="M25.184 20.7497L23.334 17.0664L18.1507 27.4164C17.8673 27.9831 17.3007 28.3331 16.6673 28.3331C16.034 28.3331 15.4673 27.9831 15.184 27.4164L12.3007 21.6664H3.33398V24.9997H6.66732V29.9997H33.334V24.9997H36.6673V21.6664H26.6673C26.034 21.6664 25.4673 21.3164 25.184 20.7497Z" fill="white"/>
 <path opacity="0.3" d="M33.334 10H6.66732V15H3.33398V18.3333H13.334C13.9673 18.3333 14.534 18.6833 14.8173 19.25L16.6673 22.9333L21.8507 12.5833C22.4173 11.45 24.2673 11.45 24.834 12.5833L27.7007 18.3333H36.6673V15H33.334V10Z" fill="white"/>
@@ -85,7 +85,7 @@
                             </li>
 
                 <li class="pcoded-hasmenu">
-                    <a class="ajd-size" href="#">
+                    <a class="ajd-size" href="{% url 'under_conc' %}">
                         <span class="pcoded-mtext"><svg width="34" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M16 11.5V19.0002" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <path d="M16 24.25V25" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -99,7 +99,7 @@
                             </li>
 
                 <li class="pcoded-hasmenu">
-                    <a class="ajd-size" href="#">
+                    <a class="ajd-size" href="{% url 'under_conc' %}">
                         <span class="pcoded-mtext"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2 4.25C2 3.65326 2.24953 3.08097 2.69369 2.65901C3.13786 2.23705 3.74028 2 4.36842 2H23.3158C23.9439 2 24.5463 2.23705 24.9905 2.65901C25.4347 3.08097 25.6842 3.65326 25.6842 4.25V32H4.36842C3.74028 32 3.13786 31.7629 2.69369 31.341C2.24953 30.919 2 30.3467 2 29.75V4.25Z" stroke="white" stroke-width="4" stroke-linejoin="round"/>
 <path d="M25.6836 17C25.6836 16.6022 25.8499 16.2206 26.1461 15.9393C26.4422 15.658 26.8438 15.5 27.2625 15.5H30.4204C30.8392 15.5 31.2408 15.658 31.5369 15.9393C31.833 16.2206 31.9994 16.6022 31.9994 17V29.75C31.9994 30.3467 31.7499 30.919 31.3057 31.341C30.8615 31.7629 30.2591 32 29.631 32H25.6836V17Z" stroke="white" stroke-width="4" stroke-linejoin="round"/>
@@ -121,7 +121,7 @@
             </li>
             <li>
                 {% for post_category in post_category|slice:":1" %}
-              <a class="ajd-size" href="{% url 'organization_view' post_category.pk %}">
+              <a class="ajd-size" href="{% url 'organization_detail' post_category.pk %}">
                   {% endfor %}
                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-gear" viewBox="0 0 16 16">
                   <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
@@ -131,7 +131,7 @@
 
             </li>
             <li>
-              <a class="ajd-size" href="#">
+              <a class="ajd-size" href="{% url 'under_conc' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-question-circle" viewBox="0 0 16 16">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
                   <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path>
