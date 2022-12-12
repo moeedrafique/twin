@@ -72,6 +72,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -84,8 +85,7 @@ ROOT_URLCONF = 'twin_dynamics.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -248,6 +248,10 @@ LOGIN_REDIRECT_URL = '/accounts/login/'
 INVITATIONS_SIGNUP_REDIRECT = 'account_signup'
 INVITATION_ONLY = True
 
+
+SESSION_EXPIRE_SECONDS = 900  # 1 hour
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = '/accounts/login/'
 
 #DEPLOYMENT SETTING
 CSRF_COOKIE_SECURE = True
