@@ -46,13 +46,13 @@
                                         <div class="left-btn box-inner-title">
                                             <ul class="tab-bar-ul">
                                                 {% for post_category in post_category|slice:":1" %}
-                                                <li><a href="{% url 'flow_distribution' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
+                                                <li><a href="{% url 'organization_detail' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
                                                 {% endfor %}
                                                 {% for post_category in post_category|slice:":1" %}
-                                                <li><a href="{% url 'air_terminals' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Users</button></a></li>
+                                                <li><a href="{% url 'organization_user_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Users</button></a></li>
                                                 {% endfor %}
                                                   {% for post_category in post_category|slice:":1" %}
-                                                <li><a href="{% url 'scheduling_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Admin</button></a></li>
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Admin</button></a></li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
