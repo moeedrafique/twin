@@ -83,3 +83,36 @@ class OrganizationOwner(AbstractOrganizationOwner):
 class OrganizationInvitation(AbstractOrganizationInvitation):
     class Meta(AbstractOrganizationInvitation.Meta):
         abstract = False
+
+
+# class Building(models.Model):
+#     organization_name = models.ForeignKey(Organization, on_delete=models.CASCADE, default=None, null=True, verbose_name=_("Organization"))
+#     building_name = models.CharField(max_length=200, default=None)
+#     slug = models.SlugField(blank=True, null=True)
+#
+#     def __str__(self):
+#         return self.building_name
+#
+#     def classes(self):
+#         return self.organization_name.all()
+#
+#     class Meta:
+#         verbose_name = _("Building")
+#         verbose_name_plural = _("Buildings")
+#
+#     def save(self, *args, **kwargs):
+#         if not self.slug and self.building_name:
+#             self.slug = slugify(self.building_name)
+#         super(Building, self).save(*args, **kwargs)
+#
+#
+# class Floors(models.Model):
+#     building = models.ForeignKey(Building, on_delete=models.CASCADE, default=None, null=True)
+#     #image = models.ImageField(upload_to='datesheet/board-images/', default=None, null=True)
+#     floor_name = models.CharField(max_length=200, default=None)
+#     def __str__(self):
+#         return f"{self.floor_name}"
+#
+#     class Meta:
+#         verbose_name = _("Floor")
+#         verbose_name_plural = _("Floors")

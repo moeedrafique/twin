@@ -5,21 +5,23 @@ from django.urls import include
 from django.urls import path
 
 from organizations.views import default as views
-from organizations.dash_apps import gauge
-from organizations.dash_apps import pie
-from organizations.dash_apps import energy_usuage
-from organizations.dash_apps import electric
-from organizations.dash_apps import gas
-from organizations.dash_apps import hvac
-from organizations.dash_apps import temp_vent_data
-from organizations.dash_apps import update_db
-from organizations.dash_apps import AHU_OUTboundary
+# from organizations.dash_apps import gauge
+# from organizations.dash_apps import pie
+# from organizations.dash_apps import energy_usuage
+# from organizations.dash_apps import electric
+# from organizations.dash_apps import gas
+# from organizations.dash_apps import hvac
+# from organizations.dash_apps import temp_vent_data
+# from organizations.dash_apps import update_db
+# from organizations.dash_apps import AHU_OUTboundary
 # from organizations.dash_apps import SG_boundary
 # from organizations.dash_apps import SF_boundary
 # app_name = "organizations"
 
 urlpatterns = [
     path('join/', views.join, name='join'),
+    path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),
+    path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
     path('under-construction/', views.underConstruction, name='under_conc'),
     path('staff-update/<slug:pk>/', views.StaffUserUpdateView.as_view(), name="staff_update"),
     path(

@@ -247,7 +247,7 @@ def update_graph_scatter(n):
         # yaxis=dict(range=[min(ahu), max(ahu)]),
         font=dict(color='white'),
         xaxis={
-            "title": "Solar Radiation",
+            "title": "",
             # "showgrid": False,
             # "showline": False,
             # "fixedrange": True,
@@ -256,7 +256,7 @@ def update_graph_scatter(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Temperature(F)",
+            "title": "Temperature(C)",
             # "fixedrange": True,
         },
     #
@@ -284,7 +284,7 @@ def update_graph_scatter_2(n):
         # yaxis=dict(range=[min(ahu), max(ahu)]),
         font=dict(color='white'),
         xaxis={
-            "title": "Solar Radiation",
+            "title": "",
             # "showgrid": False,
             # "showline": False,
             # "fixedrange": True,
@@ -293,7 +293,7 @@ def update_graph_scatter_2(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Temperature(F)",
+            "title": "Temperature(C)",
             # "fixedrange": True,
         },
     #
@@ -321,7 +321,7 @@ def update_graph_scatter_3(n):
         # yaxis=dict(range=[min(ahu), max(ahu)]),
         font=dict(color='white'),
         xaxis={
-            "title": "Solar Radiation",
+            "title": "",
             # "showgrid": False,
             # "showline": False,
             # "fixedrange": True,
@@ -330,7 +330,7 @@ def update_graph_scatter_3(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Temperature(F)",
+            "title": "Temperature(C)",
             # "fixedrange": True,
         },
     #
@@ -357,7 +357,7 @@ def update_graph_scatter_4(n):
         # yaxis=dict(range=[min(ahu), max(ahu)]),
         font=dict(color='white'),
         xaxis={
-            "title": "Solar Radiation",
+            "title": "",
             # "showgrid": False,
             # "showline": False,
             # "fixedrange": True,
@@ -366,7 +366,7 @@ def update_graph_scatter_4(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Temperature(F)",
+            "title": "Temperature(C)",
             # "fixedrange": True,
         },
     #
@@ -392,7 +392,7 @@ def update_graph_scatter_5(n):
         # yaxis=dict(range=[min(ahu), max(ahu)]),
         font=dict(color='white'),
         xaxis={
-            "title": "Solar Radiation",
+            "title": "",
             # "showgrid": False,
             # "showline": False,
             # "fixedrange": True,
@@ -401,7 +401,7 @@ def update_graph_scatter_5(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Temperature(F)",
+            "title": "Temperature(C)",
             # "fixedrange": True,
         },
     #

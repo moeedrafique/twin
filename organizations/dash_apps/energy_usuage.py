@@ -61,33 +61,8 @@ html.Div([
 #
 now = timezone.now()
 datetime_today = now.strftime('%Y-%m-%d')
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': datetime_today}).sort('_id',-1)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2022-12-01', '$lte': datetime_today}}).sort('_id',-1)
 #
-
-
-# today_energy_records = mycol_energy.aggregate([
-#     {
-#         "$project": {
-#             "y": {"$year": "$timestamp"},
-#             "m": {"$month": "$timestamp"},
-#             "d": {"$dayOfMonth": "$timestamp"},
-#             "h": {"$hour": "$timestamp"}
-#         }
-#     },
-#     {
-#         "$match":
-#             {'ref_id': 'DMC02', "d": {"$gte": 10, "$lte": 11}}
-#     },
-#     {
-#         "$group":
-#             {"_id": {"year": "$y", "month": "$m", "day": "$d", "hour": "$h"}
-#
-#              }
-#     }
-#
-# ])
-
-
 
 occu_dt = []
 for c in today_energy_records:
