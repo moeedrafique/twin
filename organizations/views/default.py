@@ -16,6 +16,9 @@ from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import EmailMessage
+from organizations.filters import *
+import json
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
@@ -74,7 +77,7 @@ def join(request):
     return render(request, 'join.html', context)
 
 
-@method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/accounts/login'), name='dispatch')
+#@method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/accounts/login'), name='dispatch')
 class OrganizationList(bases.OrganizationList):
     pass
 
@@ -124,7 +127,7 @@ class OrganizationUserDelete(AdminRequiredMixin, bases.OrganizationUserDelete):
 
 
 myclient = pymongo.MongoClient(
-    "mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+    "mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol = mydb["iiot"]
 mycol_sim = mydb["simulation_sensor_locations"]
@@ -133,6 +136,10 @@ mycol_energy = mydb["energy_building"]
 mycol_energy_building = mydb["energy_building"]
 mycol_schedule = mydb["schedules"]
 mycol_tariff = mydb["tariffs"]
+mycol_business = mydb["businesses"]
+mycol_building = mydb["buildings"]
+mycol_floor = mydb["floors"]
+mycol_room = mydb["rooms"]
 
 
 def viewDashboard(request, organization_pk):
@@ -338,7 +345,7 @@ def viewSummary(request, organization_pk):
     # all_records = mycol.find({'timestamp': {"$lt": now - timedelta(hours=24)}}).sort('_id',-1).limit(96)
     # all_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id', -1).limit(1)
     today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}})
-    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start, '$lte':previous_end}})
+    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).limit(10)
 
     today_sim_dt = []
     for c in today_sim_records:
@@ -364,6 +371,7 @@ def viewSummary(request, organization_pk):
         yesterday_sim_dt.append(c)
 
     yesterday_sim_data = pd.DataFrame(yesterday_sim_dt)
+    print("Yesterday Records", yesterday_sim_data)
     #
     yesterday_sim_main_data = yesterday_sim_data['data']
     #
@@ -448,7 +456,7 @@ def viewSummary(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = '/home/moeedrafique/twin/static/img/'
+    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -477,10 +485,10 @@ def energyDash(request, organization_pk):
     month_start = datetime.today().replace(day=1)
     month_start_strft = month_start.strftime('%Y-%m-%d')
     current_month_strft = month_start.strftime('%B')
-    print(month_start)
+    # print(month_start)
     current_date = datetime.today()
     current_date_strft = current_date.strftime('%Y-%m-%d')
-    print(current_date)
+    # print(current_date)
 
     diff = current_date - month_start
     actual_diff = diff.days + 1
@@ -488,14 +496,14 @@ def energyDash(request, organization_pk):
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
     tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     # print(tariff['anytime'])
-    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-12-31'}})
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-01-31'}})
 
     ener_data = pd.DataFrame(energy_building)
     # print(ener_data.count())
     #
     en_main_data = ener_data['data']
     time_main_data = ener_data['datetime']
-    print(time_main_data)
+    # print(time_main_data)
     time_dt = []
     for i in time_main_data:
         time_dt.append(i)
@@ -503,32 +511,32 @@ def energyDash(request, organization_pk):
     energy_dt = []
     for i in en_main_data:
         res = i['electricity']
-        energy_dt.append(res)
+        energy_dt.append(int(res))
     elec_sum = sum(energy_dt)
-    print("EDT", energy_dt)
+    # print("EDT", energy_dt)
     # print(tariff_elec['anytime'])
     tariff_cost_elec = elec_sum * tariff_elec['anytime'] / 100
-    print("Tarriffs Cost", tariff_cost_elec)
+    # print("Tarriffs Cost", tariff_cost_elec)
     standing_charge_elec = actual_diff * tariff_elec['standing_cnarge'] / 100
-    print(standing_charge_elec)
+    # print(standing_charge_elec)
 
     cost_elec = tariff_cost_elec + standing_charge_elec
-    print(cost_elec)
+    # print(cost_elec)
 
     gas_dt = []
     for i in en_main_data:
         res = i['gas']
-        gas_dt.append(res)
+        gas_dt.append(int(res))
     gas_sum = sum(gas_dt)
     # print(gas_sum)
 
     tariff_cost_gas = gas_sum * tariff_gas['anytime'] / 100
     standing_charge_gas =  actual_diff * tariff_gas['standing_cnarge'] / 100
     cost_gas = tariff_cost_gas + standing_charge_gas
-    print(cost_gas)
+    # print(cost_gas)
 
     total_cost = cost_elec + cost_gas
-    print("Total Cost is:", total_cost)
+    # print("Total Cost is:", total_cost)
 
 
     # CHANGE IN COST
@@ -541,8 +549,8 @@ def energyDash(request, organization_pk):
     last_month = first - timedelta(days=1)
     last_month_strft = last_month.strftime('%Y-%m-%d')
     last_month_var = last_month.strftime("%B")
-    print("Last Month First Day", first_month)
-    print("Last Month Last Day", last_month)
+    # print("Last Month First Day", first_month)
+    # print("Last Month Last Day", last_month)
     energy_building_lm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': first_month_strft, '$lte': last_month_strft}})
     ener_data_lm = pd.DataFrame(energy_building_lm)
     en_main_data_lm = ener_data_lm['data']
@@ -553,15 +561,15 @@ def energyDash(request, organization_pk):
         res = i['electricity']
         energy_dt_lm.append(res)
     elec_sum_lm = sum(energy_dt_lm)
-    print("Last Month ELEC Sum", elec_sum_lm)
+    # print("Last Month ELEC Sum", elec_sum_lm)
 
     tariff_cost_elec_lm = elec_sum_lm * tariff_elec['anytime'] / 100
-    print("Tarriffs Cost Last Month", tariff_cost_elec_lm)
+    # print("Tarriffs Cost Last Month", tariff_cost_elec_lm)
     standing_charge_elec_lm = 31 * tariff_elec['standing_cnarge'] / 100
-    print(standing_charge_elec_lm)
+    # print(standing_charge_elec_lm)
 
     cost_elec_lm = tariff_cost_elec_lm + standing_charge_elec_lm
-    print(cost_elec_lm)
+    # print(cost_elec_lm)
 
 
     energy_gas_dt_lm = []
@@ -569,20 +577,20 @@ def energyDash(request, organization_pk):
         res = i['gas']
         energy_gas_dt_lm.append(res)
     gas_sum_lm = sum(energy_gas_dt_lm)
-    print("Last Month GAS Sum", gas_sum_lm)
+    # print("Last Month GAS Sum", gas_sum_lm)
 
     tariff_cost_gas_lm = gas_sum_lm * tariff_gas['anytime'] / 100
-    print("Tarriffs Cost Last Month", tariff_cost_gas_lm)
+    # print("Tarriffs Cost Last Month", tariff_cost_gas_lm)
     standing_charge_gas_lm = 31 * tariff_gas['standing_cnarge'] / 100
-    print(standing_charge_gas_lm)
+    # print(standing_charge_gas_lm)
 
     cost_gas_lm = tariff_cost_gas_lm + standing_charge_gas_lm
-    print(cost_gas_lm)
+    # print(cost_gas_lm)
 
     total_cost_cic_lm = cost_elec_lm + cost_gas_lm
-    print("Total Cost Last Month:", total_cost_cic_lm)
+    # print("Total Cost Last Month:", total_cost_cic_lm)
 
-    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2022-12-31'}})
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-01-31'}})
     ener_data_cm = pd.DataFrame(energy_building_cm)
     en_main_data_cm = ener_data_cm['data']
 
@@ -597,41 +605,44 @@ def energyDash(request, organization_pk):
         res = i['electricity']
         energy_dt_cm.append(res)
     elec_sum_cm = sum(energy_dt_cm)
-    print("Current Month ELEC Sum", elec_sum_cm)
+    # print("Current Month ELEC Sum", elec_sum_cm)
 
     energy_gas_dt_cm = []
     for i in en_main_data_cm:
         res = i['gas']
         energy_gas_dt_cm.append(res)
     gas_sum_cm = sum(energy_gas_dt_cm)
-    print("Current Month GAS Sum", gas_sum_cm)
+    # print("Current Month GAS Sum", gas_sum_cm)
 
 
     tariff_cost_elec_cm = elec_sum_cm * tariff_elec['anytime'] / 100
-    print("", tariff_cost_elec_cm)
+    # print("", tariff_cost_elec_cm)
     standing_charge_elec_cm = 31 * tariff_elec['standing_cnarge'] / 100
-    print(standing_charge_elec_cm)
+    # print(standing_charge_elec_cm)
 
     cost_elec_cm = tariff_cost_elec_cm + standing_charge_elec_cm
-    print("Cost Elec Current Month", cost_elec_cm)
+    # print("Cost Elec Current Month", cost_elec_cm)
 
     tariff_cost_gas_cm = gas_sum_cm * tariff_gas['anytime'] / 100
     # print("Tarriffs Cost Gas Current Month", tariff_cost_gas_cm)
     standing_charge_gas_cm = 31 * tariff_gas['standing_cnarge'] / 100
-    print(standing_charge_gas_cm)
+    # print(standing_charge_gas_cm)
 
     cost_gas_cm = tariff_cost_gas_cm + standing_charge_gas_cm
-    print("Cost Gas Current Month", cost_gas_cm)
+    # print("Cost Gas Current Month", cost_gas_cm)
 
     total_cost_cic = cost_elec_cm + cost_gas_cm
-    print("Total Cost is:", total_cost_cic)
+    # print("Total Cost is:", total_cost_cic)
     # any_time_cost = tariff.anytime
 
     total_energy_usuage = energy_dt + gas_dt
-    print(total_energy_usuage)
+    # print(total_energy_usuage)
+
+    change_in_cost = total_cost_cic - total_cost_cic_lm
     context = {'business_detail': business_detail, 'cost_elec':cost_elec, 'cost_gas':cost_gas, 'total_cost':total_cost,
                'total_cost_cic_lm':total_cost_cic_lm, 'total_cost_cic':total_cost_cic, 'last_month_var':last_month_var,
-               'current_month_strft':current_month_strft, 'total_energy_usuage':total_energy_usuage, 'time_dt':time_dt}
+               'current_month_strft':current_month_strft, 'total_energy_usuage':total_energy_usuage, 'time_dt':time_dt,
+               'change_in_cost':change_in_cost}
     return render(request, 'energy.htm', context)
 
 def energyDetail(request, organization_pk):
@@ -662,7 +673,8 @@ def FlowDistribution(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = '/home/moeedrafique/twin/static/img/'
+    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    # location = '/home/moeedrafique/twin/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -758,8 +770,63 @@ def Tariffs(request, organization_pk):
     context = {'business_detail':business_detail, 'tariff_elec':tariff_elec, 'tariff_gas':tariff_gas}
     return render(request, 'tariffs.html', context)
 
+#
+# from bson import json_util
+# from bson.json_util import dumps
+# import json
+from bson.objectid import ObjectId
+# # return JsonResponse(json_util.dumps(business, safe=False))
+
+from django import template
+
+register = template.Library()
+
 def underConstruction(request):
-    return render(request, 'under_conc.html')
+    buildings = mycol_building.find(
+        sort=[('_id', pymongo.DESCENDING)])
+    b_dt = pd.DataFrame.from_dict(buildings)
+    business_name = b_dt["business_name"]
+    business_id= b_dt["business_id"]
+    business = []
+    for i in business_name:
+        business.append(i)
+
+    business_id_data = []
+    for i in business_id:
+        business_id_data.append(i)
+
+    if request.method == 'POST':
+        if request.POST.get('building') == 'All':
+            sim = list(mycol_sim.find())
+            # print(sim)
+            context = {'sim': sim}
+            return render(request, 'under_conc.html', context)
+        else:
+            building = request.POST.get('building')
+            floor = request.POST.get('floors')
+            room = request.POST.get('rooms')
+
+            from_date = request.POST.get('from_date')
+            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+
+            to_date = request.POST.get('to_date')
+            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+            vent = request.POST.get('vents')
+            # print(building)
+            sim2 = list(mycol_sim.find(
+                {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground', 'room': 'Coworking Space'
+                 , 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}, sort=[('_id', pymongo.DESCENDING)]))
+            # print(sim)
+            context = {'sim2': sim2}
+            return render(request, 'under_conc.html', context)
+
+    context = {'business': business, 'business_id_data':business_id_data}
+    return render(request, 'under_conc.html', context)
+
+from bson import json_util
+from bson.json_util import dumps
+import json
+# return JsonResponse(json_util.dumps(business, safe=False))
 
 @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/login'), name='dispatch')
 class StaffUserUpdateView(SuccessMessageMixin, UpdateView):
@@ -800,3 +867,51 @@ class StaffUserUpdateView(SuccessMessageMixin, UpdateView):
         staffuser.save()
         sweetify.success(self.request, 'Staff User Updated Successfully', icon="success", timer=30000)
         return HttpResponseRedirect(reverse("join"))
+
+
+
+@register.filter(name='private')
+def private(obj, attribute):
+    return getattr(obj, attribute)
+
+def load_cities(request):
+    country_id = request.GET.get('category')
+    #cities = Board.objects.filter(class_name=country_id).order_by('board_name')
+    floor_dt = mycol_floor.find(
+        {'building_id': country_id},
+        sort=[('_id', pymongo.DESCENDING)])
+    b_dt = pd.DataFrame.from_dict(floor_dt)
+    try:
+        floor = b_dt["floors"]
+        print(floor)
+        dt = []
+        for j in floor:
+            dt.append(j)
+        return render(request, 'dropdown_list_options.html', {'dt': dt})
+    except KeyError:
+        sweetify.success(request, 'No Result', icon="success", timer=30000)
+    #print(list(cities.values('id', 'name')))
+    return render(request, 'dropdown_list_options.html')
+    # return JsonResponse(json.loads(json_util.dumps(list(floor))), safe=False)
+
+def load_districts(request):
+    country_id = request.GET.get('floor')
+    #cities = Board.objects.filter(class_name=country_id).order_by('board_name')
+    business = mycol_room.find(
+        {'floor_id': country_id},
+        sort=[('_id', pymongo.DESCENDING)])
+    b_dt = pd.DataFrame.from_dict(business)
+    try:
+        room = b_dt["name"]
+        print(room)
+        rt = []
+        for j in room:
+            rt.append(j)
+
+        print(rt)
+        return render(request, 'dd.html', {'rt': rt})
+    except KeyError:
+        sweetify.success(request, 'No Result', icon="success", timer=30000)
+    #print(list(cities.values('id', 'name')))
+    return render(request, 'dd.html')
+    # return JsonResponse(json.loads(json_util.dumps(list(floor))), safe=False)

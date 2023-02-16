@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from organizations.models import OrganizationJoin
+# from organizations.models import OrganizationJoin, Floors, Building
 from organizations import models
 from organizations.base_admin import BaseOrganizationAdmin
 from organizations.base_admin import BaseOrganizationOwnerAdmin
@@ -9,7 +9,9 @@ from organizations.base_admin import BaseOrganizationUserAdmin
 from organizations.base_admin import BaseOwnerInline
 
 
-admin.site.register(OrganizationJoin)
+# admin.site.register(OrganizationJoin)
+# admin.site.register(Building)
+# admin.site.register(Floors)
 
 class OwnerInline(BaseOwnerInline):
     model = models.OrganizationOwner
