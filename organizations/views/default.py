@@ -805,6 +805,7 @@ def underConstruction(request):
             building = request.POST.get('building')
             floor = request.POST.get('floors')
             room = request.POST.get('rooms')
+            room = request.POST.get('rooms')
 
             from_date = request.POST.get('from_date')
             from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
@@ -813,10 +814,20 @@ def underConstruction(request):
             to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
             vent = request.POST.get('vents')
             # print(building)
-            sim2 = list(mycol_sim.find(
-                {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground', 'room': 'Coworking Space'
-                 , 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}, sort=[('_id', pymongo.DESCENDING)]))
-            # print(sim)
+            # sim2 = list(mycol_sim.find(
+            #
+            #     , sort=[('_id', pymongo.DESCENDING)]))
+
+            # sim2 = list(mycol_sim.aggregate([{'match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground', 'room': 'Coworking Space'
+            #      ,  'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}, '$project': {'ahu_out': '1'}}]))
+            sim2 = list(
+                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                 'room': 'Coworking Space', 'data.ahu_out': 1,
+
+                }}]))
+            # print(sim2)
             context = {'sim2': sim2}
             return render(request, 'under_conc.html', context)
 

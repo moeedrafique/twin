@@ -25380,3 +25380,20 @@ color: white;
     margin: 40px 0 0 14px;
 
 }
+.tooltip1 .tooltiptext {
+  visibility: hidden;
+ width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-left: 80px;
+    margin-top: 16px;
+    position: fixed;
+    z-index: 1;
+}
+
+.tooltip1:hover .tooltiptext {
+  visibility: visible;
+}

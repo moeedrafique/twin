@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<div class="reports-dropdown">
-								<h5><strong>HVAC EVENTS</strong></h5>
+								<h5><strong>HVAC DATA SETS</strong></h5>
 								<form id="searchForm" method="post" data-rooms-url="{% url 'ajax_load_districts' %}" data-cities-url="{% url 'ajax_load_cities' %}">
 									{% csrf_token %}
 									<div class="col-lg-12 ml-0">
@@ -47,7 +47,6 @@
 												<label for="password-input">Building</label>
 												<select name="building" id="id_class_name">
 													<option >Select Building</option>
-													<option selected="All">All</option>
 													{% for j in business_id_data %}
 
 													<option value="{{ j }}">{{ j }}</option>
@@ -65,7 +64,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">From</label>
-												<input name="from_date" type="date">
+												<input name="from_date" type="date" id="myDateInput" max="">
 
 												</input>
 											</div>
@@ -89,13 +88,16 @@
 														All
 													</option>
 													<option>
-														Fcu
+														For Coil Unit
 													</option><option>
 														Air Handling Unit
 													</option><option>
 														Supply Grill
 													</option><option>
 														Exit Grill
+													</option>
+													</option><option>
+														Supply Fan
 													</option>
 
 
@@ -104,9 +106,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">To</label>
-												<input name="to_date" type="date">
-
-												</input>
+												<input name="to_date" type="date" id="myDateInput_2" max="" />
 											</div>
 										</div>
 									</div>
@@ -190,9 +190,9 @@
                                                                         <th>Floors</th>
                                                                         <th>Rooms</th>
                                                                         <th>AHU OUT</th>
-                                                                        <th>eg1_1</th>
-                                                                        <th>fcu_in</th>
-                                                                        <th>main_door</th>
+                                                                        <th>EG1_1</th>
+                                                                        <th>FCU_IN</th>
+                                                                        <th>MAIN_DOOR</th>
 																		<th>sf1_2</th>
 																		<th>sf2_2</th>
 																		<th>sg1_1</th>
@@ -279,6 +279,14 @@
                                         });
 
                                       </script>
+	<script>
+		  var today = new Date().toISOString().split('T')[0];
+		  document.getElementById("myDateInput").setAttribute("max", today);
+	</script>
+	<script>
+		  var today = new Date().toISOString().split('T')[0];
+		  document.getElementById("myDateInput_2").setAttribute("max", today);
+	</script>
 	<!-- Page-body end -->
 </div>
 </div>
