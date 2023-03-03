@@ -36,7 +36,7 @@ PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("./data").resolve()
 import threading
 #
-myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
 mycol_energy = mydb["energy_building"]

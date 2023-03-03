@@ -35,17 +35,80 @@
 										</li>
 									</ul>
 								</div>
+
+								<div class="col-lg-6">
+									<button type="button" class="btn btn-default waves-effect float-right" data-toggle="modal" data-target="#default-Modal">Send Email</button>
+									<div id="default-Modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="login-card card-block login-card-modal">
+                                                        <form method="POST" action="" class="md-float-material">
+                                                        {% csrf_token %}
+                                                            <div class="text-center">
+                                                                <img style="width:15%;" src="{% static 'libraries\assets\images\logo-bg.png' %}" alt="logo.png">
+                                                            </div>
+                                                            <div class="card m-t-15">
+                                                                <div class="auth-box card-block">
+                                                                <div class="row m-b-20">
+                                                                    <div class="col-md-12">
+                                                                        <h3 class="text-center txt-primary">Email Configuration.</h3>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="input-group">
+																<input type="email" name="email" placeholder="Email:" class="form-control"/>
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <div class="input-group">
+																<textarea type="text" name="message" placeholder="Message:"  class="form-control"></textarea>
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <div class="row m-t-25 text-left">
+                                                                    <div class="col-md-12">
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label>
+																				<input type="checkbox" class="form-control"/>
+                                                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                                                <span class="text-inverse">PDF</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="checkbox-fade fade-in-primary">
+                                                                            <label>
+                                                                               <input type="checkbox" class="form-control"/>
+                                                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                                                <span class="text-inverse">CSV</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row m-t-15">
+                                                                    <div class="col-md-12">
+                                                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center">SUBMIT</button>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- end of form -->
+                                                    </div>
+                                                </div>
+                                    </div>
+								</div>
 							</div>
 							<div class="reports-dropdown">
 								<h5><strong>HVAC DATA SETS</strong></h5>
+								<hr>
 								<form id="searchForm" method="post" data-rooms-url="{% url 'ajax_load_districts' %}" data-cities-url="{% url 'ajax_load_cities' %}">
 									{% csrf_token %}
 									<div class="col-lg-12 ml-0">
 									<div class="row">
 										<div class="col-lg-5">
 											<div class="form-field mb-3 mt-3">
-												<label for="password-input">Building</label>
-												<select name="building" id="id_class_name">
+												<label for="building">Building</label>
+												<select name="building" class="form-control" id="id_class_name">
 													<option >Select Building</option>
 													{% for j in business_id_data %}
 
@@ -56,7 +119,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Floor</label>
-												<select name="floors" id="id_board" value="floors">
+												<select name="floors" class="form-control" id="id_board" value="floors">
 													<option  value="" selected>
 														Select Floor
 													</option>
@@ -64,7 +127,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">From</label>
-												<input name="from_date" type="date" id="myDateInput" max="">
+												<input name="from_date" class="form-control" type="date" id="myDateInput" max="">
 
 												</input>
 											</div>
@@ -75,7 +138,7 @@
 										<div class="col-lg-5">
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Room</label>
-												<select name="rooms" id="id_rooms">
+												<select name="rooms" class="form-control" id="id_rooms">
 													<option value="" selected>
 														Select Room
 													</option>
@@ -83,42 +146,34 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Vents Location</label>
-												<select name="vents">
-													<option>
-														All
-													</option>
-													<option>
-														For Coil Unit
-													</option><option>
-														Air Handling Unit
-													</option><option>
-														Supply Grill
-													</option><option>
-														Exit Grill
-													</option>
-													</option><option>
-														Supply Fan
-													</option>
-
-
-
+												<select class="form-control" name="vents">
+													<option>All</option>
+													<option value="fcu_in">For Coil Unit</option>
+													<option value="ahu_out">Air Handling Unit</option>
+													<option value="sg_1_1">Supply Grill</option>
+													<option value="eg1_1">Exit Grill</option>
+													<option>Supply Fan</option>
 												</select>
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">To</label>
-												<input name="to_date" type="date" id="myDateInput_2" max="" />
+												<input class="form-control" name="to_date" type="date" id="myDateInput_2" max="" />
 											</div>
 										</div>
 									</div>
 
 								</div>
+									<div class="mb-2"></div>
 									<div class="text-right">
-									<button type="submit" class="btn">Generate Report</button>
-								</div>
+									<button type="submit" class="btn btn-primary">Generate Report</button>
+									</div>
 								</form>
 							</div>
-							<div class="mb-4"></div>
-							<div class="col-sm-12">
+						</div>
+						<div class="mb-4"></div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-12">
                                                 <!-- HTML5 Export Buttons table start -->
                                                 <div class="card">
                                                     <div class="card-header table-card-header">
@@ -189,18 +244,7 @@
                                                                         <th>Buildings</th>
                                                                         <th>Floors</th>
                                                                         <th>Rooms</th>
-                                                                        <th>AHU OUT</th>
-                                                                        <th>EG1_1</th>
-                                                                        <th>FCU_IN</th>
-                                                                        <th>MAIN_DOOR</th>
-																		<th>sf1_2</th>
-																		<th>sf2_2</th>
-																		<th>sg1_1</th>
-																		<th>sg2_2</th>
-																		<th>sg3_2</th>
-																		<th>sg4_2</th>
-																		<th>sg5_2</th>
-																		<th>sg6_2</th>
+                                                                        <th>{{vent|upper}}</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -211,12 +255,42 @@
                                                                     <td>{{ i.building }}</td>
                                                                     <td>{{ i.floor }}</td>
                                                                     <td>{{ i.room }}</td>
+																{% if vent == 'ahu_out' %}
                                                                     <td>{{ i.data.ahu_out }}</td>
+																{% elif vent == 'eg1_1' %}
                                                                     <td>{{ i.data.eg1_1 }}</td>
+																{% elif vent == 'fcu_in' %}
                                                                     <td>{{ i.data.fcu_in }}</td>
-                                                                    <td>{{ i.data.main_door }}</td>
-                                                                    <td>{{ i.data.sf1_2 }}</td>
-                                                                    <td>{{ i.data.sf2_2 }}</td>
+																{% endif %}
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                            </table>
+															{% elif sim_sg %}
+															<table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>DateTime</th>
+                                                                        <th>Business</th>
+                                                                        <th>Buildings</th>
+                                                                        <th>Floors</th>
+                                                                        <th>Rooms</th>
+																		<th>SG1_1</th>
+																		<th>SG2_2</th>
+																		<th>SG3_2</th>
+																		<th>SG4_2</th>
+																		<th>SG5_2</th>
+																		<th>SG6_2</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for i in sim_sg %}
+                                                            <tr>
+                                                                    <td>{{ i.timestamp }}</td>
+                                                                    <td>{{ i.business }}</td>
+                                                                    <td>{{ i.building }}</td>
+                                                                    <td>{{ i.floor }}</td>
+                                                                    <td>{{ i.room }}</td>
                                                                     <td>{{ i.data.sg1_1 }}</td>
                                                                     <td>{{ i.data.sg2_2 }}</td>
                                                                     <td>{{ i.data.sg3_2 }}</td>
@@ -233,9 +307,6 @@
                                                 </div>
                                                 <!-- HTML5 Export Buttons end -->
                                             </div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

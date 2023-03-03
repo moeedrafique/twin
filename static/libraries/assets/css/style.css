@@ -25339,61 +25339,7 @@ body.dark #styleSelector .form-control {
 /*# sourceMappingURL=style.css.map */
 
 /*# UNDER CONS PAGE STYLING */
-.reports-hvac-en, .reports-table{
-    padding: 0 3rem;
-}
-.reports-hvac-en ul{
-    background: #C3D8D4;
-    padding: 5px 8px 5px 8px;
-    float: left;
-    border-radius: 6px;
-}
-.reports-hvac-en ul li{
-    padding: 4px;
-    border-radius: 5px;
-}
-.reports-hvac-en .active{
-background: #126656;
-color: white;
-}
-.reports-hvac-en .btn{
-    background: #126656;
-    color: white;
-    padding: 8px 24px;
-    border-radius: 20px;
-
-}
-.reports-dropdown{
-    border: 1px #ECECEC solid;
-    padding: 15px 40px;
-    margin: 40px 0 0 14px;
-
-}
 .reports-dropdown select, .reports-dropdown input{
     width: 70%;
     float: right;
-    height: 24px;
-}
-.reports-table{
-    padding: 8px;
-    border: 1px #36A1F1 solid;
-    margin: 40px 0 0 14px;
-
-}
-.tooltip1 .tooltiptext {
-  visibility: hidden;
- width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    margin-left: 80px;
-    margin-top: 16px;
-    position: fixed;
-    z-index: 1;
-}
-
-.tooltip1:hover .tooltiptext {
-  visibility: visible;
 }

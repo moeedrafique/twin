@@ -1,4 +1,4 @@
-
+import codecs
 import json
 from datetime import datetime, timedelta
 from random import randint
@@ -14,7 +14,7 @@ import pymongo
 from channels.db import database_sync_to_async
 from channels.generic.websocket import WebsocketConsumer
 
-myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol = mydb["fs.files"]
 mycol_occu = mydb["occupants"]
@@ -147,8 +147,13 @@ class GraphConsumer1(WebsocketConsumer):
                 blob_filename_obj = x
                 blob_filename_id = blob_filename_obj['_id']
                 blob_output_data = fs.get(blob_filename_id).read()
-                blob_output = blob_output_data.decode()
-                self.send(json.dumps({'blob_output': blob_output}))
+                blob_name = "boxes"
+                # blob_output = blob_output_data.decode()
+                location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+                outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
+                outputFile.write(blob_output_data)
+                outputFile.close()
+                # self.send(json.dumps({'blob_output': blob_output}))
 
         st = Thread(target=read_stream, args=())
         st.start()
@@ -174,9 +179,14 @@ class GraphConsumer2(WebsocketConsumer):
                 floor_filename_obj = x
                 floor_filename_id = floor_filename_obj['_id']
                 floor_output_data = fs.get(floor_filename_id).read()
-                floor_output = floor_output_data.decode()
+                floor_name = "floorplan"
+                # floor_output = floor_output_data.decode()
+                location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+                outputFile1 = codecs.open(location + f"{floor_name}.jpeg", "wb")
+                outputFile1.write(floor_output_data)
+                outputFile1.close()
 
-                self.send(json.dumps({'floor_output': floor_output}))
+                # self.send(json.dumps({'floor_output': floor_output}))
 
         st = Thread(target=read_stream, args=())
         st.start()

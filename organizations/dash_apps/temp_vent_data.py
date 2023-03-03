@@ -34,7 +34,7 @@ PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("./data").resolve()
 import threading
 
-myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
 
@@ -42,7 +42,7 @@ app = DjangoDash('temp_vent_data')
 
 app.layout = html.Div([
 html.Div([
-        deg.ExtendableGraph(id='live-graph-2', animate=True,style={'height': '335px'}),
+        dcc.Graph(id='live-graph-2', animate=True,style={'height': '335px'}),
         dcc.Interval(
             id='graph-update',
             interval=75000,

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import codecs
+import random
 from statistics import mean
 
 import gridfs
@@ -328,74 +329,77 @@ def viewDashboard(request, organization_pk):
 
 
 def viewSummary(request, organization_pk):
-    business_detail = get_object_or_404(Organization, id=organization_pk)
-    query = {
-        'business': 'Digital Media Centre',
-        'building': 'DMC02',
-        'floor': 'ground',
-        'room': 'Coworking Space',
-        'sensors_of': 'BMS'
-    }
     now = timezone.now()
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
     today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
 
     previous_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
     previous_end = now - timedelta(days=1)
-    # all_records = mycol.find({'timestamp': {"$lt": now - timedelta(hours=24)}}).sort('_id',-1).limit(96)
-    # all_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).sort('_id', -1).limit(1)
+
     today_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}})
-    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS'}).limit(10)
+    yesterday_sim_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': previous_start, '$lte':previous_end}})
 
     today_sim_dt = []
-    for c in today_sim_records:
-        today_sim_dt.append(c)
+    if today_sim_dt:
+        for c in today_sim_records:
+            today_sim_dt.append(c)
 
-    today_sim_data = pd.DataFrame(today_sim_dt)
-    #
-    today_sim_main_data = today_sim_data['data']
-    #
-    today_sim_total = []
-    for i in today_sim_main_data:
-        res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
-            "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
-                  'sg3_2'] + \
-              i['sg4_2'] + i['sg5_2'] + \
-              i['sg6_2']
-        today_sim_total.append(res)
-    today_avg = mean(today_sim_total)
-    # print(today_avg)
+        today_sim_data = pd.DataFrame(today_sim_dt)
+        #
+        today_sim_main_data = today_sim_data['data']
+        #
+        today_sim_total = []
+        for i in today_sim_main_data:
+            res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+                "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                      'sg3_2'] + \
+                  i['sg4_2'] + i['sg5_2'] + \
+                  i['sg6_2']
+            today_sim_total.append(res)
+        today_avg = mean(today_sim_total)
+        # print(today_avg)
 
-    yesterday_sim_dt = []
-    for c in yesterday_sim_records:
-        yesterday_sim_dt.append(c)
+        yesterday_sim_dt = []
+        for c in yesterday_sim_records:
+            yesterday_sim_dt.append(c)
 
-    yesterday_sim_data = pd.DataFrame(yesterday_sim_dt)
-    print("Yesterday Records", yesterday_sim_data)
-    #
-    yesterday_sim_main_data = yesterday_sim_data['data']
-    #
-    yesterday_sim_total = []
-    for i in yesterday_sim_main_data:
-        res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
-            "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
-                  'sg3_2'] + \
-              i['sg4_2'] + i['sg5_2'] + \
-              i['sg6_2']
-        yesterday_sim_total.append(res)
-    yesterday_avg = mean(yesterday_sim_total)
-    # print(yesterday_avg)
+        yesterday_sim_data = pd.DataFrame(yesterday_sim_dt)
+        # print("Yesterday Records", yesterday_sim_data)
+        #
+        yesterday_sim_main_data = yesterday_sim_data['data']
+        #
+        yesterday_sim_total = []
+        for i in yesterday_sim_main_data:
+            res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i["eg1_1"] + i[
+                "fcu_in"] + i["main_door"] + i['sg1_1'] + i['sg2_2'] + i[
+                      'sg3_2'] + \
+                  i['sg4_2'] + i['sg5_2'] + \
+                  i['sg6_2']
+            yesterday_sim_total.append(res)
+        yesterday_avg = mean(yesterday_sim_total)
+        # print(yesterday_avg)
 
-    subtract_temp = (yesterday_avg - today_avg)
-    divide_temp = (subtract_temp / yesterday_avg) * 100
-    change_in_temp = "{:.2f}".format(divide_temp).replace("-", "")
-    if divide_temp > 0:
-        temp_class_name = "feather icon-arrow-up m-r-15"
+        subtract_temp = (yesterday_avg - today_avg)
+        divide_temp = (subtract_temp / yesterday_avg) * 100
+        change_in_temp = "{:.2f}".format(divide_temp).replace("-", "")
+        if divide_temp > 0:
+            temp_class_name = "feather icon-arrow-up m-r-15"
+        else:
+            temp_class_name = "feather icon-arrow-down m-r-15"
+        context = {'change_in_temp': change_in_temp}
+        template = 'summary.html'
+        return render(request, template, context)
+
     else:
-        temp_class_name = "feather icon-arrow-down m-r-15"
+        change_in_temp = random.uniform(-2, 2)
+        print(change_in_temp)
+        context = {'change_in_temp': change_in_temp}
+        template = 'summary.html'
+        return render(request, template, context)
 
 
     datetime_today = now.strftime('%Y-%m-%d')
+    print(datetime_today)
     calc_yesterday = now - timedelta(days=1)
     datetime_yesterday = calc_yesterday.strftime('%Y-%m-%d')
     today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': datetime_today})
@@ -403,46 +407,58 @@ def viewSummary(request, organization_pk):
     energy_dt = []
     for c in today_energy_records:
         energy_dt.append(c)
+    # print(energy_dt)
+    if energy_dt:
+        ener_data = pd.DataFrame(energy_dt)
+        en_main_data = ener_data['data']
+        #
+        today_total = []
+        for i in en_main_data:
+            res = i['electricity'] + i['gas']
+            today_total.append(res)
+        today_sum = sum(today_total)
+        # print(today_sum)
 
-    ener_data = pd.DataFrame(energy_dt)
-    #
-    en_main_data = ener_data['data']
-    #
-    today_total = []
-    for i in en_main_data:
-        res = i['electricity'] + i['gas']
-        today_total.append(res)
-    today_sum = sum(today_total)
-    # print(today_sum)
+        yesterdy_energy_dt = []
+        for c in yesterday_energy_records:
+            yesterdy_energy_dt.append(c)
 
-    yesterdy_energy_dt = []
-    for c in yesterday_energy_records:
-        yesterdy_energy_dt.append(c)
+        yesterday_ener_data = pd.DataFrame(yesterdy_energy_dt)
+        #
+        yesterday_en_main_data = yesterday_ener_data['data']
+        #
+        yesterday_today_total = []
+        for i in yesterday_en_main_data:
+            res = i['electricity'] + i['gas']
+            yesterday_today_total.append(res)
+        yesterday_sum = sum(yesterday_today_total)
+        # print(yesterday_sum)
 
-    yesterday_ener_data = pd.DataFrame(yesterdy_energy_dt)
-    #
-    yesterday_en_main_data = yesterday_ener_data['data']
-    #
-    yesterday_today_total = []
-    for i in yesterday_en_main_data:
-        res = i['electricity'] + i['gas']
-        yesterday_today_total.append(res)
-    yesterday_sum = sum(yesterday_today_total)
-    # print(yesterday_sum)
-
-    subtract_energies = (yesterday_sum - today_sum)
-    divide_energy = (subtract_energies / yesterday_sum) * 100
-    change_in_energy = "{:.2f}".format(divide_energy).replace("-", "")
-    # print(change_in_energy)
-    if divide_energy > 0:
-        energy_class_name = "feather icon-arrow-up m-r-15"
+        subtract_energies = (yesterday_sum - today_sum)
+        divide_energy = (subtract_energies / yesterday_sum) * 100
+        change_in_energy = "{:.2f}".format(divide_energy).replace("-", "")
+        # print(change_in_energy
+        if divide_energy > 0:
+            energy_class_name = "feather icon-arrow-up m-r-15"
+        else:
+            energy_class_name = "feather icon-arrow-down m-r-15"
+        #
+        elec = []
+        for i in en_main_data:
+            res = i['electricity']
+            elec.append(res)
+        context = {"energy_dt": energy_dt,
+                   'energy_class_name': energy_class_name,
+                   "change_in_temp": change_in_temp, "change_in_energy": change_in_energy,
+                   'temp_class_name': temp_class_name}
+        template = 'summary.html'
+        return render(request, template, context)
     else:
-        energy_class_name = "feather icon-arrow-down m-r-15"
-    #
-    elec = []
-    for i in en_main_data:
-        res = i['electricity']
-        elec.append(res)
+        change_in_energy = random.uniform(-2, 2)
+        print(change_in_energy)
+        context = {'change_in_energy': change_in_energy}
+        template = 'summary.html'
+        return render(request, template, context)
 
     # total_energy = [x + y for x, y in zip(gas, elec)]
     # print(total_energy)
@@ -472,8 +488,7 @@ def viewSummary(request, organization_pk):
     outputFile1.close()
 
     context = {"energy_dt": energy_dt,
-               'energy_class_name': energy_class_name,
-               "change_in_temp": change_in_temp, "change_in_energy": change_in_energy,
+               "change_in_temp": change_in_temp,
                'temp_class_name': temp_class_name}
     template = 'summary.html'
     return render(request, template, context)
@@ -496,7 +511,7 @@ def energyDash(request, organization_pk):
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
     tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     # print(tariff['anytime'])
-    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-01-31'}})
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-03-31'}})
 
     ener_data = pd.DataFrame(energy_building)
     # print(ener_data.count())
@@ -590,7 +605,7 @@ def energyDash(request, organization_pk):
     total_cost_cic_lm = cost_elec_lm + cost_gas_lm
     # print("Total Cost Last Month:", total_cost_cic_lm)
 
-    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-01-31'}})
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-03-31'}})
     ener_data_cm = pd.DataFrame(energy_building_cm)
     en_main_data_cm = ener_data_cm['data']
 
@@ -781,6 +796,9 @@ from django import template
 
 register = template.Library()
 
+def Reporting(request):
+    return render(request, 'under_conc.html')
+
 def underConstruction(request):
     buildings = mycol_building.find(
         sort=[('_id', pymongo.DESCENDING)])
@@ -796,44 +814,195 @@ def underConstruction(request):
         business_id_data.append(i)
 
     if request.method == 'POST':
+        building = request.POST.get('building')
+        floor = request.POST.get('floors')
+        room = request.POST.get('rooms')
+        room = request.POST.get('rooms')
+
+        from_date = request.POST.get('from_date')
+        from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+
+        to_date = request.POST.get('to_date')
+        to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        vent = request.POST.get('vents')
+        vent_data = "data" + '.' + vent
+
         if request.POST.get('building') == 'All':
             sim = list(mycol_sim.find())
             # print(sim)
             context = {'sim': sim}
-            return render(request, 'under_conc.html', context)
+            # return render(request, 'under_conc.html', context)
         else:
-            building = request.POST.get('building')
-            floor = request.POST.get('floors')
-            room = request.POST.get('rooms')
-            room = request.POST.get('rooms')
 
-            from_date = request.POST.get('from_date')
-            from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+            print(vent_data)
 
-            to_date = request.POST.get('to_date')
-            to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
-            vent = request.POST.get('vents')
-            # print(building)
-            # sim2 = list(mycol_sim.find(
-            #
-            #     , sort=[('_id', pymongo.DESCENDING)]))
+            if request.POST.get('vents') == 'sg1_1':
+                sim_sg = list(
+                    mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                     'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                    '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                     'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
+                                                    , 'data.sg5_2': 1, 'data.sg6_2': 1
 
-            # sim2 = list(mycol_sim.aggregate([{'match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground', 'room': 'Coworking Space'
-            #      ,  'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}, '$project': {'ahu_out': '1'}}]))
-            sim2 = list(
-                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
-                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
-                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
-                                                 'room': 'Coworking Space', 'data.ahu_out': 1,
+                    }}]))
+                context = {'vent': vent, 'sim_sg': sim_sg}
+                return render(request, 'under_conc.html', context)
+            else:
+                sim2 = list(mycol_sim.aggregate(
+                        [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                     'room': 'Coworking Space',
+                                     'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                            '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                            'room': 'Coworking Space', vent_data: 1,
 
-                }}]))
-            # print(sim2)
-            context = {'sim2': sim2}
-            return render(request, 'under_conc.html', context)
+                        }}]))
+                context = {'sim2':sim2}
+                return render(request, 'under_conc.html', context)
 
     context = {'business': business, 'business_id_data':business_id_data}
     return render(request, 'under_conc.html', context)
 
+
+def Logs(request):
+    buildings = mycol_building.find(
+        sort=[('_id', pymongo.DESCENDING)])
+    b_dt = pd.DataFrame.from_dict(buildings)
+    business_name = b_dt["business_name"]
+    business_id= b_dt["business_id"]
+    business = []
+    for i in business_name:
+        business.append(i)
+
+    business_id_data = []
+    for i in business_id:
+        business_id_data.append(i)
+
+    if request.method == 'POST':
+        buildings = mycol_building.find(
+            sort=[('_id', pymongo.DESCENDING)])
+        b_dt = pd.DataFrame.from_dict(buildings)
+        business_name = b_dt["business_name"]
+        business_id = b_dt["business_id"]
+        business = []
+        for i in business_name:
+            business.append(i)
+
+        business_id_data = []
+        for i in business_id:
+            business_id_data.append(i)
+
+        from_date = request.POST.get('from_date')
+        from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+
+        to_date = request.POST.get('to_date')
+        to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+        vent = request.POST.get('vents')
+        vent_data = "data" + '.' + vent
+
+        if request.POST.get('building') == 'All':
+            sim = list(mycol_sim.find())
+            # print(sim)
+            context = {'sim': sim}
+            # return render(request, 'under_conc.html', context)
+        else:
+            buildings = mycol_building.find(
+                sort=[('_id', pymongo.DESCENDING)])
+            b_dt = pd.DataFrame.from_dict(buildings)
+            business_name = b_dt["business_name"]
+            business_id = b_dt["business_id"]
+            business = []
+            for i in business_name:
+                business.append(i)
+
+            business_id_data = []
+            for i in business_id:
+                business_id_data.append(i)
+            print(vent_data)
+
+            if request.POST.get('vents') == 'sg1_1':
+                sim_sg = list(
+                    mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                     'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                    '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                     'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
+                                                    , 'data.sg5_2': 1, 'data.sg6_2': 1
+
+                    }}]))
+                context = {'business': business, 'business_id_data':business_id_data, 'vent': vent, 'sim_sg': sim_sg}
+            else:
+                sim2 = mycol_sim.aggregate(
+                        [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                     'room': 'Coworking Space',
+                                     'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                            '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                            'room': 'Coworking Space', vent_data: 1,
+
+                        }}, {'$sort': {"timestamp": 1}}])
+
+                # df = pd.DataFrame(sim2)
+                # df.to_csv('file1.csv')
+
+                # print(sim2["data"])
+
+                x_values = []
+                y_values = []
+                for d in sim2:
+                    x_values.append(d['timestamp'])
+                    y_values.append(d['data'][vent])
+
+
+                # x_values = request.POST.get('ahu_out', '1,2,3,4,5').split(',')
+                # y_values = request.POST.get('y_values', '10,20,30,40,50').split(',')
+
+                # Create the Plotly trace
+                trace = go.Scatter(x=x_values, y=y_values)
+                import plotly.offline as opy
+                # Create the Plotly layout
+                layout = go.Layout(
+                        # title="My Attractive Plotly Chart",
+                        # title_font=dict(size=30),  # increase the size of the title font
+                        paper_bgcolor='white',     # set the background color of the paper to white
+                        plot_bgcolor='#F8F8F8',    # set the background color of the plot area
+                        font=dict(color='#333333', size=14),  # set the font color and size
+                        xaxis=dict(
+                            title_font=dict(size=20),  # increase the size of the x-axis title font
+                            tickfont=dict(size=12),    # decrease the size of the x-axis tick labels
+                            gridcolor='#DDDDDD',       # set the color of the x-axis gridlines
+                            zerolinecolor='#CCCCCC'    # set the color of the x-axis zero line
+                        ),
+                        yaxis=dict(
+                            title="Temperature [C]",
+                            title_font=dict(size=20),  # increase the size of the y-axis title font
+                            tickfont=dict(size=12),    # decrease the size of the y-axis tick labels
+                            gridcolor='#DDDDDD',       # set the color of the y-axis gridlines
+                            zerolinecolor='#CCCCCC'    # set the color of the y-axis zero line
+                        ),
+                        legend=dict(
+                            font=dict(size=12),        # decrease the size of the legend font
+                            bordercolor='#E2E2E2',     # set the color of the legend border
+                            borderwidth=1              # set the width of the legend border
+                        ),
+                        margin=dict(l=80, r=50, t=80, b=50),  # set the margins of the plot
+                    )
+
+
+
+                # Combine the trace and layout to create a Plotly figure
+                figure = go.Figure(data=[trace], layout=layout)
+                figure.update_layout(
+                    yaxis_range=[0, 50]  # set the range of the y-axis from 0 to 10
+                )
+
+                # Convert the figure to HTML and render the template
+                plot_div = opy.plot(figure, auto_open=False, output_type='div')
+
+                context = {'business': business, 'business_id_data':business_id_data, 'sim2': sim2, 'vent': vent, 'plot_div':plot_div}
+            # print(sim2)
+
+            return render(request, 'logs.html', context)
+
+    context = {'business': business, 'business_id_data':business_id_data}
+    return render(request, 'logs.html', context)
 from bson import json_util
 from bson.json_util import dumps
 import json
@@ -926,3 +1095,41 @@ def load_districts(request):
     #print(list(cities.values('id', 'name')))
     return render(request, 'dd.html')
     # return JsonResponse(json.loads(json_util.dumps(list(floor))), safe=False)
+
+
+import plotly.graph_objs as go
+from pymongo import MongoClient
+
+def get_data():
+    # Connect to MongoDB
+    client = MongoClient('mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority')
+    db = client['mydatabase']
+    collection = db['mycollection']
+
+    # Get the latest data point
+    data = collection.find_one(sort=[('timestamp', -1)])
+
+    return data
+
+def get_figure():
+    # Get the data from MongoDB
+    data = get_data()
+
+    # Create the Plotly trace
+    trace = go.Scatter(x=[data['x']], y=[data['y']], mode='markers')
+
+    # Create the Plotly layout
+    layout = go.Layout(title='Real-Time Plotly Graph', xaxis={'title': 'X Axis'}, yaxis={'title': 'Y Axis'})
+
+    # Combine the trace and layout to create a Plotly figure
+    figure = go.Figure(data=[trace], layout=layout)
+
+    return figure
+
+def plot_graph(request):
+    # Create the Plotly figure
+    figure = get_figure()
+
+    # Convert the figure to HTML and render the template
+    plot_div = opy.plot(figure, auto_open=False, output_type='div')
+    return render(request, 'plot.html', context={'plot_div': plot_div})

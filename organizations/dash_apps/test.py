@@ -1,53 +1,79 @@
-# import datetime
-# import pathlib
-#
-# import dash
-# import gridfs
-# import pandas as pd
-# import pymongo
-# #from bson.json_util import dumps
-# import pytz
-# from bson.json_util import dumps
-# from dash import dcc
-# from dash import html
-# from dash.dependencies import Input, Output
-# import plotly.graph_objs as go
-# import plotly
-# from django.utils.safestring import SafeString, mark_safe
-# # =============================================================================
-# from django_plotly_dash import DjangoDash
-# from collections import deque
-# from queue import Empty
-# from queue import Queue
-# from threading import Thread
-#
-# from plotly.subplots import make_subplots
-# from pymongo.change_stream import ChangeStream
-# import time
-# import random
-# from dash.exceptions import PreventUpdate
-# import requests
-# import json
-# from collections import OrderedDict
-#
-# app = dash.Dash()
-# import plotly.graph_objects as go
-# from plotly.subplots import make_subplots
-#
-# labels = ["Electricity", "Gas"]
-# values = [4500, 2500, 1053, 500]
-# # Create subplots: use 'domain' type for Pie subplot
-# fig = go.Figure(data=[go.Pie(labels=labels, values=[16, 15], hole=.3)])
-#
-# # Use `hole` to create a donut-like pie chart
-# fig.update_traces(hole=.4, hoverinfo="label+percent")
-#
-# fig.update_layout(
-#     title_text="Global Emissions 1990-2011",
-#     # Add annotations in the center of the donut pies.
-#     annotations=[dict(text='GHG', x=0.18, y=0.5, font_size=20, showarrow=False)])
-# fig.show()
-#
-#
-# if __name__ == '__main__':
-#     app.run_server(debug=True)
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import pandas as pd
+import plotly.graph_objs as go
+from dash.dependencies import Input, Output
+from pymongo import MongoClient
+
+# Create a Dash application
+app = dash.Dash(__name__)
+
+# Create the layout
+app.layout = html.Div([
+    dcc.Graph(id='graph'),
+    dcc.Interval(id='interval', interval=1000, n_intervals=0)
+])
+
+# Create the MongoDB client and database
+client = MongoClient('mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority')
+db = client['twin_dynamics']
+collection = db['simulation_sensor_locations']
+
+# Create the initial data
+occupant_records = collection.find({}).sort('_id',-1).limit(300)
+
+occu_dt = []
+for c in occupant_records:
+    occu_dt.append(c)
+# print(len(occu_dt))
+data = pd.DataFrame(occu_dt)
+main_data = data['data']
+
+MAIN_DOOR = []
+xx = []
+
+for i in main_data:
+    res = i['main_door']
+    MAIN_DOOR.append(res)
+
+for t in data['timestamp']:
+    # print(t)
+    xx.append(t)
+
+x = [xx]
+y = [MAIN_DOOR]
+
+print(x)
+
+# Create the initial trace
+trace = go.Scatter(x=x, y=y, mode='markers')
+
+# Create the initial layout
+layout = go.Layout(title='Real-Time Plotly Dash Graph', xaxis={'title': 'X Axis'}, yaxis={'title': 'Y Axis'})
+
+# Combine the trace and layout to create the initial figure
+figure = go.Figure(data=[trace], layout=layout)
+
+# Create the initial graph
+@app.callback(Output('graph', 'figure'), [Input('interval', 'n_intervals')])
+def update_graph(n_intervals):
+    return figure
+
+# Fetch the latest data from MongoDB
+def get_data():
+    data = collection.find_one(sort=[('timestamp', -1)])
+    return data
+
+# def update_data(n_intervals):
+#     data = get_data()
+#     x.append(data['timestamp'])
+#     y.append(data['main_door'])
+#     figure['data'][0]['x'] = x
+#     figure['data'][0]['y'] = y
+#     return figure
+
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
