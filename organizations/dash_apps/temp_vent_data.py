@@ -14,6 +14,7 @@ from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 import plotly
 from django.utils import timezone
+import dash_extendable_graph as deg
 from django.utils.safestring import SafeString, mark_safe
 # =============================================================================
 from django_plotly_dash import DjangoDash
@@ -33,7 +34,7 @@ PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("./data").resolve()
 import threading
 
-myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:fX7AQkxT0zJ4WXhp@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
 
@@ -57,8 +58,8 @@ yy = []
 now = timezone.now()
 today_start = now.replace(hour=8, minute=0, second=0, microsecond=0) - timedelta(days=0)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('_id',-1)
-
+occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('timestamp',-1)
+print(occupant_records)
 occu_dt = []
 for c in occupant_records:
     occu_dt.append(c)
@@ -78,6 +79,9 @@ for t in data['timestamp']:
     # print(t)
     xx.append(t)
 # print(len(xx))
+
+new_time = []
+new_data = []
 
 
 def read_stream():

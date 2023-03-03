@@ -20,7 +20,10 @@ from organizations.dash_apps import AHU_OUTboundary
 
 urlpatterns = [
     path('join/', views.join, name='join'),
+    path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),
+    path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
     path('under-construction/', views.underConstruction, name='under_conc'),
+    path('logs/', views.Logs, name='logs'),
     path('staff-update/<slug:pk>/', views.StaffUserUpdateView.as_view(), name="staff_update"),
     path(
         "",
