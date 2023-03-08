@@ -12,7 +12,7 @@
     <nav class="pcoded-navbar">
         <div class="pcoded-inner-navbar main-menu">
             <ul class="pcoded-item pcoded-left-item ">
-                <li class="pcoded-hasmenu active pcoded-trigger" data-toggle="tooltip" data-placement="right" title="" data-original-title="Summary">
+                <li style="margin-top: 5px;margin-bottom: 10px;" class="pcoded-hasmenu active pcoded-trigger" data-toggle="tooltip" data-placement="right" title="" data-original-title="Operational Behaviour">
 
                     {% for post_category in post_category|slice:":1" %}
                     <a class="ajd-size" href="{% url 'summary' post_category.pk %}">
@@ -29,14 +29,14 @@
                 </li>
             </ul>
             <ul class="pcoded-hasmenu active pcoded-trigger  pcoded-left-item ">
-                <li class="pcoded-hasmenu"  data-toggle="tooltip" data-placement="right" title="" data-original-title="Under Construction">
-                    <a class="ajd-size" href="{% url 'under_conc' %}">
-                        <span class="pcoded-mtext mt-2"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M33.452 25.282C31.766 28.008 26.382 30.004 20 30.004C13.618 30.004 8.234 28.008 6.546 25.282C6.19 24.702 6 25.012 6 25.296V29.3C6 33.18 12.268 37.2 20 37.2C27.732 37.2 34 33.18 34 29.302V25.298C34 25.012 33.808 24.702 33.452 25.282ZM33.474 15.05C31.814 17.46 26.41 19.23 20 19.23C13.59 19.23 8.184 17.46 6.524 15.05C6.182 14.554 6 14.824 6 15.046V19.76C6 23.284 12.268 26.138 20 26.138C27.732 26.138 34 23.282 34 19.76V15.046C34 14.824 33.816 14.554 33.474 15.05ZM20 2C12.268 2 6 4.36 6 7.266V9.786C6 12.868 12.268 15.368 20 15.368C27.732 15.368 34 12.868 34 9.786V7.266C34 4.36 27.732 2 20 2Z" fill="white"/>
-                        </svg>
-                        </span>
-                    </a>
-                </li>
+<!--                <li class="pcoded-hasmenu"  data-toggle="tooltip" data-placement="right" title="" data-original-title="Under Construction">-->
+<!--                    <a class="ajd-size" href="{% url 'under_conc' %}">-->
+<!--                        <span class="pcoded-mtext mt-2"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <path d="M33.452 25.282C31.766 28.008 26.382 30.004 20 30.004C13.618 30.004 8.234 28.008 6.546 25.282C6.19 24.702 6 25.012 6 25.296V29.3C6 33.18 12.268 37.2 20 37.2C27.732 37.2 34 33.18 34 29.302V25.298C34 25.012 33.808 24.702 33.452 25.282ZM33.474 15.05C31.814 17.46 26.41 19.23 20 19.23C13.59 19.23 8.184 17.46 6.524 15.05C6.182 14.554 6 14.824 6 15.046V19.76C6 23.284 12.268 26.138 20 26.138C27.732 26.138 34 23.282 34 19.76V15.046C34 14.824 33.816 14.554 33.474 15.05ZM20 2C12.268 2 6 4.36 6 7.266V9.786C6 12.868 12.268 15.368 20 15.368C27.732 15.368 34 12.868 34 9.786V7.266C34 4.36 27.732 2 20 2Z" fill="white"/>-->
+<!--                        </svg>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                </li>-->
                 {% for post_category in post_category|slice:":1" %}
                 <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="Flow Distribution">
                     <a class="ajd-size" href="{% url 'flow_distribution' post_category.pk %}">
@@ -48,22 +48,7 @@
                     </a>
                             </li>
                 {% endfor %}
-
-                <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="Logs">
-                    <a class="ajd-size" href="{% url 'logs' %}">
-                        <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path opacity="0.3" d="M25.184 20.7497L23.334 17.0664L18.1507 27.4164C17.8673 27.9831 17.3007 28.3331 16.6673 28.3331C16.034 28.3331 15.4673 27.9831 15.184 27.4164L12.3007 21.6664H3.33398V24.9997H6.66732V29.9997H33.334V24.9997H36.6673V21.6664H26.6673C26.034 21.6664 25.4673 21.3164 25.184 20.7497Z" fill="white"/>
-<path opacity="0.3" d="M33.334 10H6.66732V15H3.33398V18.3333H13.334C13.9673 18.3333 14.534 18.6833 14.8173 19.25L16.6673 22.9333L21.8507 12.5833C22.4173 11.45 24.2673 11.45 24.834 12.5833L27.7007 18.3333H36.6673V15H33.334V10Z" fill="white"/>
-<path d="M33.334 6.66602H6.66732C4.83398 6.66602 3.33398 8.16602 3.33398 9.99935V14.9993H6.66732V9.99935H33.334V14.9993H36.6673V9.99935C36.6673 8.16602 35.1673 6.66602 33.334 6.66602ZM33.334 29.9993H6.66732V24.9993H3.33398V29.9993C3.33398 31.8327 4.83398 33.3327 6.66732 33.3327H33.334C35.1673 33.3327 36.6673 31.8327 36.6673 29.9993V24.9993H33.334V29.9993Z" fill="white"/>
-<path d="M24.8173 12.5824C24.2507 11.4491 22.4007 11.4491 21.834 12.5824L16.6673 22.9324L14.8173 19.2491C14.6807 18.9728 14.4692 18.7404 14.2069 18.5783C13.9447 18.4162 13.6423 18.3311 13.334 18.3324H3.33398V21.6658H12.3007L15.1673 27.4158C15.4673 27.9824 16.034 28.3324 16.6673 28.3324C17.3007 28.3324 17.8673 27.9824 18.1507 27.4158L23.334 17.0658L25.184 20.7491C25.4673 21.3158 26.034 21.6658 26.6673 21.6658H36.6673V18.3324H27.7007L24.8173 12.5824Z" fill="white"/>
-</svg>
-
-
-                        </span>
-                    </a>
-                            </li>
-
-                <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="Energy Dashboard">
+                <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="Energy Consumption">
                     {% for post_category in post_category|slice:":1" %}
                     <a class="ajd-size" href="{% url 'energy' post_category.pk %}">
                         <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,6 +69,22 @@
                     </a>
                     {% endfor %}
                             </li>
+
+                <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="Logs">
+                    <a class="ajd-size" href="{% url 'logs' %}">
+                        <span class="pcoded-mtext"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.3" d="M25.184 20.7497L23.334 17.0664L18.1507 27.4164C17.8673 27.9831 17.3007 28.3331 16.6673 28.3331C16.034 28.3331 15.4673 27.9831 15.184 27.4164L12.3007 21.6664H3.33398V24.9997H6.66732V29.9997H33.334V24.9997H36.6673V21.6664H26.6673C26.034 21.6664 25.4673 21.3164 25.184 20.7497Z" fill="white"/>
+<path opacity="0.3" d="M33.334 10H6.66732V15H3.33398V18.3333H13.334C13.9673 18.3333 14.534 18.6833 14.8173 19.25L16.6673 22.9333L21.8507 12.5833C22.4173 11.45 24.2673 11.45 24.834 12.5833L27.7007 18.3333H36.6673V15H33.334V10Z" fill="white"/>
+<path d="M33.334 6.66602H6.66732C4.83398 6.66602 3.33398 8.16602 3.33398 9.99935V14.9993H6.66732V9.99935H33.334V14.9993H36.6673V9.99935C36.6673 8.16602 35.1673 6.66602 33.334 6.66602ZM33.334 29.9993H6.66732V24.9993H3.33398V29.9993C3.33398 31.8327 4.83398 33.3327 6.66732 33.3327H33.334C35.1673 33.3327 36.6673 31.8327 36.6673 29.9993V24.9993H33.334V29.9993Z" fill="white"/>
+<path d="M24.8173 12.5824C24.2507 11.4491 22.4007 11.4491 21.834 12.5824L16.6673 22.9324L14.8173 19.2491C14.6807 18.9728 14.4692 18.7404 14.2069 18.5783C13.9447 18.4162 13.6423 18.3311 13.334 18.3324H3.33398V21.6658H12.3007L15.1673 27.4158C15.4673 27.9824 16.034 28.3324 16.6673 28.3324C17.3007 28.3324 17.8673 27.9824 18.1507 27.4158L23.334 17.0658L25.184 20.7491C25.4673 21.3158 26.034 21.6658 26.6673 21.6658H36.6673V18.3324H27.7007L24.8173 12.5824Z" fill="white"/>
+</svg>
+
+
+                        </span>
+                    </a>
+                            </li>
+
+
 
 <!--                <li class="pcoded-hasmenu " data-toggle="tooltip" data-placement="right" title="" data-original-title="tooltip on right">-->
 <!--                    <a class="ajd-size" href="{% url 'under_conc' %}">-->
@@ -139,7 +140,7 @@
                 </svg>
               </a>
             </li>
-            <li data-toggle="tooltip" data-placement="right" title="" data-original-title="Help">
+            <li data-toggle="tooltip" data-placement="right" title="" data-original-title="Logout">
               <a class="ajd-size" href="/accounts/logout/">
                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" id="bi-pics" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"></path>

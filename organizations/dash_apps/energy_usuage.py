@@ -59,15 +59,36 @@ html.Div([
 # SF2 = []
 #
 #
-now = timezone.now()
-datetime_today = now.strftime('%Y-%m-%d')
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2022-12-01', '$lte': datetime_today}}).sort('_id',-1)
-#
+# now = timezone.now()
+# datetime_today = now.strftime('%Y-%m-%d')
+# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
+# today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-03-07', '$lte': datetime_today}}).sort('_id',-1)
+
+# Get the current month and year
+now = datetime.now()
+year = now.year
+month = now.month
+
+# Get the first day of the current month
+first_day = datetime(year, month, 1)
+
+# Get the first day of the next month
+if month == 12:
+    next_month = 1
+    next_year = year + 1
+else:
+    next_month = month + 1
+    next_year = year
+next_month_first_day = datetime(next_year, next_month, 1)
+
+# Find documents where the date/time field is in the current month
+query = {"createdAt": {"$gte": first_day, "$lt": next_month_first_day}}
+today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':first_day, '$lte': next_month_first_day}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
 
 occu_dt = []
 for c in today_energy_records:
     occu_dt.append(c)
-# print(len(occu_dt))
+print(occu_dt)
 data = pd.DataFrame(occu_dt)
 #
 main_data = data['data']
