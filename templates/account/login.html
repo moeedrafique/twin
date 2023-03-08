@@ -5,29 +5,60 @@
 	<title>Login auth</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 
 	<div class="wrapper">
-	  <a href="index.php" id="logo"><img src="{% static 'pics/logo-text.png' %}" alt="image"></a>
+	  <a href="#" id="logo"><img src="{% static 'pics/logo-text.png' %}" alt="image"></a>
 
 	    <!-- Login Form -->
 	    <form class="form" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
 	      <input type="text" id="login" class=" form-control" name="login" placeholder="Username">
-	      <input type="password" id="password" class=" form-control" name="password" placeholder="Password">
+	      <input type="password"  id="password-field" class=" form-control" name="password" placeholder="Password">
+		  <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
 	      <input type="submit" class=" btn btn-large col" value="Log In">
 	    </form>
 
-        <p>Create your account <a href="signup.php">Here!</a></p>
+        <p>Forget your password <a href="{% url 'account_reset_password' %}">Reset Here!</a></p>
 
 
 	</div>
+	<style>
+		.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: 25px;
+  position: relative;
+  z-index: 2;
+  color: #26a69a;
+}
 
-<script src="{% static 'js/jquery.js' %}"></script>
+.container{
+  padding-top:50px;
+  margin: auto;
+}
+	</style>
+<script>
+	$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+
+</script>
+
 <script src="{% static 'js/materialize.min.js' %}"></script>
 
 </body>
