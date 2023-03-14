@@ -472,7 +472,7 @@ def viewSummary(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    location = '/home/moeedrafique/twin/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -688,8 +688,8 @@ def FlowDistribution(request, organization_pk):
     blob_filename_id = blob_filename_obj['_id']
     blob_output_data = fs.get(blob_filename_id).read()
     # blob_output = blob_output_data.decode()
-    location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
-    # location = '/home/moeedrafique/twin/static/img/'
+    #location = 'C:/Users/MR LAPTOP/PycharmProjects/twin_dynamics/static/img/'
+    location = '/home/moeedrafique/twin/static/img/'
     outputFile = codecs.open(location + f"{blob_name}.jpeg", "wb")
     outputFile.write(blob_output_data)
     outputFile.close()
@@ -814,6 +814,18 @@ def underConstruction(request):
         business_id_data.append(i)
 
     if request.method == 'POST':
+        buildings = mycol_building.find(
+            sort=[('_id', pymongo.DESCENDING)])
+        b_dt = pd.DataFrame.from_dict(buildings)
+        business_name = b_dt["business_name"]
+        business_id= b_dt["business_id"]
+        business = []
+        for i in business_name:
+            business.append(i)
+    
+        business_id_data = []
+        for i in business_id:
+            business_id_data.append(i)
         building = request.POST.get('building')
         floor = request.POST.get('floors')
         room = request.POST.get('rooms')
@@ -825,39 +837,32 @@ def underConstruction(request):
         to_date = request.POST.get('to_date')
         to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
         vent = request.POST.get('vents')
+        print("Vent is" + vent)
         vent_data = "data" + '.' + vent
 
-        if request.POST.get('building') == 'All':
-            sim = list(mycol_sim.find())
-            # print(sim)
-            context = {'sim': sim}
-            # return render(request, 'under_conc.html', context)
+
+        if request.POST.get('vents') == 'sg1_1':
+            sim_sg = list(
+                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                 'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
+                                                , 'data.sg5_2': 1, 'data.sg6_2': 1
+
+                }}]))
+            context = {'business': business, 'business_id_data':business_id_data, 'sim_sg': sim_sg}
+            return render(request, 'under_conc.html', context)
         else:
-
-            print(vent_data)
-
-            if request.POST.get('vents') == 'sg1_1':
-                sim_sg = list(
-                    mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
-                                                     'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
-                                                    '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
-                                                     'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
-                                                    , 'data.sg5_2': 1, 'data.sg6_2': 1
+            sim2 = list(mycol_sim.aggregate(
+                    [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                 'room': 'Coworking Space',
+                                 'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                        '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                        'room': 'Coworking Space', vent_data: 1,
 
                     }}]))
-                context = {'vent': vent, 'sim_sg': sim_sg}
-                return render(request, 'under_conc.html', context)
-            else:
-                sim2 = list(mycol_sim.aggregate(
-                        [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
-                                     'room': 'Coworking Space',
-                                     'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
-                            '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
-                            'room': 'Coworking Space', vent_data: 1,
-
-                        }}]))
-                context = {'sim2':sim2}
-                return render(request, 'under_conc.html', context)
+            context = {'business': business, 'business_id_data':business_id_data, 'vent': vent, 'sim2':sim2}
+            return render(request, 'under_conc.html', context)
 
     context = {'business': business, 'business_id_data':business_id_data}
     return render(request, 'under_conc.html', context)
