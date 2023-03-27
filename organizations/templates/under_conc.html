@@ -27,13 +27,11 @@
 							<h5><strong>Reporting</strong></h5>
 						</div>
 						<div class="col-lg-12 reports-hvac-en">
-								<div class="col-lg-6">
+								<div class="col-lg-12">
 									<button type="button" class="btn btn-default waves-effect float-right" data-toggle="modal" data-target="#default-Modal">Send Email</button>
 									<div id="default-Modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="login-card card-block login-card-modal">
-                                                        <form method="POST" action="" class="md-float-material">
-                                                        {% csrf_token %}
                                                             <div class="text-center">
                                                                 <img style="width:15%;" src="{% static 'libraries\assets\images\logo-bg.png' %}" alt="logo.png">
                                                             </div>
@@ -46,11 +44,11 @@
                                                                 </div>
                                                                 <hr>
                                                                 <div class="input-group">
-																<input type="email" name="email" placeholder="Email:" class="form-control"/>
+																<input type="email" id="recipient-email" name="email" placeholder="Email:" class="form-control"/>
                                                                     <span class="md-line"></span>
                                                                 </div>
                                                                 <div class="input-group">
-																<textarea type="text" name="message" placeholder="Message:"  class="form-control"></textarea>
+																<textarea type="text" id="recipient-message" name="message" placeholder="Message:"  class="form-control"></textarea>
                                                                     <span class="md-line"></span>
                                                                 </div>
                                                                 <div class="row m-t-25 text-left">
@@ -75,14 +73,13 @@
                                                                 </div>
                                                                 <div class="row m-t-15">
                                                                     <div class="col-md-12">
-                                                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center">SUBMIT</button>
+                                                                        <button type="submit" id="email-send-button" class="btn btn-primary btn-md btn-block waves-effect text-center">SUBMIT</button>
                                                                     </div>
                                                                 </div>
                                                                 <hr>
 
                                                             </div>
                                                             </div>
-                                                        </form>
                                                         <!-- end of form -->
                                                     </div>
                                                 </div>
@@ -157,6 +154,7 @@
 									<div class="mb-2"></div>
 									<div class="text-right">
 									<button type="submit" class="btn btn-primary">Generate Report</button>
+                                        <div class="mb-2"></div>
 									</div>
 								</form>
 							</div>
@@ -179,7 +177,36 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <div class="dt-responsive table-responsive">
-														
+														<table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>DateTime</th>
+                                                                        <th>Business</th>
+                                                                        <th>Buildings</th>
+                                                                        <th>Floors</th>
+                                                                        <th>Rooms</th>
+                                                                        <th>{{vent|upper}}</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for i in sim2 %}
+                                                            <tr>
+                                                                    <td>{{ i.timestamp }}</td>
+                                                                    <td>{{ i.business }}</td>
+                                                                    <td>{{ i.building }}</td>
+                                                                    <td>{{ i.floor }}</td>
+                                                                    <td>{{ i.room }}</td>
+																                                    {% if vent == 'ahu_out' %}
+                                                                    <td>{{ i.data.ahu_out }}</td>
+																                                    {% elif vent == 'eg1_1' %}
+                                                                    <td>{{ i.data.eg1_1 }}</td>
+																                                    {% elif vent == 'fcu_in' %}
+                                                                    <td>{{ i.data.fcu_in }}</td>
+																                                    {% endif %}
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                            </table>
 															{% if sim2 %}
 															<table id="basic-btn" class="table table-striped table-bordered nowrap">
                                                                 <thead>
@@ -303,6 +330,41 @@
 		  var today = new Date().toISOString().split('T')[0];
 		  document.getElementById("myDateInput_2").setAttribute("max", today);
 	</script>
+
+
+<script>
+    $(document).ready(function() {
+  // ... other code ...
+
+  // Handle email sending
+  $('#email-send-button').click(function() {
+    // Get recipient email address from form
+    var recipientEmail = $('#recipient-email').val();
+    var recipientMessage = $('#recipient-message').val();
+    console.log(recipientEmail);
+    console.log(recipientMessage);
+    // Send email
+    $.ajax({
+      url: '/send-table-email/',
+      type: 'POST',
+      data: {
+        recipient_email: recipientEmail,
+        recipient_message: recipientMessage
+      },
+      success: function(data) {
+        // Email sent successfully, close modal dialog and show success message
+        $('#email-modal').modal('hide');
+        toastr.success('Table sent to ' + recipientEmail + ' successfully!');
+      },
+      error: function(xhr, status, error) {
+        // Error sending email, show error message
+        toastr.error('Error sending table: ' + error);
+      }
+    });
+  });
+} );
+</script>
+
 	<!-- Page-body end -->
 </div>
 </div>

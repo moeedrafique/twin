@@ -8,6 +8,7 @@ from organizations.views import default as views
 from organizations.dash_apps import gauge
 from organizations.dash_apps import pie
 from organizations.dash_apps import energy_usuage
+from organizations.dash_apps import co2
 from organizations.dash_apps import electric
 from organizations.dash_apps import gas
 from organizations.dash_apps import hvac
@@ -24,6 +25,7 @@ urlpatterns = [
     path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
     path('reports/', views.underConstruction, name='under_conc'),
     path('logs/', views.Logs, name='logs'),
+    path('my_table_view', views.my_table_view, name='send_table_email'),
     path('staff-update/<slug:pk>/', views.StaffUserUpdateView.as_view(), name="staff_update"),
     path(
         "",
@@ -53,6 +55,9 @@ urlpatterns = [
                      ),
                 path('energy-usage/', views.energyDetail,
                      name='energy-detail'
+                     ),
+                path('co-usage/', views.energyDetail,
+                     name='co2'
                      ),
                 path('scheduling/', views.Scheduling,
                      name='scheduling'

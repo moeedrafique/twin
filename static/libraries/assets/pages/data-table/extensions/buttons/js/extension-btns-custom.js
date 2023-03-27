@@ -153,19 +153,21 @@ $(document).ready(function() {
             }
         }]
     });
+//    $('#basic-btn').DataTable({
+//        dom: 'Bfrtip',
+//        buttons: ['csv', 'pdf']
+//    });
     $('#basic-btn').DataTable({
         dom: 'Bfrtip',
-        buttons: ['csv', 'pdf']
-    });
-    $('#custom-btn').DataTable({
-        dom: 'Bfrtip',
-        buttons: [{
-            text: 'My Custom button',
+        buttons: ['csv', 'pdf', {
+            text: 'Email',
             action: function(e, dt, node, config) {
-                alert('Button activated');
+                $('#default-Modal').modal('show');
             }
         }]
     });
+
+
     $('#class-btn').DataTable({
         dom: 'Bfrtip',
         buttons: [{

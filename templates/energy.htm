@@ -24,7 +24,9 @@
                                                 {% for post_category in post_category|slice:":1" %}
                                                 <li><a href="{% url 'energy-detail' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Energy Usage</button></a></li>
                                                 {% endfor %}
-                                                <li><a href=""><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'co2' post_category.pk %}"><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <div class="right-btn">

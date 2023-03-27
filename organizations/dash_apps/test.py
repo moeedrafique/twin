@@ -1,34 +1,47 @@
+import pathlib
+
+import pandas as pd
+import pymongo
+import datetime
+#from bson.json_util import dumps
+import pytz
+from bson.json_util import dumps
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
+import plotly.graph_objs as go
+import plotly
+from django.utils import timezone
+import dash_extendable_graph as deg
+from django.utils.safestring import SafeString, mark_safe
+# =============================================================================
+from django_plotly_dash import DjangoDash
+from collections import deque
+from queue import Empty
+from queue import Queue
+from threading import Thread
+from pymongo.change_stream import ChangeStream
+import time
+import random
+from dash.exceptions import PreventUpdate
 import requests
+import json
+from collections import OrderedDict
+# =============================================================================
+PATH = pathlib.Path(__file__).parent
+DATA_PATH = PATH.joinpath("./data").resolve()
+import threading
 
-url = "https://bo-api.drivewealth.io/back-office/managed/portfolios"
+myclient = pymongo.MongoClient("mongodb+srv://shahid_123:iRRHpdYoWApzFkWw@trymedriver.nmfto.mongodb.net/trymeTaxiDatabase?retryWrites=true&w=majority")
+mydb = myclient["trymeTaxiDatabase"]
+mycol_sim = mydb["drivers"]
 
-payload = {
-    "userID": "66304da9-3h6f-2234-935f-ac6b7933d706",
-    "name": "Recession Proof",
-    "clientPortfolioID": "AAABBB-1222-3344.123456789",
-    "description": "Mix of sectors",
-    "holdings": [
-        {
-            "type": "FUND",
-            "id": "fund_3d9d00d1-f06e-4f86-9cbf-893c75cf77fe",
-            "target": 0.95
-        }
-    ],
-    "triggers": [
-        {
-            "type": "TOTAL_DRIFT",
-            "maxAllowed": 0.05,
-            "child": None,
-            "lowerBound": 0.01,
-            "upperBound": 0.02
-        }
-    ]
-}
-headers = {
-    "accept": "application/json",
-    "content-type": "application/json"
-}
+# tariff_elec = mycol_sim.find()
 
-response = requests.post(url, json=payload, headers=headers)
+buildings = mycol_sim.find({'isLive': True})
+b_dt = pd.DataFrame.from_dict(buildings)
+business = []
+for i in b_dt:
+    business.append(i)
 
-print(response.text)
+print(b_dt)

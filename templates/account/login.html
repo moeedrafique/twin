@@ -6,7 +6,14 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	    <!-- notify js Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\pnotify\css\pnotify.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\pnotify\css\pnotify.brighttheme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\pnotify\css\pnotify.buttons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\pnotify\css\pnotify.history.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\bower_components\pnotify\css\pnotify.mobile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries\assets\pages\pnotify\notify.css' %}">
+
 
 </head>
 <body>
@@ -17,6 +24,11 @@
 	    <!-- Login Form -->
 	    <form class="form" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <input type="hidden" id="error" value="{{ error }}">
+      {% endfor %}
+    {% endif %}
 	      <input type="text" id="login" class=" form-control" name="login" placeholder="Username">
 	      <input type="password"  id="password-field" class=" form-control" name="password" placeholder="Password">
 		  <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -45,6 +57,35 @@
   margin: auto;
 }
 	</style>
+
+
+<script src="{% static 'js/materialize.min.js' %}"></script>
+    <!-- pnotify js -->
+	<script type="text/javascript" src="{% static 'libraries\bower_components\jquery\js\jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.desktop.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.buttons.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.confirm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.callbacks.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.animate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.history.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.mobile.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\bower_components\pnotify\js\pnotify.nonblock.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries\assets\pages\pnotify\notify.js' %}"></script>
+	  {% if form.non_field_errors %}
+	<script>
+		$(document).ready(function() {
+		{% for error in form.non_field_errors %}
+    (new PNotify({
+        title: 'Error',
+        text: '{{ error }}',
+        type: 'error',
+        delay: 5000,
+    }));
+     {% endfor %}
+});
+	</script>
+  {% endif %}
 <script>
 	$(".toggle-password").click(function() {
 
@@ -58,8 +99,5 @@
 });
 
 </script>
-
-<script src="{% static 'js/materialize.min.js' %}"></script>
-
 </body>
 </html>

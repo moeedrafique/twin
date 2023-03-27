@@ -20,7 +20,7 @@ from django.core.mail import EmailMessage
 from organizations.filters import *
 import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -36,7 +36,7 @@ from organizations.views.base import ViewFactory
 from organizations.views.mixins import AdminRequiredMixin
 from organizations.views.mixins import MembershipRequiredMixin
 from organizations.views.mixins import OwnerRequiredMixin
-
+from weasyprint import HTML
 bases = ViewFactory(Organization)
 
 
@@ -665,12 +665,53 @@ def energyDetail(request, organization_pk):
     context = {'business_detail': business_detail}
     return render(request, 'energy_detail.htm', context)
 
+def coDetail(request, organization_pk):
+    business_detail = get_object_or_404(Organization, id=organization_pk)
+    context = {'business_detail': business_detail}
+    return render(request, 'co2.html', context)
+
 def AirTerminals(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
 
     context = {'business_detail': business_detail, 'i':main_data}
     return render(request, 'air_terminals.html', context)
+
+def my_table_view(request):
+    # Retrieve data for the DataTable
+    my_data = request.POST.get('building')
+    print(my_data)
+    # Render the DataTable as HTML
+    html_string = render_to_string('my_table.html', {'my_data': my_data})
+
+    # Generate the PDF file from the HTML using WeasyPrint
+    pdf_file = HTML(string=html_string).write_pdf()
+
+    # Return the PDF file as a response
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="my_table.pdf"'
+    return response
+
+def send_table_email(request):
+    # Retrieve the recipient email address from the request
+    recipient_email = request.POST.get('recipient_email')
+
+    # Retrieve the PDF file generated from the DataTable view
+    pdf_file = my_table_view(request).content
+
+    # Create the email message and attach the PDF file
+    email_message = EmailMessage(
+        subject='My DataTable PDF',
+        body='Please find attached the PDF file of my DataTable.',
+        from_email='sender@example.com',
+        to=[recipient_email],
+    )
+    email_message.attach('my_table.pdf', pdf_file, 'application/pdf')
+
+    # Send the email and return a success response
+    email_message.send()
+    return HttpResponse('Email sent successfully!')
+
 
 def FlowDistribution(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
@@ -850,6 +891,14 @@ def underConstruction(request):
                                                 , 'data.sg5_2': 1, 'data.sg6_2': 1
 
                 }}]))
+            html_string = render_to_string('my_table.html', {'sim_sg': sim_sg})
+
+            # Generate the PDF file from the HTML using WeasyPrint
+            pdf_file = HTML(string=html_string).write_pdf()
+
+            # Return the PDF file as a response
+            response = HttpResponse(pdf_file, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="my_table.pdf"'
             context = {'business': business, 'business_id_data':business_id_data, 'sim_sg': sim_sg}
             return render(request, 'under_conc.html', context)
         else:
