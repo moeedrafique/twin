@@ -23,8 +23,8 @@
                                                 {% for post_category in post_category|slice:":1" %}
                                                 <li><a href="{% url 'energy' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Summary</button></a></li>
                                                 <li><a href="{% url 'energy-detail' post_category.pk %}"><button class="btn-primary btn-sm active mt-1">Energy Usage</button></a></li>
+                                                <li><a href="{% url 'co2' post_category.pk %}"><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
                                                 {% endfor %}
-                                                <li><a href=""><button class="btn-primary btn-sm mt-1">CO2 Usage</button></a></li>
                                             </ul>
                                         </div>
                                         <div class="right-btn">
@@ -65,7 +65,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
                                                                 <div class="colors {% plotly_class name="electric" %}" style="height:100%;width: 100%;">
@@ -74,7 +74,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="card">
                                                             <div class="card-header table-card-header">
                                                                 <div class="colors {% plotly_class name="gas" %}" style="height:100%;width: 100%;">
@@ -83,15 +83,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="card">
-                                                            <div class="card-header table-card-header">
-                                                                <div class="colors {% plotly_class name="hvac" %}" style="height:100%;width: 100%;">
-                                                              {% plotly_app name='hvac' ratio=0.65 %}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                             </div>
                                         </div>

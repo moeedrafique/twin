@@ -3,9 +3,11 @@ import base64
 import codecs
 import random
 from statistics import mean
-
+from des.models import DynamicEmailConfiguration
 import gridfs
 import numpy as np
+import pdfkit
+import os
 import pandas as pd
 import pymongo
 from datetime import datetime, timedelta
@@ -22,7 +24,7 @@ import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -36,7 +38,6 @@ from organizations.views.base import ViewFactory
 from organizations.views.mixins import AdminRequiredMixin
 from organizations.views.mixins import MembershipRequiredMixin
 from organizations.views.mixins import OwnerRequiredMixin
-from weasyprint import HTML
 bases = ViewFactory(Organization)
 
 
@@ -511,7 +512,7 @@ def energyDash(request, organization_pk):
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
     tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     # print(tariff['anytime'])
-    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-03-31'}})
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-04-30'}})
 
     ener_data = pd.DataFrame(energy_building)
     # print(ener_data.count())
@@ -605,7 +606,7 @@ def energyDash(request, organization_pk):
     total_cost_cic_lm = cost_elec_lm + cost_gas_lm
     # print("Total Cost Last Month:", total_cost_cic_lm)
 
-    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-03-31'}})
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-04-30'}})
     ener_data_cm = pd.DataFrame(energy_building_cm)
     en_main_data_cm = ener_data_cm['data']
 
@@ -693,24 +694,114 @@ def my_table_view(request):
     return response
 
 def send_table_email(request):
+    now = timezone.now()
+    datetime_str = now.strftime("%Y-%m-%d")
     # Retrieve the recipient email address from the request
-    recipient_email = request.POST.get('recipient_email')
+    from_date = request.session.get('from_date')
+    from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
 
-    # Retrieve the PDF file generated from the DataTable view
-    pdf_file = my_table_view(request).content
+    to_date = request.session.get('to_date')
+    print(to_date)
+    to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
+    print(to_date_obj)
+    vent = request.session.get('vents')
+    print("Vent is " + vent)
+    vent_data = "data" + '.' + vent
 
-    # Create the email message and attach the PDF file
+    sensor = request.POST.get('vents')
+    if vent == 'sg1_1':
+        sim_sg = list(
+            mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                             'room': 'Coworking Space',
+                                             'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
+                , 'data.sg5_2': 1, 'data.sg6_2': 1
+
+            }}]))
+    elif vent == 'sf1_2':
+        sim_sg = list(
+            mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                             'room': 'Coworking Space',
+                                             'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                'room': 'Coworking Space', 'data.sf1_2': 1, 'data.sf2_2': 1
+
+            }}]))
+    else:
+        sim_sg = list(mycol_sim.aggregate(
+            [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                         'room': 'Coworking Space',
+                         'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                'room': 'Coworking Space', vent_data: 1,
+
+            }}]))
+    p_settings = DynamicEmailConfiguration.objects.get(id=1)
+    context = {'sim_sg': sim_sg}
+    context['sensor'] = vent
+    context['p_settings'] = p_settings
+    filename = '{}.pdf'.format("Daily Report" + '[' + datetime_str + ']')
+
+    # HTML FIle to be converted to PDF - inside your Django directory
+    template = get_template('my_table.html')
+
+    # Render the HTML
+    html = template.render(context)
+
+    # Options - Very Important [Don't forget this]
+    options = {
+        'encoding': 'UTF-8',
+        'javascript-delay': '1000',  # Optional
+        'enable-local-file-access': None,  # To be able to access CSS
+        'page-size': 'A4',
+        'custom-header': [
+            ('Accept-Encoding', 'gzip')
+        ],
+    }
+    # Javascript delay is optional
+
+    # Remember that location to wkhtmltopdf
+    # For windows os
+    # config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+
+    # For linux
+    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+
+    # Saving the File
+    filepath = os.path.join(settings.MEDIA_ROOT, 'customer-invoices/')
+    os.makedirs(filepath, exist_ok=True)
+    pdf_save_path = filepath + filename
+    # Save the PDF
+    pdfkit.from_string(html, pdf_save_path, configuration=config, options=options)
+    # send the emails to client
     email_message = EmailMessage(
         subject='My DataTable PDF',
         body='Please find attached the PDF file of my DataTable.',
-        from_email='sender@example.com',
-        to=[recipient_email],
+        from_email=p_settings.from_email,
+        to=[request.POST.get('email')],
     )
-    email_message.attach('my_table.pdf', pdf_file, 'application/pdf')
+    print(request.POST.get('email'))
+    with open(pdf_save_path, 'rb') as pdf_file:
+        email_message.attach(filename, pdf_file.read(), 'application/pdf')
+    
+    #email_message.attach(filename, pdf_save_path, 'application/pdf')
 
     # Send the email and return a success response
     email_message.send()
-    return HttpResponse('Email sent successfully!')
+
+    del request.session['from_date']
+    del request.session['to_date']
+    del request.session['vents']
+
+    # Email was send, redirect back to view - invoice
+    messages.success(request, "Email sent to the client succesfully")
+    return redirect('under_conc')
+
+
+    # # Email was send, redirect back to view - invoice
+    # messages.success(request, "Email sent to the client succesfully")
+    # return HttpResponse('Email sent successfully!')
 
 
 def FlowDistribution(request, organization_pk):
@@ -855,11 +946,11 @@ def underConstruction(request):
         business_id_data.append(i)
 
     if request.method == 'POST':
-        buildings = mycol_building.find(
-            sort=[('_id', pymongo.DESCENDING)])
+        buildings = mycol_building.find(sort=[('_id', pymongo.DESCENDING)])
         b_dt = pd.DataFrame.from_dict(buildings)
         business_name = b_dt["business_name"]
         business_id= b_dt["business_id"]
+
         business = []
         for i in business_name:
             business.append(i)
@@ -867,22 +958,21 @@ def underConstruction(request):
         business_id_data = []
         for i in business_id:
             business_id_data.append(i)
-        building = request.POST.get('building')
-        floor = request.POST.get('floors')
-        room = request.POST.get('rooms')
-        room = request.POST.get('rooms')
+
+        # building = request.POST.get('building')
+        # floor = request.POST.get('floors')
+        # room = request.POST.get('rooms')
+        # room = request.POST.get('rooms')
 
         from_date = request.POST.get('from_date')
         from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
 
         to_date = request.POST.get('to_date')
         to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
-        vent = request.POST.get('vents')
-        print("Vent is" + vent)
-        vent_data = "data" + '.' + vent
+        sensor = request.POST.get('vents')
+        print(sensor)
+        if sensor == 'sg1_1':
 
-
-        if request.POST.get('vents') == 'sg1_1':
             sim_sg = list(
                 mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
                                                  'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
@@ -891,18 +981,18 @@ def underConstruction(request):
                                                 , 'data.sg5_2': 1, 'data.sg6_2': 1
 
                 }}]))
-            html_string = render_to_string('my_table.html', {'sim_sg': sim_sg})
+        elif sensor == 'sf1_2':
+            sim_sg = list(
+                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                 'room': 'Coworking Space', 'data.sf1_2': 1, 'data.sf2_2': 1
 
-            # Generate the PDF file from the HTML using WeasyPrint
-            pdf_file = HTML(string=html_string).write_pdf()
-
-            # Return the PDF file as a response
-            response = HttpResponse(pdf_file, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="my_table.pdf"'
-            context = {'business': business, 'business_id_data':business_id_data, 'sim_sg': sim_sg}
-            return render(request, 'under_conc.html', context)
+                }}]))
         else:
-            sim2 = list(mycol_sim.aggregate(
+            # print("Vent is" + sensor)
+            vent_data = "data" + '.' + sensor
+            sim_sg = list(mycol_sim.aggregate(
                     [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
                                  'room': 'Coworking Space',
                                  'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
@@ -910,8 +1000,64 @@ def underConstruction(request):
                         'room': 'Coworking Space', vent_data: 1,
 
                     }}]))
-            context = {'business': business, 'business_id_data':business_id_data, 'vent': vent, 'sim2':sim2}
-            return render(request, 'under_conc.html', context)
+        request.session['from_date'] = from_date
+        request.session['to_date'] = to_date
+        request.session['vents'] = sensor
+        # context1 = {'sim_sg': sim_sg}
+        # p_settings = DynamicEmailConfiguration.objects.get(id=1)
+        # filename = '{}.pdf'.format("invoice.number")
+        #
+        # # HTML FIle to be converted to PDF - inside your Django directory
+        # template = get_template('my_table.html')
+        #
+        # # Render the HTML
+        # html = template.render(context1)
+        #
+        # # Options - Very Important [Don't forget this]
+        # options = {
+        #     'encoding': 'UTF-8',
+        #     'javascript-delay': '1000',  # Optional
+        #     'enable-local-file-access': None,  # To be able to access CSS
+        #     'page-size': 'A4',
+        #     'custom-header': [
+        #         ('Accept-Encoding', 'gzip')
+        #     ],
+        # }
+        # # Javascript delay is optional
+        #
+        # # Remember that location to wkhtmltopdf
+        # # For windows os
+        # config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        #
+        # # For linux
+        # # config = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')
+        #
+        # # Saving the File
+        # filepath = os.path.join(settings.MEDIA_ROOT, 'customer-invoices/')
+        # os.makedirs(filepath, exist_ok=True)
+        # pdf_save_path = filepath + filename
+        # # Save the PDF
+        # pdfkit.from_string(html, pdf_save_path, configuration=config, options=options)
+        #
+        # if 'email' in  request.POST:
+        #     # send the emails to client
+        #     email_message = EmailMessage(
+        #         subject='My DataTable PDF',
+        #         body='Please find attached the PDF file of my DataTable.',
+        #         from_email=p_settings.from_email,
+        #         to=[request.POST.get('email')],
+        #     )
+        #     print(request.POST.get('email'))
+        #     email_message.attach(filename, pdf_save_path, 'application/pdf')
+        #
+        #     # Send the email and return a success response
+        #     email_message.send()
+        #
+        #     # Email was send, redirect back to view - invoice
+        #     messages.success(request, "Email sent to the client succesfully")
+
+        context = {'business': business, 'business_id_data':business_id_data, 'sim_sg': sim_sg, 'sensor':sensor}
+        return render(request, 'under_conc.html', context)
 
     context = {'business': business, 'business_id_data':business_id_data}
     return render(request, 'under_conc.html', context)
@@ -952,110 +1098,201 @@ def Logs(request):
         to_date_obj = datetime.strptime(to_date, "%Y-%m-%d")
         vent = request.POST.get('vents')
         vent_data = "data" + '.' + vent
+        sensor = request.POST.get('vents')
+        print(sensor)
+        if sensor == 'sg1_1':
 
-        if request.POST.get('building') == 'All':
-            sim = list(mycol_sim.find())
-            # print(sim)
-            context = {'sim': sim}
-            # return render(request, 'under_conc.html', context)
+            sim_sg = list(
+                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                 'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
+                                                , 'data.sg5_2': 1, 'data.sg6_2': 1
+
+                }}]))
+            x_values_1 = []
+            y_values_1 = []
+            y_values_2 = []
+            y_values_3 = []
+            y_values_4 = []
+            y_values_5 = []
+            y_values_6 = []
+            for d in sim_sg:
+                x_values_1.append(d['timestamp'])
+                y_values_1.append(d['data']['sg1_1'])
+                y_values_2.append(d['data']['sg2_2'])
+                y_values_3.append(d['data']['sg3_2'])
+                y_values_4.append(d['data']['sg4_2'])
+                y_values_5.append(d['data']['sg5_2'])
+                y_values_6.append(d['data']['sg6_2'])
+
+            # Create the Plotly trace
+            trace1 = go.Scatter(x=x_values_1, y=y_values_1, name='SG1_2')
+            trace2 = go.Scatter(x=x_values_1, y=y_values_2, name='SG2_2')
+            trace3 = go.Scatter(x=x_values_1, y=y_values_3, name='SG3_2')
+            trace4 = go.Scatter(x=x_values_1, y=y_values_4, name='SG4_2')
+            trace5 = go.Scatter(x=x_values_1, y=y_values_5, name='SG5_2')
+            trace6 = go.Scatter(x=x_values_1, y=y_values_6, name='SG6_2')
+
+            data = [trace1, trace2, trace3, trace4, trace5, trace6]
+            import plotly.offline as opy
+            # Create the Plotly layout
+            layout = go.Layout(
+                # title="My Attractive Plotly Chart",
+                # title_font=dict(size=30),  # increase the size of the title font
+                paper_bgcolor='white',  # set the background color of the paper to white
+                plot_bgcolor='#F8F8F8',  # set the background color of the plot area
+                font=dict(color='#333333', size=14),  # set the font color and size
+                xaxis=dict(
+                    title_font=dict(size=20),  # increase the size of the x-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the x-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the x-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the x-axis zero line
+                ),
+                yaxis=dict(
+                    title="Temperature [C]",
+                    title_font=dict(size=20),  # increase the size of the y-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the y-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the y-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the y-axis zero line
+                ),
+                legend=dict(
+                    font=dict(size=12),  # decrease the size of the legend font
+                    bordercolor='#E2E2E2',  # set the color of the legend border
+                    borderwidth=1  # set the width of the legend border
+                ),
+                margin=dict(l=80, r=50, t=80, b=50),  # set the margins of the plot
+            )
+
+            # Combine the trace and layout to create a Plotly figure
+            figure = go.Figure(data=data, layout=layout)
+            figure.update_layout(
+                yaxis_range=[0, 50]  # set the range of the y-axis from 0 to 10
+            )
+
+            # Convert the figure to HTML and render the template
+            plot_div = opy.plot(figure, auto_open=False, output_type='div')
+
+        elif sensor == 'sf1_2':
+            sim_sg = list(
+                mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                                                 'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
+                                                '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                                                 'room': 'Coworking Space', 'data.sf1_2': 1, 'data.sf2_2': 1
+
+                }}]))
+            x_values_1 = []
+            y_values_1 = []
+            y_values_2 = []
+            for d in sim_sg:
+                x_values_1.append(d['timestamp'])
+                y_values_1.append(d['data']['sf1_2'])
+                y_values_2.append(d['data']['sf2_2'])
+
+            # Create the Plotly trace
+            trace1 = go.Scatter(x=x_values_1, y=y_values_1, name='SF1_2')
+            trace2 = go.Scatter(x=x_values_1, y=y_values_2, name='SF2_2')
+            data = [trace1, trace2]
+            import plotly.offline as opy
+            # Create the Plotly layout
+            layout = go.Layout(
+                # title="My Attractive Plotly Chart",
+                # title_font=dict(size=30),  # increase the size of the title font
+                paper_bgcolor='white',  # set the background color of the paper to white
+                plot_bgcolor='#F8F8F8',  # set the background color of the plot area
+                font=dict(color='#333333', size=14),  # set the font color and size
+                xaxis=dict(
+                    title_font=dict(size=20),  # increase the size of the x-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the x-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the x-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the x-axis zero line
+                ),
+                yaxis=dict(
+                    title="Temperature [C]",
+                    title_font=dict(size=20),  # increase the size of the y-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the y-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the y-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the y-axis zero line
+                ),
+                legend=dict(
+                    font=dict(size=12),  # decrease the size of the legend font
+                    bordercolor='#E2E2E2',  # set the color of the legend border
+                    borderwidth=1  # set the width of the legend border
+                ),
+                margin=dict(l=80, r=50, t=80, b=50),  # set the margins of the plot
+            )
+
+            # Combine the trace and layout to create a Plotly figure
+            figure = go.Figure(data=data, layout=layout)
+            figure.update_layout(
+                yaxis_range=[0, 50]  # set the range of the y-axis from 0 to 10
+            )
+
+            # Convert the figure to HTML and render the template
+            plot_div = opy.plot(figure, auto_open=False, output_type='div')
+
         else:
-            buildings = mycol_building.find(
-                sort=[('_id', pymongo.DESCENDING)])
-            b_dt = pd.DataFrame.from_dict(buildings)
-            business_name = b_dt["business_name"]
-            business_id = b_dt["business_id"]
-            business = []
-            for i in business_name:
-                business.append(i)
+            # print("Vent is" + sensor)
+            vent_data = "data" + '.' + sensor
+            sim_sg = mycol_sim.aggregate(
+                [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
+                             'room': 'Coworking Space',
+                             'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
+                    '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
+                    'room': 'Coworking Space', vent_data: 1,
 
-            business_id_data = []
-            for i in business_id:
-                business_id_data.append(i)
-            print(vent_data)
+                }}, {'$sort': {"timestamp": 1}}])
 
-            if request.POST.get('vents') == 'sg1_1':
-                sim_sg = list(
-                    mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
-                                                     'room': 'Coworking Space', 'timestamp': {'$gte': from_date_obj, '$lte':to_date_obj}}}, {'$project': {
-                                                    '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
-                                                     'room': 'Coworking Space', 'data.sg1_1': 1, 'data.sg2_2': 1, 'data.sg3_2': 1, 'data.sg4_2': 1
-                                                    , 'data.sg5_2': 1, 'data.sg6_2': 1
+            x_values = []
+            y_values = []
+            for d in sim_sg:
+                x_values.append(d['timestamp'])
+                y_values.append(d['data'][vent])
 
-                    }}]))
-                context = {'business': business, 'business_id_data':business_id_data, 'vent': vent, 'sim_sg': sim_sg}
-            else:
-                sim2 = mycol_sim.aggregate(
-                        [{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
-                                     'room': 'Coworking Space',
-                                     'timestamp': {'$gte': from_date_obj, '$lte': to_date_obj}}}, {'$project': {
-                            '_id': 0, 'timestamp': 1, 'business': 1, 'building': 1, 'floor': 1,
-                            'room': 'Coworking Space', vent_data: 1,
+            # Create the Plotly trace
+            trace = go.Scatter(x=x_values, y=y_values)
+            import plotly.offline as opy
+            # Create the Plotly layout
+            layout = go.Layout(
+                # title="My Attractive Plotly Chart",
+                # title_font=dict(size=30),  # increase the size of the title font
+                paper_bgcolor='white',  # set the background color of the paper to white
+                plot_bgcolor='#F8F8F8',  # set the background color of the plot area
+                font=dict(color='#333333', size=14),  # set the font color and size
+                xaxis=dict(
+                    title_font=dict(size=20),  # increase the size of the x-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the x-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the x-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the x-axis zero line
+                ),
+                yaxis=dict(
+                    title="Temperature [C]",
+                    title_font=dict(size=20),  # increase the size of the y-axis title font
+                    tickfont=dict(size=12),  # decrease the size of the y-axis tick labels
+                    gridcolor='#DDDDDD',  # set the color of the y-axis gridlines
+                    zerolinecolor='#CCCCCC'  # set the color of the y-axis zero line
+                ),
+                legend=dict(
+                    font=dict(size=12),  # decrease the size of the legend font
+                    bordercolor='#E2E2E2',  # set the color of the legend border
+                    borderwidth=1  # set the width of the legend border
+                ),
+                margin=dict(l=80, r=50, t=80, b=50),  # set the margins of the plot
+            )
 
-                        }}, {'$sort': {"timestamp": 1}}])
+            # Combine the trace and layout to create a Plotly figure
+            figure = go.Figure(data=[trace], layout=layout)
+            figure.update_layout(
+                yaxis_range=[0, 50]  # set the range of the y-axis from 0 to 10
+            )
 
-                # df = pd.DataFrame(sim2)
-                # df.to_csv('file1.csv')
+            # Convert the figure to HTML and render the template
+            plot_div = opy.plot(figure, auto_open=False, output_type='div')
 
-                # print(sim2["data"])
+        context = {'business': business, 'business_id_data': business_id_data, 'sim_sg': sim_sg, 'sensor': sensor, 'plot_div':plot_div}
+        return render(request, 'logs.html', context)
 
-                x_values = []
-                y_values = []
-                for d in sim2:
-                    x_values.append(d['timestamp'])
-                    y_values.append(d['data'][vent])
-
-
-                # x_values = request.POST.get('ahu_out', '1,2,3,4,5').split(',')
-                # y_values = request.POST.get('y_values', '10,20,30,40,50').split(',')
-
-                # Create the Plotly trace
-                trace = go.Scatter(x=x_values, y=y_values)
-                import plotly.offline as opy
-                # Create the Plotly layout
-                layout = go.Layout(
-                        # title="My Attractive Plotly Chart",
-                        # title_font=dict(size=30),  # increase the size of the title font
-                        paper_bgcolor='white',     # set the background color of the paper to white
-                        plot_bgcolor='#F8F8F8',    # set the background color of the plot area
-                        font=dict(color='#333333', size=14),  # set the font color and size
-                        xaxis=dict(
-                            title_font=dict(size=20),  # increase the size of the x-axis title font
-                            tickfont=dict(size=12),    # decrease the size of the x-axis tick labels
-                            gridcolor='#DDDDDD',       # set the color of the x-axis gridlines
-                            zerolinecolor='#CCCCCC'    # set the color of the x-axis zero line
-                        ),
-                        yaxis=dict(
-                            title="Temperature [C]",
-                            title_font=dict(size=20),  # increase the size of the y-axis title font
-                            tickfont=dict(size=12),    # decrease the size of the y-axis tick labels
-                            gridcolor='#DDDDDD',       # set the color of the y-axis gridlines
-                            zerolinecolor='#CCCCCC'    # set the color of the y-axis zero line
-                        ),
-                        legend=dict(
-                            font=dict(size=12),        # decrease the size of the legend font
-                            bordercolor='#E2E2E2',     # set the color of the legend border
-                            borderwidth=1              # set the width of the legend border
-                        ),
-                        margin=dict(l=80, r=50, t=80, b=50),  # set the margins of the plot
-                    )
-
-
-
-                # Combine the trace and layout to create a Plotly figure
-                figure = go.Figure(data=[trace], layout=layout)
-                figure.update_layout(
-                    yaxis_range=[0, 50]  # set the range of the y-axis from 0 to 10
-                )
-
-                # Convert the figure to HTML and render the template
-                plot_div = opy.plot(figure, auto_open=False, output_type='div')
-
-                context = {'business': business, 'business_id_data':business_id_data, 'sim2': sim2, 'vent': vent, 'plot_div':plot_div}
-            # print(sim2)
-
-            return render(request, 'logs.html', context)
-
-    context = {'business': business, 'business_id_data':business_id_data}
+    context = {'business': business, 'business_id_data': business_id_data}
     return render(request, 'logs.html', context)
 from bson import json_util
 from bson.json_util import dumps
@@ -1123,7 +1360,7 @@ def load_cities(request):
             dt.append(j)
         return render(request, 'dropdown_list_options.html', {'dt': dt})
     except KeyError:
-        sweetify.success(request, 'No Result', icon="success", timer=30000)
+        print('No Result')
     #print(list(cities.values('id', 'name')))
     return render(request, 'dropdown_list_options.html')
     # return JsonResponse(json.loads(json_util.dumps(list(floor))), safe=False)

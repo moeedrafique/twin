@@ -10,6 +10,8 @@ from organizations.dash_apps import pie
 from organizations.dash_apps import energy_usuage
 from organizations.dash_apps import co2
 from organizations.dash_apps import electric
+from organizations.dash_apps import electric_co
+from organizations.dash_apps import gas_co
 from organizations.dash_apps import gas
 from organizations.dash_apps import hvac
 from organizations.dash_apps import temp_vent_data
@@ -25,7 +27,7 @@ urlpatterns = [
     path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
     path('reports/', views.underConstruction, name='under_conc'),
     path('logs/', views.Logs, name='logs'),
-    path('my_table_view', views.my_table_view, name='send_table_email'),
+    path('my_table_view', views.send_table_email, name='send_table_email'),
     path('staff-update/<slug:pk>/', views.StaffUserUpdateView.as_view(), name="staff_update"),
     path(
         "",
@@ -56,7 +58,7 @@ urlpatterns = [
                 path('energy-usage/', views.energyDetail,
                      name='energy-detail'
                      ),
-                path('co-usage/', views.energyDetail,
+                path('co-usage/', views.coDetail,
                      name='co2'
                      ),
                 path('scheduling/', views.Scheduling,

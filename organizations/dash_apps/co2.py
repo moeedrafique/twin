@@ -59,13 +59,7 @@ html.Div([
 # SF2 = []
 #
 #
-# now = timezone.now()
-# datetime_today = now.strftime('%Y-%m-%d')
-# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
-# today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-03-07', '$lte': datetime_today}}).sort('_id',-1)
-
-# Get the current month and year
-now = datetime.now()
+now = timezone.now()
 year = now.year
 month = now.month
 
@@ -81,9 +75,16 @@ else:
     next_year = year
 next_month_first_day = datetime(next_year, next_month, 1)
 
-# Find documents where the date/time field is in the current month
-query = {"createdAt": {"$gte": first_day, "$lt": next_month_first_day}}
-today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':first_day, '$lte': next_month_first_day}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
+datetime_today = now.strftime('%Y-%m-%d')
+# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)
+
+# Get the current month and year
+
+
+# # Find documents where the date/time field is in the current month
+# query = {"createdAt": {"$gte": first_day, "$lt": next_month_first_day}}
+# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':first_day, '$lte': next_month_first_day}}, {"datetime": {"$exists": False}}]}).sort('_id',-1)
 
 occu_dt = []
 for c in today_energy_records:
@@ -185,7 +186,7 @@ def update_graph_scatter(n):
             # "showgrid": False,
             # "showline": False,
             # "zeroline": False,
-            "title": "Energy Consumption(kWh)",
+            "title": "CO2e(kg)",
             #"range": [0, 4]
             # "fixedrange": True,
         },

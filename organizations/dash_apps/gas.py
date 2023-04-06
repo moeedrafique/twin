@@ -1,6 +1,8 @@
 import datetime
 import pathlib
 
+import numpy as np
+from django.utils import timezone
 import dash
 import gridfs
 import pandas as pd
@@ -30,6 +32,11 @@ import requests
 import json
 from collections import OrderedDict
 
+myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
+mydb = myclient["twin_dynamics"]
+mycol_sim = mydb["simulation_sensor_locations"]
+mycol_energy = mydb["energy_building"]
+
 app = DjangoDash("gas")
 app.layout = html.Div([
 html.Div([
@@ -42,9 +49,31 @@ html.Div([
 ]),
     ])
 
+now = timezone.now()
+datetime_today = now.strftime('%Y-%m-%d')
+# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)
 
+
+# # Find documents where the date/time field is in the current month
+# query = {"createdAt": {"$gte": first_day, "$lt": next_month_first_day}}
+# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':first_day, '$lte': next_month_first_day}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
+
+occu_dt = []
+for c in today_energy_records:
+    occu_dt.append(c)
+print(occu_dt)
+data = pd.DataFrame(occu_dt)
 #
-# fig.show()
+main_data = data['data']
+#
+gas = []
+for i in main_data:
+    res = i['gas']
+    gas.append(res)
+#
+average = np.mean(gas)
+print(average)
 
 @app.callback(
     Output('live-graph-4', 'figure'),
@@ -53,7 +82,7 @@ html.Div([
 def update_graph_scatter(n):
     fig = go.Figure(go.Indicator(
         mode = "gauge",
-        value = 420,
+        value = average,
         domain = {'x': [0, 1], 'y': [0, 1]},
         title = {'text': "GAS", 'font': {'size': 24, 'color':'white'}},
         # delta = {'reference': 400, 'increasing': {'color': "RebeccaPurple"}},

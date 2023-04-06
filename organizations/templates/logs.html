@@ -37,8 +37,8 @@
 										<div class="col-lg-5">
 											<div class="form-field mb-3 mt-3">
 												<label for="building">Building</label>
-												<select name="building" class="form-control" id="id_class_name">
-													<option >Select Building</option>
+												<select name="building" required class="form-control" id="id_class_name">
+													<option selected value="">Select Building</option>
 													{% for j in business_id_data %}
 
 													<option value="{{ j }}">{{ j }}</option>
@@ -48,7 +48,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Floor</label>
-												<select name="floors" class="form-control" id="id_board" value="floors">
+												<select name="floors" required class="form-control" id="id_board" value="floors">
 													<option  value="" selected>
 														Select Floor
 													</option>
@@ -56,7 +56,7 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">From</label>
-												<input name="from_date" class="form-control" type="date" id="myDateInput" max="">
+												<input name="from_date" required class="form-control" type="date" id="myDateInput" max="">
 
 												</input>
 											</div>
@@ -67,7 +67,7 @@
 										<div class="col-lg-5">
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Room</label>
-												<select name="rooms" class="form-control" id="id_rooms">
+												<select name="rooms" required class="form-control" id="id_rooms">
 													<option value="" selected>
 														Select Room
 													</option>
@@ -75,17 +75,20 @@
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">Vents Location</label>
-												<select class="form-control" name="vents">
+												<select required class="form-control" name="vents">
+													<option value="" selected>
+														Select Vents
+													</option>
 													<option value="fcu_in">Fan Coil Unit</option>
 													<option value="ahu_out">Air Handling Unit</option>
 													<option value="sg1_1">Supply Grill</option>
 													<option value="eg1_1">Exit Grill</option>
-													<option>Supply Fan</option>
+													<option value="sf1_2">Supply Fan</option>
 												</select>
 											</div>
 											<div class="form-field mb-3 mt-3">
 												<label for="password-input">To</label>
-												<input class="form-control" name="to_date" type="date" id="myDateInput_2" max="" />
+												<input required class="form-control" name="to_date" type="date" id="myDateInput_2" max="" />
 											</div>
 										</div>
 									</div>
@@ -93,7 +96,7 @@
 								</div>
 									<div class="mb-2"></div>
 									<div class="text-right">
-									<button type="submit" class="btn btn-primary">Generate Logs</button>
+									<button type="submit" id="submit" class="btn btn-primary">Generate Logs</button>
 									</div>
 								</form>
 							</div>
@@ -171,6 +174,42 @@
 		  var today = new Date().toISOString().split('T')[0];
 		  document.getElementById("myDateInput_2").setAttribute("max", today);
 	</script>
+	<script>
+  const form = document.getElementById('searchForm');
+  const submitButton = document.getElementById('submit');
+  const dropdowns = form.querySelectorAll('select');
+  const inputs = form.querySelectorAll('input');
+  const requiredFields = form.querySelectorAll('[required]');
+  form.addEventListener('input', () => {
+    let isDropdownValid = true;
+    isFormValid = true;
+
+    inputs.forEach(input => {
+      if (!input.value) {
+        isFormValid = false;
+      }
+    });
+
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.value) {
+        isDropdownValid = false;
+      }
+    });
+
+    requiredFields.forEach(field => {
+      if (!field.value) {
+        isFormValid = false;
+        field.classList.add('form-control-danger');
+      } else {
+        field.classList.remove('form-control-danger');
+      }
+    });
+
+    submitButton.disabled = !isDropdownValid;
+    submitButton.disabled = !isFormValid;
+    console.log("DIS");
+  });
+</script>
 	<!-- Page-body end -->
 </div>
 </div>

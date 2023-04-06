@@ -61,8 +61,7 @@ html.Div([
 #
 now = timezone.now()
 datetime_today = now.strftime('%Y-%m-%d')
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2022-12-01', '$lte': datetime_today}}).sort('_id',-1)
-#
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)#
 
 
 # today_energy_records = mycol_energy.aggregate([
