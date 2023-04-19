@@ -655,10 +655,12 @@ def energyDash(request, organization_pk):
     # print(total_energy_usuage)
 
     change_in_cost = total_cost_cic - total_cost_cic_lm
+    day_of_month = now.day
     context = {'business_detail': business_detail, 'cost_elec':cost_elec, 'cost_gas':cost_gas, 'total_cost':total_cost,
                'total_cost_cic_lm':total_cost_cic_lm, 'total_cost_cic':total_cost_cic, 'last_month_var':last_month_var,
                'current_month_strft':current_month_strft, 'total_energy_usuage':total_energy_usuage, 'time_dt':time_dt,
-               'change_in_cost':change_in_cost}
+               'change_in_cost':change_in_cost, 'day_of_month':day_of_month}
+    context['day_of_month'] = range(0, day_of_month)
     return render(request, 'energy.htm', context)
 
 def energyDetail(request, organization_pk):
@@ -694,8 +696,6 @@ def my_table_view(request):
     return response
 
 def send_table_email(request):
-    now = timezone.now()
-    datetime_str = now.strftime("%Y-%m-%d")
     # Retrieve the recipient email address from the request
     from_date = request.session.get('from_date')
     from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
@@ -708,7 +708,6 @@ def send_table_email(request):
     print("Vent is " + vent)
     vent_data = "data" + '.' + vent
 
-    sensor = request.POST.get('vents')
     if vent == 'sg1_1':
         sim_sg = list(
             mycol_sim.aggregate([{'$match': {'business': 'Digital Media Centre', 'building': 'DMC02', 'floor': 'ground',
@@ -737,58 +736,74 @@ def send_table_email(request):
                 'room': 'Coworking Space', vent_data: 1,
 
             }}]))
-    p_settings = DynamicEmailConfiguration.objects.get(id=1)
+
     context = {'sim_sg': sim_sg}
     context['sensor'] = vent
-    context['p_settings'] = p_settings
-    filename = '{}.pdf'.format("Daily Report" + '[' + datetime_str + ']')
 
-    # HTML FIle to be converted to PDF - inside your Django directory
-    template = get_template('my_table.html')
+    if request.POST.get('pdf'):
+        p_settings = DynamicEmailConfiguration.objects.get(id=1)
+        filename = '{}.pdf'.format("invoice.number")
 
-    # Render the HTML
-    html = template.render(context)
+        # HTML FIle to be converted to PDF - inside your Django directory
+        template = get_template('my_table.html')
 
-    # Options - Very Important [Don't forget this]
-    options = {
-        'encoding': 'UTF-8',
-        'javascript-delay': '1000',  # Optional
-        'enable-local-file-access': None,  # To be able to access CSS
-        'page-size': 'A4',
-        'custom-header': [
-            ('Accept-Encoding', 'gzip')
-        ],
-    }
-    # Javascript delay is optional
+        # Render the HTML
+        html = template.render(context)
 
-    # Remember that location to wkhtmltopdf
-    # For windows os
-    # config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        # Options - Very Important [Don't forget this]
+        options = {
+            'encoding': 'UTF-8',
+            'javascript-delay': '1000',  # Optional
+            'enable-local-file-access': None,  # To be able to access CSS
+            'page-size': 'A4',
+            'custom-header': [
+                ('Accept-Encoding', 'gzip')
+            ],
+        }
+        # Javascript delay is optional
 
-    # For linux
-    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+        # Remember that location to wkhtmltopdf
+        # For windows os
+        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
-    # Saving the File
-    filepath = os.path.join(settings.MEDIA_ROOT, 'customer-invoices/')
-    os.makedirs(filepath, exist_ok=True)
-    pdf_save_path = filepath + filename
-    # Save the PDF
-    pdfkit.from_string(html, pdf_save_path, configuration=config, options=options)
-    # send the emails to client
-    email_message = EmailMessage(
-        subject='My DataTable PDF',
-        body='Please find attached the PDF file of my DataTable.',
-        from_email=p_settings.from_email,
-        to=[request.POST.get('email')],
-    )
-    print(request.POST.get('email'))
-    with open(pdf_save_path, 'rb') as pdf_file:
-        email_message.attach(filename, pdf_file.read(), 'application/pdf')
-    
-    #email_message.attach(filename, pdf_save_path, 'application/pdf')
+        # For linux
+        # config = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')
 
-    # Send the email and return a success response
-    email_message.send()
+        # Saving the File
+        filepath = os.path.join(settings.MEDIA_ROOT, 'customer-invoices/')
+        os.makedirs(filepath, exist_ok=True)
+        pdf_save_path = filepath + filename
+        # Save the PDF
+        pdfkit.from_string(html, pdf_save_path, configuration=config, options=options)
+        # send the emails to client
+        email_message = EmailMessage(
+            subject='My DataTable PDF',
+            body=request.POST.get('message'),
+            from_email=p_settings.from_email,
+            to=[request.POST.get('email')],
+        )
+        print(request.POST.get('email'))
+        email_message.attach(filename, pdf_save_path, 'application/pdf')
+
+        # Send the email and return a success response
+        email_message.send()
+    else:
+        p_settings = DynamicEmailConfiguration.objects.get(id=1)
+        df = pd.DataFrame.json_normalize(sim_sg)
+
+        # Convert the DataFrame to CSV format as a string
+        csv_data = StringIO()
+        df.to_csv(csv_data, index=False)
+        csv_file = csv_data.getvalue()
+
+        # Send email with CSV data as attachment
+        subject = 'Form submission data'
+        message = request.POST.get('message')
+        from_email = p_settings.from_email
+        recipient_list = [request.POST.get('email')]
+        email = EmailMessage(subject, message, from_email, recipient_list)
+        email.attach('form_data.csv', csv_file, 'text/csv')
+        email.send()
 
     del request.session['from_date']
     del request.session['to_date']

@@ -56,7 +56,7 @@ yy = []
 
 
 now = timezone.now()
-today_start = now.replace(hour=8, minute=0, second=0, microsecond=0) - timedelta(days=0)
+today_start = now - timedelta(days=1)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
 occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('timestamp',-1)
 print(occupant_records)
@@ -115,11 +115,13 @@ def update_graph_scatter(n):
     # print(ahu)
     temp= xx
 
-    data = plotly.graph_objs.Scatter(
+    data = plotly.graph_objs.Bar(
         x=list(temp),
         y=list(ahu),
-        name='Scatter',
-        mode='lines+markers'
+        marker_color ='black',
+        marker_line_color='#000',
+        #name='Scatter',
+        #mode='Bars'
     )
     layout = go.Layout(
         # paper_bgcolor='#27293d',

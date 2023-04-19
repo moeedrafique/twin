@@ -86,9 +86,6 @@ var oilData = {
             backgroundColor: [
                 "#57e2c2",
                 "#fae93a",
-                "#fae93a",
-                "#fae93a",
-                "#fae93a",
             ]
         }]
 };
@@ -175,9 +172,7 @@ var oilData = {
     datasets: [
         {
             data: {{total_energy_usuage}},
-            backgroundColor: [
-                "#fae93a",
-            ]
+            backgroundColor: [{% for i in day_of_month %}"#fae93a",{% endfor %}]
         }],
 
 };

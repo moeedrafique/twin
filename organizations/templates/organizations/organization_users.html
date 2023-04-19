@@ -52,10 +52,9 @@
                                                     <div class="card-header table-card-header">
                                                                 <div class="row">
                                                                     <div class="col-sm-3 col-md-3" style="text-align: center;">
-                                                                        <a  href="{% url 'organization_user_add' organization.pk %}" type="button">
-                                                        Invite Members
-                                                    </a>
-                                                                        <button role="button" data-toggle="modal" data-target="#form" class="btn btn-primary btn-rounded" style="width: 80%; color: white;"><i class="fa fa-plus"></i>Invite Members</button>
+                                                                         <a class="btn btn-primary btn-rounded" style="width: 80%; color: white;" href="{% url 'organization_user_add' organization.pk %}" type="button">
+                                                                            <i class="fa fa-plus"></i>Invite Members
+                                                                        </a>
                                                                     </div>
                                                                     <div class="col-sm-3 col-md-3">
                                                                         <div class="form-group form-focus">

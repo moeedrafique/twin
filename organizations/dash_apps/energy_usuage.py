@@ -1,8 +1,11 @@
-from datetime import datetime, timedelta
+import calendar
+import datetime
+# from datetime import datetime, timedelta
 import pathlib
 
 import dash
 import gridfs
+import numpy as np
 import pandas as pd
 import pymongo
 #from bson.json_util import dumps
@@ -10,7 +13,7 @@ import pytz
 from bson.json_util import dumps
 from dash import dcc
 from dash import html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 import plotly
 from django.utils import timezone
@@ -41,16 +44,64 @@ mydb = myclient["twin_dynamics"]
 mycol_sim = mydb["simulation_sensor_locations"]
 mycol_energy = mydb["energy_building"]
 #
+# Get the current year and month
+current_year = datetime.datetime.now().year
+current_month = datetime.datetime.now().month
+
+
+# Aggregate the collection to extract the year and month values from the datetime fields
+result = mycol_energy.aggregate([
+    {'$addFields': {
+        'dateObj': {'$toDate': '$datetime'}
+    }},
+    {'$project': {
+        'year': {'$year': '$dateObj'},
+        'month': {'$month': '$dateObj'}
+    }},
+    {'$match': {
+        '$or': [
+            {'year': {'$gt': current_year}},
+            {'year': current_year, 'month': {'$lte': current_month}}
+        ]
+    }},
+    {'$sort': {'year': 1, 'month': 1}},
+    {'$group': {
+        '_id': {'year': '$year', 'month': '$month'},
+        'count': {'$sum': 1}
+    }}
+])
+# Extract the unique months from the MongoDB result
+months = []
+
+
+for doc in result:
+    year = doc['_id']['year']
+    month = doc['_id']['month']
+    month_name = calendar.month_name[month]
+    months.append({'label': f"{month_name}", 'value': f"{year}-{month:02d}"})
+
+# print(months)
+labels = [d['label'] for d in months]
+# print(labels)
+months_sorted = sorted(labels, key=lambda x: datetime.datetime.strptime(x, "%B").month)
+# print(months_sorted)
+
 app = DjangoDash("energy_usuage")
 
 app.layout = html.Div([
 html.Div([
-        dcc.Graph(id='live-graph', animate=True,style={'height': '500px'}),
-        dcc.Interval(
-            id='graph-update',
-            interval=75000,
-            n_intervals=0
+        dcc.Dropdown(
+            id='month-dropdown',
+            options=months,
+            value=months[0]['value']
         ),
+        dcc.Graph(id='live-graph', animate=True,style={'height': '500px'}),
+
+]),
+html.Div(style={'display': 'flex'},children=[
+
+        dcc.Graph(id='live-graph-4', animate=True, style={'height': '415px', 'margin-top': '-35px', 'width': '50%'}),
+        dcc.Graph(id='live-graph-5', animate=True, style={'height': '415px', 'margin-top': '-35px', 'width': '50%'}),
 ]),
     ])
 #
@@ -64,96 +115,66 @@ year = now.year
 month = now.month
 
 # Get the first day of the current month
-first_day = datetime(year, month, 1)
-
-# Get the first day of the next month
-if month == 12:
-    next_month = 1
-    next_year = year + 1
-else:
-    next_month = month + 1
-    next_year = year
-next_month_first_day = datetime(next_year, next_month, 1)
-
+first_day = datetime.datetime(year, month, 1).strftime('%Y-%m-%d')
 datetime_today = now.strftime('%Y-%m-%d')
-# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)
-
-
-# # Find documents where the date/time field is in the current month
-# query = {"createdAt": {"$gte": first_day, "$lt": next_month_first_day}}
-# today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':first_day, '$lte': next_month_first_day}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
-
-occu_dt = []
-for c in today_energy_records:
-    occu_dt.append(c)
-print(occu_dt)
-data = pd.DataFrame(occu_dt)
-#
-main_data = data['data']
-#
-gas = []
-for i in main_data:
-    res = i['gas']
-    gas.append(res)
-#
-elec = []
-for i in main_data:
-    res = i['electricity']
-    elec.append(res)
-# print(len(elec))
-# print(elec)
-#
-time = []
-for t in data['datetime']:
-    # print(t)
-    time.append(t)
-# print(len(time))
-# print(time)
-#
-#
-def read_stream():
-    for change in mycol_energy.watch([{
-        '$match': {
-            'operationType': {'$in': ['replace', 'insert']},
-            'fullDocument.business': 'Digital Media Centre'
-        }
-    }
-    ]
-    ):
-        x = change["fullDocument"]
-        sim_main_data = x['data']
-
-        add_elec = sim_main_data['electricity']
-        elec.append(add_elec)
-
-        add_gas = sim_main_data['gas']
-        gas.append(add_gas)
-
-        add_time = x['datetime']
-        time.append(add_time)
-
-
-st = Thread(target=read_stream, args=())
-st.start()
-st.is_alive()
 
 button_layer_1_height = 1.12
 button_layer_2_height = 1.5
 # stackData = pd.DataFrame(stackData)
 @app.callback(
     Output('live-graph', 'figure'),
-    [Input('graph-update', 'n_intervals')]
+    Output('live-graph-4', 'figure'),
+    Output('live-graph-5', 'figure'),
+    [Input('month-dropdown', 'value')],
 )
-def update_graph_scatter(n):
+def update_graph(selected_month):
+    year, month = selected_month.split("-")
+    month_num = int(month)
+    start_date = datetime.datetime(current_year, month_num, 1)
+    start_date_str = start_date.strftime('%Y-%m-%d')
+    end_date = start_date + datetime.timedelta(days=calendar.monthrange(current_year, month_num)[1])
+    end_date_str = end_date.strftime('%Y-%m-%d')
+    # filter the data based on the selected month
+    print(current_month)
+    if month_num == current_month:
+        filtered_data = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':first_day, '$lte':datetime_today}}).sort('_id',-1)
+    else:
+        filtered_data = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':start_date_str, '$lte':end_date_str}}).sort('_id',-1)
+    occu_dt = []
+    for c in filtered_data:
+        occu_dt.append(c)
+    # print(occu_dt)
+    data = pd.DataFrame(occu_dt)
+    #
+    main_data = data['data']
+    #
+    gas = []
+    for i in main_data:
+        res = i['gas']
+        gas.append(res)
 
+    average_gas = np.mean(gas)
+    #
+    elec = []
+    for i in main_data:
+        res = i['electricity']
+        elec.append(res)
+    # print(len(elec))
+    print(elec)
+
+    average = np.mean(elec)
+    #
+    time = []
+    for t in data['datetime']:
+        # print(t)
+        time.append(t)
 
     trace1 = go.Bar(
         name="Electricity",
         x=list(time),
         y=list(elec),
         offsetgroup=0,
-        marker_color = '#f4c142',
+        marker_color='#f4c142',
         # text = "Electricity "
     ),
     trace2 = go.Bar(
@@ -161,7 +182,7 @@ def update_graph_scatter(n):
         x=list(time),
         y=list(gas),
         offsetgroup=0,
-        marker_color = '#758cec',
+        marker_color='#758cec',
         # text = "Gas"
     ),
     fig = make_subplots()
@@ -178,6 +199,7 @@ def update_graph_scatter(n):
             # "title": "Solar Radiation",
             # "showgrid": False,
             # "showline": False,
+            "range": [min(time), max(time)],
             # "fixedrange": True,
         },
         yaxis={
@@ -185,7 +207,7 @@ def update_graph_scatter(n):
             # "showline": False,
             # "zeroline": False,
             "title": "Energy Consumption(kWh)",
-            #"range": [0, 4]
+            # "range": [0, 4]
             # "fixedrange": True,
         },
         updatemenus=[
@@ -218,7 +240,30 @@ def update_graph_scatter(n):
                 font=dict(color='#bdbdbd'),
             )
         ]
-    #
+        #
     )
 
-    return fig
+    fig2 = go.Figure(go.Indicator(
+        mode = "gauge",
+        value = average,
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        title = {'text': "ELECTRICITY", 'font': {'size': 24, 'color':'white'}},
+        # delta = {'reference': 400, 'increasing': {'color': "RebeccaPurple"}},
+        gauge = {
+            'bar': {'color': "#d8eb4d"},
+                 }))
+    fig2.update_layout(paper_bgcolor="#27293d", font={'color': "white", 'family': "Arial"})
+
+    fig3 = go.Figure(go.Indicator(
+        mode = "gauge",
+        value = average_gas,
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        title = {'text': "GAS", 'font': {'size': 24, 'color':'white'}},
+        # delta = {'reference': 400, 'increasing': {'color': "RebeccaPurple"}},
+        gauge = {
+            'bar': {'color': "#38eedf"},
+                 }))
+    fig3.update_layout(paper_bgcolor="#27293d", font={'color': "white", 'family': "Arial"})
+
+    # updated_fig = create_graph(filtered_data)
+    return fig, fig2, fig3

@@ -235,11 +235,11 @@ def update_graph_scatter(n):
     temp= xx
 
     fig = plotly.graph_objs.Figure()
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SG2), name='SG2_2'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SG3), name='SG3_2'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SG4), name='SG4_2'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SG5), name='SG5_2'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SG6), name='SG6_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SG2), name='SG2_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SG3), name='SG3_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SG4), name='SG4_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SG5), name='SG5_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SG6), name='SG6_2'))
     fig.update_layout(
         paper_bgcolor='#27293d',
         plot_bgcolor='rgba(0,0,0,0)',
@@ -275,8 +275,8 @@ def update_graph_scatter_2(n):
     temp= xx
 
     fig = plotly.graph_objs.Figure()
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SF1), name='SF1_2'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(SF2), name='SF2_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SF1), name='SF1_2'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(SF2), name='SF2_2'))
     fig.update_layout(
         paper_bgcolor='#27293d',
         plot_bgcolor='rgba(0,0,0,0)',
@@ -312,8 +312,8 @@ def update_graph_scatter_3(n):
     temp= xx
 
     fig = plotly.graph_objs.Figure()
-    fig.add_trace(go.Scatter(x=list(temp), y=list(EG1), name='EG1_1'))
-    fig.add_trace(go.Scatter(x=list(temp), y=list(FCU_IN), name='FCU_IN'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(EG1), name='EG1_1'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(FCU_IN), name='FCU_IN'))
     fig.update_layout(
         paper_bgcolor='#27293d',
         plot_bgcolor='rgba(0,0,0,0)',
@@ -349,7 +349,7 @@ def update_graph_scatter_4(n):
     temp= xx
 
     fig = plotly.graph_objs.Figure()
-    fig.add_trace(go.Scatter(x=list(temp), y=list(AHU_OUT), name='AHU_OUT'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(AHU_OUT), name='AHU_OUT'))
     fig.update_layout(
         paper_bgcolor='#27293d',
         plot_bgcolor='rgba(0,0,0,0)',
@@ -384,7 +384,7 @@ def update_graph_scatter_5(n):
     temp= xx
 
     fig = plotly.graph_objs.Figure()
-    fig.add_trace(go.Scatter(x=list(temp), y=list(MAIN_DOOR), name='MAIN_DOOR'))
+    fig.add_trace(go.Bar(x=list(temp), y=list(MAIN_DOOR), name='MAIN_DOOR'))
     fig.update_layout(
         paper_bgcolor='#27293d',
         plot_bgcolor='rgba(0,0,0,0)',
