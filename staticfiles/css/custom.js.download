@@ -1,0 +1,98 @@
+$(window).on('load', function(){
+
+
+	$(".tab button").click(function(){
+		//alert("click");
+		$(this).parent().addClass("active").siblings().removeClass("active");
+
+	});
+
+	$(".show-booking-form").click(function(){
+		$(".search-form").slideUp(1);
+		$(".book-jobs").slideDown(1);
+	});
+	$(".show-search-form").click(function(){
+		$(".book-jobs").slideUp(1);
+		$(".search-form").slideDown(1);
+	});
+
+	$(".toggle-btn-hide").click(function(){
+		$(this).hide();
+		$(".toggle-btn-show.toggle-btn").css("display","inline-block");
+		$(".toggle-sidebar").animate({
+			left:'-640px',
+		}, 500);
+		$(".expanding").animate({
+			width:'100%'
+		}, 700);
+	});
+
+	$(".toggle-btn-show").click(function(){
+		$(this).hide();
+		$(".toggle-btn-hide.toggle-btn").css("display","inline-block");
+		$(".toggle-sidebar").animate({
+			left:'0'
+		}, 700);
+		$(".expanding").animate({
+			width:'66.6666666667%'
+		},500);
+	});
+
+	$(".sidebar-open").on('click',function(){
+		$(".toggle-btn-hide").hide();
+		$(this).hide();
+		$(".sidebar-lock").show();
+		
+
+	});
+
+	$(".sidebar-lock").on('click',function(){
+		$(".toggle-btn-hide").show();
+		$(".sidebar-open").hide();
+		$(this).hide();
+	});
+
+	$(".open-message-box").click(function(){
+		$(".messages-holder").fadeToggle(100);
+	});
+
+	$(".toggle-chat-box").click(function(){
+		$(".chat-box").fadeToggle(100);
+	});
+
+	
+	
+	$("#popup").click(function(){
+		$(".option-holder").fadeToggle(100);
+	});
+	$(".open-alerts").click(function(){
+		$(".alerts-holder").fadeToggle(100);
+	});
+	$("#booking").click(function(){
+		$(".cards-overlay").fadeToggle();
+		$(".instant-callbox").fadeToggle(100);
+	});
+	$(".close-call-box").click(function(){
+		$(".cards-overlay").fadeOut(300);
+		$(".instant-callbox").fadeOut(100);
+	});
+	$("#show-message-box").click(function(){
+		$(".message-box").fadeToggle(100);
+	});
+
+	
+	
+	$(document).on('click','#save-message', function(){
+		var new_message = $("#message").val();
+
+		$.ajax({ 
+			type:"POST",
+			url: "/models/messages",
+			data: {message:new_message},
+			success: function () { },
+			error: function () { }
+		});
+	});
+
+	
+});

@@ -27,6 +27,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string, get_template
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView
 from sweetify import sweetify
@@ -329,6 +330,7 @@ def viewDashboard(request, organization_pk):
     return render(request, template, context)
 
 
+@login_required
 def viewSummary(request, organization_pk):
     now = timezone.now()
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=0)
@@ -494,6 +496,7 @@ def viewSummary(request, organization_pk):
     template = 'summary.html'
     return render(request, template, context)
 
+@login_required
 def energyDash(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     now = timezone.now()
@@ -663,16 +666,19 @@ def energyDash(request, organization_pk):
     context['day_of_month'] = range(0, day_of_month)
     return render(request, 'energy.htm', context)
 
+@login_required
 def energyDetail(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'energy_detail.htm', context)
 
+@login_required
 def coDetail(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     context = {'business_detail': business_detail}
     return render(request, 'co2.html', context)
 
+@login_required
 def AirTerminals(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     main_data = mycol_sim.find_one({'business':'Digital Media Centre'}, sort=[( '_id', pymongo.DESCENDING )])
@@ -695,6 +701,7 @@ def my_table_view(request):
     response['Content-Disposition'] = 'attachment; filename="my_table.pdf"'
     return response
 
+@login_required
 def send_table_email(request):
     # Retrieve the recipient email address from the request
     from_date = request.session.get('from_date')
@@ -819,6 +826,7 @@ def send_table_email(request):
     # return HttpResponse('Email sent successfully!')
 
 
+@login_required
 def FlowDistribution(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
 
@@ -855,6 +863,7 @@ def FlowDistribution(request, organization_pk):
     return render(request, 'local_flow.html', context)
 
 
+@login_required
 def Scheduling(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     if request.method == 'POST':
@@ -900,6 +909,7 @@ def Scheduling(request, organization_pk):
     context = {'business_detail': business_detail}
     return render(request, 'scheduling.html', context)
 
+@login_required
 def SchedulingList(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     main_data = mycol_schedule.find()
@@ -909,6 +919,7 @@ def SchedulingList(request, organization_pk):
     context = {'business_detail': business_detail, 'main_data':main_data}
     return render(request, 'scheduling_list.html', context)
 
+@login_required
 def SchedulingDetail(request, organization_pk):
     print(request.POST.get('ref_id'))
     business_detail = get_object_or_404(Organization, id=organization_pk)
@@ -918,6 +929,7 @@ def SchedulingDetail(request, organization_pk):
     context = {'schedule':schedule, 'business_detail': business_detail}
     return render(request, 'scheduling_detail.html', context)
 
+@login_required
 def Tariffs(request, organization_pk):
     business_detail = get_object_or_404(Organization, id=organization_pk)
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
@@ -943,9 +955,11 @@ from django import template
 
 register = template.Library()
 
+@login_required
 def Reporting(request):
     return render(request, 'under_conc.html')
 
+@login_required
 def underConstruction(request):
     buildings = mycol_building.find(
         sort=[('_id', pymongo.DESCENDING)])
@@ -1078,6 +1092,7 @@ def underConstruction(request):
     return render(request, 'under_conc.html', context)
 
 
+@login_required
 def Logs(request):
     buildings = mycol_building.find(
         sort=[('_id', pymongo.DESCENDING)])

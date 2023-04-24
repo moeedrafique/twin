@@ -1,8 +1,73 @@
-{% extends "organizations_base.html" %}
-{% block content %}
-<h1>{{ organization }}</h1>
-<form action="." method="post">{% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Send reminder">
-</form>
-{% endblock %}
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <div class="tab-bar mb-3">
+                                    <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                        <div class="left-btn box-inner-title">
+                                            <ul class="tab-bar-ul">
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'organization_detail' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Overview</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'organization_user_list' post_category.pk %}"><button class="btn-primary btn-sm mt-1 active">Users</button></a></li>
+                                                {% endfor %}
+                                                {% for post_category in post_category|slice:":1" %}
+                                                <li><a href="{% url 'tariffs' post_category.pk %}"><button class="btn-primary btn-sm mt-1">Admin</button></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="right-btn">
+                                            <ul class="tab-bar-ul">
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">List</button></li>-->
+<!--                                                <li><button href="#" class="btn-primary btn-sm mt-1">New Business</button></li>-->
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- Page-header start -->
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- HTML5 Export Buttons table start -->
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 100vh;" class="dt-responsive table-responsive">
+                                                            <h3>{{ organization }}</h3>
+                                                            <form action="." method="post">{% csrf_token %}
+                                                                {{ form }}
+                                                                <input type="submit" class="btn btn-primary btn-rounded" value="Send reminder">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- HTML5 Export Buttons end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+    {% endblock %}
+</body>
+</html>
