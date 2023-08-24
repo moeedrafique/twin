@@ -27,6 +27,7 @@ urlpatterns = [
     path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
     path('reports/', views.underConstruction, name='under_conc'),
     path('logs/', views.Logs, name='logs'),
+    path('floor-plan-svg/', views.floorPlanSvg, name='floor_plan_svg'),
     path('my_table_view', views.send_table_email, name='send_table_email'),
     path('staff-update/<slug:pk>/', views.StaffUserUpdateView.as_view(), name="staff_update"),
     path(

@@ -1,0 +1,431 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load plotly_dash %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+                            <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-header start -->
+                                <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                        <div class="card-header table-card-header">
+                                            <div class="flex-contianer" style="display: flex; justify-content: space-between">
+                                                <div class="left-btn">
+                                            <h4>FLOORPLAN SVG</h4>
+                                                </div>
+                                                <div class="right-btn">
+                                                   <select  id="colorselector" name="select" class="form-control form-group-lg">
+            <option value="ground">Ground Floor</option>
+            <option value="first">First Floor</option>
+            <option value="second">Second Floor</option>
+            <option value="third">Third Floor</option>
+        </select>
+                                                </div>
+                                            </div>
+                                <hr>
+                                <div class="mb-1"></div>
+                            </div><!--card ends here---->
+
+                        </div>
+                        </div>
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="row text-center">
+                                                    <div class="col-lg-12">
+                                                        <div class="card" style="height:1400px;">
+                                                            <div class="card-header table-card-header">
+                                                                <style>
+        #tooltip {
+            background: black;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+          }
+        #area:hover{
+            fill: red;
+            opacity: 0.3;
+        }
+    </style>
+                                                                <div id="tooltip" display="none" style="position: absolute; display: none;"></div>
+                                                                <div id="ground" class="colors" style="height:100%;width: 100%;">
+                                                                    <svg width="80%" xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 1149 972" version = "1.1">
+<!-- svg generated using QGIS www.qgis.org -->
+<g id="dmc02_gf" inkscape:groupmode="layer" inkscape:label="dmc02_gf">
+<g stroke="rgb(128,14,16)" fill="rgb(228,26,28)" stroke-linejoin="round" stroke-width="0.40">
+<g id="dmc02_gf_1" inkscape:label="1">
+<path d="M 585,920 L 586,834 L 673,834 L 673,920 L 585,920 " />
+</g>
+<g id="dmc02_gf_2" inkscape:label="2">
+<path d="M 586,722 L 586,640 L 673,640 L 673,722 L 586,722 " />
+</g>
+<g id="dmc02_gf_3" inkscape:label="3">
+<path id="area" onmousemove="showTooltip(evt, 'Collaboration Space <br/> GR1-01 <br/> A: 118m <sup>2</sup><br/> Energy Consumption: 66.08 kWh');" onmouseout="hideTooltip();" d="M 679,920 L 679,828 L 586,828 L 586,729 L 679,729 L 679,633 L 672,633 L 672,618 L 970,618 L 970,624 L 1018,624 L 1018,772 L 998,846 L 944,900 L 870,920 L 679,920 " />
+</g>
+<g id="dmc02_gf_4" inkscape:label="4">
+<path d="M 970,618 L 672,618 L 672,488 L 742,488 L 742,447 L 818,447 L 818,488 L 970,488 L 970,618 " />
+</g>
+<g id="dmc02_gf_5" inkscape:label="5">
+<path onmouseout="hideTooltip();" d="M 666,633 L 586,633 L 586,488 L 666,488 L 666,633 " />
+</g>
+<g id="dmc02_gf_6" inkscape:label="6">
+<path d="M 825,481 L 825,403 L 907,403 L 906,481 L 825,481 " />
+</g>
+<g id="dmc02_gf_7" inkscape:label="7">
+<path d="M 913,481 L 913,333 L 752,333 L 752,285 L 969,285 L 969,411 L 1109,411 L 1109,481 L 913,481 " />
+</g>
+<g id="dmc02_gf_8" inkscape:label="8">
+<path d="M 825,397 L 825,339 L 907,339 L 907,397 L 825,397 " />
+</g>
+<g id="dmc02_gf_9" inkscape:label="9">
+<path d="M 742,440 L 742,339 L 818,339 L 818,440 L 742,440 " />
+</g>
+<g id="dmc02_gf_10" inkscape:label="10">
+<path d="M 593,481 L 593,382 L 643,382 L 643,427 L 666,427 L 666,481 L 593,481 " />
+</g>
+<g id="dmc02_gf_11" inkscape:label="11">
+<path d="M 672,481 L 672,427 L 699,427 L 699,343 L 699,331 L 673,331 L 673,285 L 746,285 L 746,290 L 752,290 L 752,318 L 746,318 L 746,333 L 735,333 L 735,481 L 672,481 " />
+</g>
+<g id="dmc02_gf_12" inkscape:label="12">
+<path d="M 649,421 L 649,382 L 692,382 L 692,421 L 649,421 " />
+</g>
+<g id="dmc02_gf_13" inkscape:label="13">
+<path d="M 649,376 L 649,337 L 692,337 L 692,376 L 649,376 " />
+</g>
+<g id="dmc02_gf_14" inkscape:label="14">
+<path d="M 643,376 L 593,376 L 593,285 L 667,285 L 667,331 L 643,331 L 643,376 " />
+</g>
+<g id="dmc02_gf_15" inkscape:label="15">
+<path d="M 975,404 L 975,340 L 1029,340 L 1029,404 L 975,404 " />
+</g>
+<g id="dmc02_gf_16" inkscape:label="16">
+<path id="area" onmousemove="showTooltip(evt, 'Conf St <br/> GR1-07 <br/> A: 118m <sup>2</sup><br/> Energy Consumption: 66.08 kWh');" onmouseout="hideTooltip();" d="M 975,334 L 975,285 L 1029,285 L 1029,334 L 975,334 " />
+</g>
+<g id="dmc02_gf_17" inkscape:label="17">
+<path id="area" onmousemove="showTooltip(evt, 'Kitchen <br/> GR1-04 <br/> A: 118m <sup>2</sup><br/> Energy Consumption: 66.08 kWh');" onmouseout="hideTooltip();" d="M 1036,404 L 1036,285 L 1109,285 L 1109,404 L 1036,404 " />
+</g>
+<g id="dmc02_gf_18" inkscape:label="18">
+<path id="area" onmousemove="showTooltip(evt, 'Maker Space <br/> GR1-08 <br/> A: 99m <sup>2</sup><br/> Energy Consumption: 55.44 kWh');" onmouseout="hideTooltip();" d="M 925,231 L 925,48 L 1109,48 L 1109,279 L 975,279 L 975,232 L 925,231 " />
+</g>
+<g id="dmc02_gf_19" inkscape:label="19">
+<path id="area" onmousemove="showTooltip(evt, 'Maker Space <br/> GR1-08 <br/> A: 99m <sup>2</sup><br/> Energy Consumption: 55.44 kWh');" onmouseout="hideTooltip();" d="M 925,231 L 910,232 L 910,279 L 672,279 L 672,48 L 925,48 L 925,231 " />
+</g>
+<g id="dmc02_gf_20" inkscape:label="20">
+<path id="area" onmousemove="showTooltip(evt, 'Lobby <br/> GR1-08a');" onmouseout="hideTooltip();" d="M 969,238 L 969,279 L 917,279 L 917,238 L 969,238 " />
+</g>
+<g id="dmc02_gf_21" inkscape:label="21">
+<path id="area" onmousemove="showTooltip(evt, 'Refuse + recycle store <br/> GR2-02');" onmouseout="hideTooltip();" d="M 665,279 L 587,279 L 587,291 L 510,291 L 510,135 L 567,135 L 567,185 L 665,185 L 665,279 " />
+</g>
+<g id="dmc02_gf_22" inkscape:label="22">
+<path d="M 573,179 L 573,48 L 665,48 L 665,179 L 573,179 " />
+</g>
+<g id="dmc02_gf_23" inkscape:label="23">
+<path id="area" onmousemove="showTooltip(evt, 'Elect switch rm <br/> GR2-03');" onmouseout="hideTooltip();" d="M 567,129 L 503,129 L 503,163 L 401,163 L 401,48 L 567,48 L 567,129 " />
+</g>
+<g id="dmc02_gf_24" inkscape:label="24">
+<path id="area" onmousemove="showTooltip(evt, 'Elect sub-station <br/> GR2-04');" onmouseout="hideTooltip();" d="M 503,170 L 503,291 L 401,291 L 401,170 L 503,170 " />
+</g>
+<g id="dmc02_gf_25" inkscape:label="25">
+<path id="area" onmousemove="showTooltip(evt, 'Biomass + Back-up boilers <br/> GR2-05');" onmouseout="hideTooltip();" d="M 394,48 L 394,291 L 232,291 L 232,226 L 137,226 L 137,204 L 127,204 L 127,48 L 394,48 " />
+</g>
+<g id="dmc02_gf_26" inkscape:label="26">
+<path id="area" onmousemove="showTooltip(evt, 'Meters <br/> GR2-08');" onmouseout="hideTooltip();" d="M 226,291 L 173,291 L 173,233 L 226,233 L 226,291 " />
+</g>
+<g id="dmc02_gf_27" inkscape:label="27">
+<path id="area" onmousemove="showTooltip(evt, 'Cleaner St <br/> GR2-07');" onmouseout="hideTooltip();" d="M 166,291 L 97,291 L 97,211 L 130,211 L 130,233 L 166,233 L 166,291 " />
+</g>
+<g id="dmc02_gf_28" inkscape:label="28">
+<path id="area" onmousemove="showTooltip(evt, 'Stairs 1 <br/> GR2-06');" onmouseout="hideTooltip();" d="M 121,94 L 121,204 L 91,204 L 91,291 L 36,291 L 36,94 L 121,94 " />
+</g>
+<g id="dmc02_gf_29" inkscape:label="29">
+<path d="M 77,481 L 77,344 L 36,344 L 36,298 L 587,298 L 587,481 L 77,481 " />
+</g>
+</g>
+</g>
+<!-- QGIS extent for clipping, eg in Inkscape -->
+<g id="qgisviewbox" inkscape:groupmode="layer" inkscape:label="qgisviewbox" stroke="rgb(255,0,0)" stroke-width="1" fill="none" >
+<path d="M 0,970 L 1147,970 L 1147,0 L 0,0 L 0,970 " />
+</g></svg>
+                                                                </div>
+                                                                <div id="first" class="colors" style="height:100%;width: 100%;">
+                                                                    <svg width="80%"  xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 1149 972" version = "1.1">
+<!-- svg generated using QGIS www.qgis.org -->
+<g id="dmc02_ff" inkscape:groupmode="layer" inkscape:label="dmc02_ff">
+<g stroke="rgb(35,35,35)" fill="rgb(183,72,75)" stroke-linejoin="round" stroke-width="0.40">
+<g id="dmc02_ff_1" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 003 <br/> UF1-13 <br/> A: 118m <sup>2</sup><br/> Energy Consumption: 66.08 kWh');" onmouseout="hideTooltip();" d="M 586,920 L 586,640 L 666,640 L 666,685 L 767,685 L 767,624 L 1018,624 L 1018,772 L 998,846 L 944,900 L 870,920 L 586,920 " />
+</g>
+<g id="dmc02_ff_2" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Break Out Area <br/> UF1-11 <br/> A: 19.3m <sup>2</sup><br/> Energy Consumption: 10.80 kWh');" onmouseout="hideTooltip();" d="M 761,624 L 761,678 L 672,678 L 672,511 L 734,511 L 734,505 L 734,488 L 836,488 L 970,488 L 970,618 L 730,618 L 730,624 L 761,624 " />
+</g>
+<g id="dmc02_ff_3" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Break Out Corridor <br/> UF1-14 <br/> A: 12.4m <sup>2</sup><br/> Energy Consumption: 6.944 kWh');" onmouseout="hideTooltip();" d="M 586,633 L 586,488 L 664,488 L 666,488 L 666,633 L 586,633 " />
+</g>
+<g id="dmc02_ff_4" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Stair 2 <br/> UF1-01 <br/> A: 28.3m <sup>2</sup><br/> Energy Consumption: 15.84 kWh');" onmouseout="hideTooltip();" d="M 734,481 L 734,260 L 813,260 L 813,253 L 813,375 L 813,399 L 820,399 L 836,399 L 907,399 L 907,481 L 734,481 " />
+</g>
+<g id="dmc02_ff_5" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Fire Evacuation Lift (17 Persons)');" onmouseout="hideTooltip();" d="M 820,392 L 820,332 L 836,332 L 907,332 L 907,392 L 820,392 " />
+</g>
+<g id="dmc02_ff_6" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF1-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C<br/> Energy Consumption: 68.376 kWh');" onmouseout="hideTooltip();" d="M 820,253 L 1109,254 L 1109,481 L 913,481 L 734,481 L 907,481 L 913,481 L 913,325 L 907,325 L 820,325 L 820,253 " />
+</g>
+<g id="dmc02_ff_7" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF1-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone B<br/> Energy Consumption: 68.376 kWh');" onmouseout="hideTooltip();" d="M 914,254 L 914,48 L 1109,48 L 1109,254 L 914,254 " />
+</g>
+<g id="dmc02_ff_8" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF1-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone A<br/> Energy Consumption: 68.376 kWh');" onmouseout="hideTooltip();" d="M 820,253 L 820,212 L 733,212 L 733,47 L 733,48 L 1109,48 L 914,48 L 914,254 L 820,253 " />
+</g>
+<g id="dmc02_ff_9" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Meeting Room <br/> UF1-09 <br/> A: 15.2m <sup>2</sup><br/> Energy Consumption: 8.512 kWh');" onmouseout="hideTooltip();" d="M 636,212 L 636,48 L 726,48 L 726,47 L 726,212 L 636,212 " />
+</g>
+<g id="dmc02_ff_10" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Kitchen <br/> UF1-04 <br/> A: 10.2m <sup>2</sup><br/> Energy Consumption: 5.712 kWh');" onmouseout="hideTooltip();" d="M 630,212 L 494,212 L 494,135 L 630,135 L 630,212 " />
+</g>
+<g id="dmc02_ff_11" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Stair 2 Corridor <br/> UF1-15 <br/> A: 10.8m <sup>2</sup><br/> Energy Consumption: 6.048 kWh');" onmouseout="hideTooltip();" d="M 672,484 L 670,484 L 670,260 L 727,260 L 727,505 L 734,505 L 726,505 L 726,506 L 727,506 L 727,508 L 726,508 L 726,511 L 673,511 L 672,511 L 672,678 L 672,508 L 672,506 L 672,484 " />
+</g>
+<g id="dmc02_ff_12" inkscape:label="NULL">
+<path d="M 518,481 L 518,376 L 578,376 L 590,376 L 590,407 L 596,407 L 663,407 L 663,481 L 585,481 L 518,481 " />
+</g>
+<g id="dmc02_ff_13" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, '20 <br/> Room <br/> 16 m<sup>2</sup> <br/> 170.5 SF');" onmouseout="hideTooltip();" d="M 518,370 L 590,370 L 590,344 L 590,338 L 663,338 L 590,338 L 590,344 L 590,370 L 518,370 L 518,281 L 663,281 L 518,281 L 518,370 " />
+</g>
+<g id="dmc02_ff_14" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Corridor <br/> UF1-16 <br/> A: 13.6m <sup>2</sup><br/> Energy Consumption: 7.616 kWh');" onmouseout="hideTooltip();" d="M 544,275 L 544,218 L 813,218 L 813,221 L 820,221 L 820,222 L 820,251 L 820,252 L 813,252 L 813,253 L 663,253 L 663,275 L 544,275 " />
+</g>
+<g id="dmc02_ff_15" inkscape:label="NULL">
+<path d="M 596,400 L 596,344 L 663,344 L 663,400 L 596,400 " />
+</g>
+<g id="dmc02_ff_16" inkscape:label="NULL">
+<path d="M 518,370 L 518,281 L 663,281 L 663,338 L 590,338 L 590,344 L 590,370 L 518,370 " />
+</g>
+<g id="dmc02_ff_17" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF1-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone D<br/> Energy Consumption: 100.50 kWh');" onmouseout="hideTooltip();" d="M 511,481 L 323,481 L 321,275 L 454,275 L 511,275 L 511,481 " />
+</g>
+<g id="dmc02_ff_18" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF1-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone B<br/> Energy Consumption: 100.50 kWh');" onmouseout="hideTooltip();" d="M 321,275 L 323,481 L 511,481 L 77,481 L 77,350 L 127,350 L 127,275 L 321,275 " />
+</g>
+<g id="dmc02_ff_19" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF1-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone A <br/> Energy Consumption: 100.50 kWh');" onmouseout="hideTooltip();" d="M 321,275 L 127,275 L 127,48 L 320,48 L 321,275 " />
+</g>
+<g id="dmc02_ff_20" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF1-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone C<br/> Energy Consumption: 100.50 kWh');" onmouseout="hideTooltip();" d="M 320,48 L 454,48 L 454,275 L 321,275 L 320,48 " />
+</g>
+<g id="dmc02_ff_21" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF1-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone E<br/> Energy Consumption: 100.50 kWh');" onmouseout="hideTooltip();" d="M 537,218 L 537,275 L 454,275 L 454,48 L 630,48 L 630,128 L 494,128 L 487,128 L 487,212 L 487,218 L 537,218 " />
+</g>
+<g id="dmc02_ff_22" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Stair 1 <br/> UF1-07 <br/> A: 19.5m <sup>2</sup><br/> Energy Consumption: 10.92 kWh');" onmouseout="hideTooltip();" d="M 121,344 L 36,344 L 36,94 L 121,94 L 121,344 " />
+</g>
+</g>
+</g>
+<!-- QGIS extent for clipping, eg in Inkscape -->
+<g id="qgisviewbox" inkscape:groupmode="layer" inkscape:label="qgisviewbox" stroke="rgb(255,0,0)" stroke-width="1" fill="none" >
+<path d="M 0,970 L 1147,970 L 1147,0 L 0,0 L 0,970 " />
+</g></svg>
+                                                                </div>
+                                                                <div id="second" class="colors" style="height:100%;width: 100%;">
+                                                                    <svg width="80%"  xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 1149 972" version = "1.1">
+<!-- svg generated using QGIS www.qgis.org -->
+<g id="dmc02_sf" inkscape:groupmode="layer" inkscape:label="dmc02_sf">
+<g stroke="rgb(35,35,35)" fill="rgb(231,113,72)" stroke-linejoin="round" stroke-width="0.40">
+<g id="dmc02_sf_1" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office area 003 <br/> UF2-13 <br/> A: 118m <sup>2</sup><br/> Energy Consumption: 66.08 kWh');" onmouseout="hideTooltip();" d="M 586,920 L 586,640 L 665,640 L 665,678 L 665,685 L 767,685 L 767,675 L 767,674 L 767,646 L 767,624 L 1018,624 L 1018,772 L 998,846 L 944,900 L 870,920 L 586,920 " />
+</g>
+<g id="dmc02_sf_2" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Break out Area <br/> UF2-11 <br/> A: 19.3m <sup>2</sup><br/> Energy Consumption: 10.80 kWh');" onmouseout="hideTooltip();" d="M 761,624 L 761,644 L 761,646 L 767,646 L 767,674 L 767,675 L 761,675 L 761,678 L 672,678 L 672,511 L 673,511 L 673,512 L 726,512 L 726,511 L 734,511 L 734,488 L 970,488 L 970,618 L 730,618 L 730,624 L 761,624 " />
+</g>
+<g id="dmc02_sf_3" inkscape:label="NULL">
+<path d="M 727,505 L 672,505 L 672,484 L 670,484 L 670,377 L 670,349 L 670,347 L 670,316 L 670,315 L 670,290 L 670,289 L 670,260 L 727,260 L 727,505 " />
+</g>
+<g id="dmc02_sf_4" inkscape:label="NULL">
+<path d="M 734,481 L 734,260 L 813,260 L 813,399 L 815,399 L 907,399 L 907,481 L 734,481 " />
+</g>
+<g id="dmc02_sf_5" inkscape:label="NULL">
+<path d="M 907,392 L 889,392 L 820,392 L 820,354 L 820,332 L 907,332 L 907,392 " />
+</g>
+<g id="dmc02_sf_6" inkscape:label="NULL">
+<path d="M 663,481 L 586,481 L 518,481 L 518,376 L 554,376 L 590,376 L 590,407 L 596,407 L 663,407 L 663,481 " />
+</g>
+<g id="dmc02_sf_7" inkscape:label="NULL">
+<path d="M 596,400 L 596,344 L 663,344 L 663,347 L 670,347 L 670,349 L 670,377 L 663,377 L 663,378 L 663,400 L 596,400 " />
+</g>
+<g id="dmc02_sf_8" inkscape:label="NULL">
+<path d="M 518,370 L 518,281 L 663,281 L 663,338 L 590,338 L 590,344 L 590,351 L 590,370 L 518,370 " />
+</g>
+<g id="dmc02_sf_9" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Comms Room <br/> A: 17.2m <sup>2</sup><br/> Energy Consumption: 9.63 kWh');" onmouseout="hideTooltip();" d="M 511,481 L 411,481 L 411,281 L 511,281 L 511,481 " />
+</g>
+<g id="dmc02_sf_10" inkscape:label="NULL">
+<path d="M 449,275 L 449,218 L 813,218 L 813,253 L 727,253 L 727,252 L 670,252 L 670,253 L 663,253 L 663,275 L 449,275 " />
+</g>
+<g id="dmc02_sf_11" inkscape:label="NULL">
+<path d="M 630,135 L 630,212 L 494,212 L 494,135 L 630,135 " />
+</g>
+<g id="dmc02_sf_12" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Meeting Room <br/> UF2-09 <br/> A: 15.2m <sup>2</sup><br/> Energy Consumption: 8.51 kWh');" onmouseout="hideTooltip();" d="M 726,212 L 636,212 L 636,135 L 636,128 L 636,56 L 636,48 L 726,48 L 726,212 " />
+</g>
+<g id="dmc02_sf_13" inkscape:label="NULL">
+<path d="M 121,344 L 77,344 L 76,344 L 36,344 L 36,94 L 121,94 L 121,344 " />
+</g>
+<g id="dmc02_sf_14" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 820,263 L 983,263 L 1109,264 L 1109,481 L 913,481 L 913,325 L 907,325 L 820,325 L 820,263 " />
+</g>
+<g id="dmc02_sf_15" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone B <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 1109,264 L 983,263 L 981,48 L 1109,48 L 1109,264 " />
+</g>
+<g id="dmc02_sf_16" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone A <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 820,212 L 813,212 L 733,212 L 733,123 L 733,48 L 1109,48 L 981,48 L 983,263 L 820,263 L 820,212 " />
+</g>
+<g id="dmc02_sf_17" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 442,212 L 442,48 L 630,48 L 630,120 L 630,128 L 494,128 L 487,128 L 487,212 L 442,212 " />
+</g>
+<g id="dmc02_sf_18" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF2-08 <br/> A: 154.1m <sup>2</sup><br/> Thermal Zone B <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 405,275 L 405,281 L 405,481 L 77,481 L 77,350 L 127,350 L 127,275 L 405,275 " />
+</g>
+<g id="dmc02_sf_19" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF2-08 <br/> A: 154.1m <sup>2</sup><br/> Thermal Zone A <br/> Energy Consumption: 68.37 kWh');" onmouseout="hideTooltip();" d="M 442,275 L 405,275 L 127,275 L 127,48 L 442,48 L 442,275 " />
+</g>
+<g id="dmc02_sf_20" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Break out Corridor <br/> UF2-14 <br/> A: 12.4m <sup>2</sup>');" onmouseout="hideTooltip();" d="M 665,633 L 586,633 L 586,488 L 665,488 L 665,633 " />
+</g>
+</g>
+</g>
+<!-- QGIS extent for clipping, eg in Inkscape -->
+<g id="qgisviewbox" inkscape:groupmode="layer" inkscape:label="qgisviewbox" stroke="rgb(255,0,0)" stroke-width="1" fill="none" >
+<path d="M 0,970 L 1147,970 L 1147,0 L 0,0 L 0,970 " />
+</g></svg>
+                                                                </div>
+                                                                <div id="third" class="colors" style="height:100%;width: 100%;">
+                                                                    <svg width="80%"  xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 1149 972" version = "1.1">
+<!-- svg generated using QGIS www.qgis.org -->
+<g id="dmc02_tf" inkscape:groupmode="layer" inkscape:label="dmc02_tf">
+<g stroke="rgb(35,35,35)" fill="rgb(231,113,72)" stroke-linejoin="round" stroke-width="0.40">
+<g id="dmc02_tf_2" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 68.37 kwh');" onmouseout="hideTooltip();" d="M 907,481 L 734,481 L 734,260 L 813,260 L 813,399 L 907,399 L 907,481 " />
+</g>
+<g id="dmc02_tf_3" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF2-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 68.37 kwh');" onmouseout="hideTooltip();" d="M 663,481 L 586,481 L 518,481 L 518,376 L 590,376 L 590,407 L 663,407 L 663,481 " />
+</g>
+<g id="dmc02_tf_4" inkscape:label="NULL">
+<path d="M 663,400 L 596,400 L 596,344 L 663,344 L 663,400 " />
+</g>
+<g id="dmc02_tf_5" inkscape:label="NULL">
+<path d="M 663,338 L 590,338 L 590,370 L 518,370 L 518,281 L 663,281 L 663,338 " />
+</g>
+<g id="dmc02_tf_6" inkscape:label="NULL">
+<path d="M 813,253 L 663,253 L 663,275 L 544,275 L 544,218 L 813,218 L 813,253 " />
+</g>
+<g id="dmc02_tf_7" inkscape:label="NULL">
+<path d="M 727,481 L 670,481 L 670,260 L 727,260 L 727,481 " />
+</g>
+<g id="dmc02_tf_8" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Meeting Rm  <br/> UF3-09 <br/> A: 16.3m <sup>2</sup><br/> Energy Consumption: 9.12 kwh');" onmouseout="hideTooltip();" d="M 726,212 L 636,212 L 636,48 L 654,48 L 726,48 L 726,212 " />
+</g>
+<g id="dmc02_tf_9" inkscape:label="NULL">
+<path d="M 630,212 L 494,212 L 494,135 L 630,135 L 630,212 " />
+</g>
+<g id="dmc02_tf_10" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone F <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 511,275 L 511,481 L 408,481 L 409,275 L 511,275 " />
+</g>
+<g id="dmc02_tf_11" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone D <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 409,275 L 408,481 L 254,481 L 255,276 L 409,275 " />
+</g>
+<g id="dmc02_tf_12" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone B <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 254,481 L 77,481 L 77,350 L 127,350 L 127,279 L 255,276 L 254,481 " />
+</g>
+<g id="dmc02_tf_13" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone A <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 255,276 L 127,279 L 127,48 L 254,48 L 255,276 " />
+</g>
+<g id="dmc02_tf_14" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 409,275 L 255,276 L 254,48 L 408,48 L 409,275 " />
+</g>
+<g id="dmc02_tf_15" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 001 <br/> UF 3-08 <br/> A: 179.5m <sup>2</sup><br/> Thermal Zone E <br/> Energy Consumption: 100.52 kwh');" onmouseout="hideTooltip();" d="M 408,48 L 630,48 L 630,128 L 487,128 L 487,218 L 537,218 L 537,275 L 511,275 L 409,275 L 408,48 " />
+</g>
+<g id="dmc02_tf_16" inkscape:label="NULL">
+<path d="M 121,344 L 77,344 L 36,344 L 36,94 L 121,94 L 121,344 " />
+</g>
+<g id="dmc02_tf_17" inkscape:label="NULL">
+<path d="M 820,392 L 820,332 L 907,332 L 907,392 L 820,392 " />
+</g>
+<g id="dmc02_tf_18" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF3-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone C <br/> Energy Consumption: 68.37 kwh');" onmouseout="hideTooltip();" d="M 820,274 L 953,274 L 1109,274 L 1109,481 L 970,481 L 913,481 L 913,325 L 820,325 L 820,274 " />
+</g>
+<g id="dmc02_tf_19" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF3-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone B <br/> Energy Consumption: 68.37 kwh');" onmouseout="hideTooltip();" d="M 953,274 L 953,48 L 1109,48 L 1109,274 L 953,274 " />
+</g>
+<g id="dmc02_tf_20" inkscape:label="NULL">
+<path id="area" onmousemove="showTooltip(evt, 'Office Area 002 <br/> UF3-10 <br/> A: 122.1m <sup>2</sup><br/> Thermal Zone A <br/> Energy Consumption: 68.37 kwh');" onmouseout="hideTooltip();" d="M 820,274 L 820,212 L 733,212 L 733,48 L 953,48 L 953,274 L 820,274 " />
+</g>
+</g>
+</g>
+<!-- QGIS extent for clipping, eg in Inkscape -->
+<g id="qgisviewbox" inkscape:groupmode="layer" inkscape:label="qgisviewbox" stroke="rgb(255,0,0)" stroke-width="1" fill="none" >
+<path d="M 0,970 L 1147,970 L 1147,0 L 0,0 L 0,970 " />
+</g></svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Page-body end -->
+                                </div>
+                            </div>
+                        </div>
+                                                                                            <script>
+                                                    $(function() {
+  $('#colorselector').change(function(){
+    $('.colors').hide();
+    $('#' + $(this).val()).show();
+  });
+});
+                                                </script>
+    <script>
+    function showTooltip(evt, text) {
+        let tooltip = document.getElementById("tooltip");
+        tooltip.innerHTML = text;
+        tooltip.style.display = "block";
+        tooltip.style.left = evt.pageX + 10 + 'px';
+        tooltip.style.top = evt.pageY + 10 + 'px';
+      }
+
+      function hideTooltip() {
+        var tooltip = document.getElementById("tooltip");
+        tooltip.style.display = "none";
+      }
+</script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="{% static 'libraries/bower_components/bootstrap/js/bootstrap.bundle.js' %}"></script>
+<script type="text/javascript">
+	$(function () {
+  		$('[data-toggle="tooltip"]').tooltip()
+	})
+</script>
+    {% endblock %}
+
+
+</body>
+</html>

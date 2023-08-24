@@ -36,7 +36,7 @@ import threading
 
 myclient = pymongo.MongoClient("mongodb+srv://twidy_dashboard:9TInnovations@cluster0.8obys.mongodb.net/?retryWrites=true&w=majority")
 mydb = myclient["twin_dynamics"]
-mycol_sim = mydb["simulation_sensor_locations"]
+mycol_sim = mydb["iot"]
 
 app = DjangoDash('temp_vent_data')
 
@@ -58,7 +58,7 @@ yy = []
 now = timezone.now()
 today_start = now - timedelta(days=1)
 today_end = now.replace(hour=23, minute=59, second=59, microsecond=999999) - timedelta(days=0)
-occupant_records = mycol_sim.find({'ref_id': 'DMC02-CWS', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('timestamp',-1)
+occupant_records = mycol_sim.find({'ref_id': 'DMC02_iot', 'timestamp': {'$gte': today_start, '$lte':today_end}}).sort('timestamp',-1)
 print(occupant_records)
 occu_dt = []
 for c in occupant_records:
@@ -69,8 +69,8 @@ data = pd.DataFrame(occu_dt)
 main_data = data['data']
 
 for i in main_data:
-    res = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i['sg1_1'] + i['sg2_2'] + i['sg3_2'] + i['sg4_2'] + i['sg5_2'] + i['sg6_2']
-    mean_first_inlet = res / 9
+    res = i["Sensor A"] + i["Sensor B"] + i["Sensor C"]
+    mean_first_inlet = res / 3
     yy.append(mean_first_inlet)
 # print(len(yy))
 # print(np.mean(yy))
@@ -95,8 +95,8 @@ def read_stream():
     ):
         x = change["fullDocument"]
         i = x['data']
-        add_sg = i["sf1_2"] + i["sf2_2"] + i["ahu_out"] + i['sg1_1'] + i['sg2_2'] + i['sg3_2'] + i['sg4_2'] + i['sg5_2'] + i['sg6_2']
-        mean_sg = add_sg / 9
+        add_sg = i["Sensor A"] + i["Sensor B"] + i["Sensor C"]
+        mean_sg = add_sg / 3
         yy.append(mean_sg)
 
         time = x['timestamp']

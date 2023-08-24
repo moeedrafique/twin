@@ -515,7 +515,7 @@ def energyDash(request, organization_pk):
     tariff_elec = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'electricity'}, sort=[( '_id', pymongo.DESCENDING )])
     tariff_gas = mycol_tariff.find_one({'business':'Digital Media Centre', 'energy_type':'gas'}, sort=[( '_id', pymongo.DESCENDING )])
     # print(tariff['anytime'])
-    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-04-30'}})
+    energy_building = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-08-31'}})
 
     ener_data = pd.DataFrame(energy_building)
     # print(ener_data.count())
@@ -609,7 +609,7 @@ def energyDash(request, organization_pk):
     total_cost_cic_lm = cost_elec_lm + cost_gas_lm
     # print("Total Cost Last Month:", total_cost_cic_lm)
 
-    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-04-30'}})
+    energy_building_cm = mycol_energy_building.find({'business':'Digital Media Centre', 'datetime': {'$gte': month_start_strft, '$lte': '2023-08-31'}})
     ener_data_cm = pd.DataFrame(energy_building_cm)
     en_main_data_cm = ener_data_cm['data']
 
@@ -1369,6 +1369,9 @@ class StaffUserUpdateView(SuccessMessageMixin, UpdateView):
         sweetify.success(self.request, 'Staff User Updated Successfully', icon="success", timer=30000)
         return HttpResponseRedirect(reverse("join"))
 
+
+def floorPlanSvg(request):
+    return render(request, 'floorplan_svg.html')
 
 
 @register.filter(name='private')

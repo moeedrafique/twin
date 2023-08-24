@@ -60,8 +60,10 @@ html.Div([
 #
 #
 now = timezone.now()
+previous_date = now - timedelta(days=30)
+previous_date_str = previous_date.strftime('%Y-%m-%d')
 datetime_today = now.strftime('%Y-%m-%d')
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)#
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':previous_date_str, '$lte': datetime_today}}).sort('_id',-1)
 
 
 # today_energy_records = mycol_energy.aggregate([

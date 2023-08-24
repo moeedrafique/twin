@@ -52,7 +52,7 @@ html.Div([
 now = timezone.now()
 datetime_today = now.strftime('%Y-%m-%d')
 # today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-05-01', '$lte': datetime_today}}).sort('_id',-1)
 
 
 # # Find documents where the date/time field is in the current month

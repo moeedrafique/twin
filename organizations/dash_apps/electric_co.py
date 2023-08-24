@@ -68,7 +68,7 @@ next_month_first_day = datetime(next_year, next_month, 1)
 
 datetime_today = now.strftime('%Y-%m-%d')
 # today_energy_records = mycol_energy.find({"$or": [{"datetime": {'$gte':'2023-03-01', '$lte': datetime_today}}, {"datetime": {"$exists": True}}]}).sort('_id',-1)
-today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-04-01', '$lte': datetime_today}}).sort('_id',-1)
+today_energy_records = mycol_energy.find({'ref_id': 'DMC02_Energy', 'datetime': {'$gte':'2023-05-01', '$lte': datetime_today}}).sort('_id',-1)
 
 # Get the current month and year
 
